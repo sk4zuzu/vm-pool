@@ -24,7 +24,7 @@ inputs = {
     nodes1 = {
         count   = 3
         vcpu    = 2
-        memory  = "2400"
+        memory  = "2048"
         image   = "../../../../../packer/any/.cache/output/packer-any.qcow2"
         storage = "34359738368"  # 32GiB
     }
@@ -32,7 +32,7 @@ inputs = {
     nodes2 = {
         count   = 1
         vcpu    = 2
-        memory  = "1200"
+        memory  = "2048"
         image   = "../../../../../packer/any/.cache/output/packer-any.qcow2"
         storage = "17179869184"  # 16GiB
     }
