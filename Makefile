@@ -1,8 +1,6 @@
 
 SELF := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
 
-AUTO_APPROVE :=
-
 SSH_OPTIONS := -o ForwardAgent=yes \
                -o StrictHostKeyChecking=no \
                -o GlobalKnownHostsFile=/dev/null \
@@ -46,13 +44,20 @@ asd-apply: any-disk
 asd-destroy:
 	cd $(SELF)/LIVE/asd1/ && terragrunt destroy $(AUTO_APPROVE)
 
-.PHONY: ssh-any ssh-asd
+.PHONY: become ssh-any ssh-asd
 
-ssh-any:
-	@ssh $(SSH_OPTIONS) ubuntu@10.20.1.10
+become:
+	@: $(eval BECOME_ROOT := -t sudo -i)
 
-ssh-asd:
-	@ssh $(SSH_OPTIONS) ubuntu@10.20.2.10
+ssh-any: ssh-any10
+
+ssh-asd: ssh-asd10
+
+ssh-any%:
+	@ssh $(SSH_OPTIONS) ubuntu@10.20.1.$* $(BECOME_ROOT)
+
+ssh-asd%:
+	@ssh $(SSH_OPTIONS) ubuntu@10.20.2.$* $(BECOME_ROOT)
 
 .PHONY: clean
 
