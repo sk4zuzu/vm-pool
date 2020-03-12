@@ -6,10 +6,11 @@ SSH_OPTIONS := -o ForwardAgent=yes \
                -o GlobalKnownHostsFile=/dev/null \
                -o UserKnownHostsFile=/dev/null
 
-.PHONY: all yes requirements
+.PHONY: all confirm yes requirements
 
 all:
 
+confirm: yes
 yes:
 	@: $(eval AUTO_APPROVE := --auto-approve)
 
