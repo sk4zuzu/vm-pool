@@ -45,6 +45,22 @@ asd-apply: any-disk
 asd-destroy:
 	cd $(SELF)/LIVE/asd1/ && terragrunt destroy $(AUTO_APPROVE)
 
+.PHONY: any-backup any-restore
+
+any-backup:
+	make -f $(SELF)/Makefile.SNAPSHOT backup-a1
+
+any-restore:
+	make -f $(SELF)/Makefile.SNAPSHOT restore-a1
+
+.PHONY: asd-backup asd-restore
+
+asd-backup:
+	make -f $(SELF)/Makefile.SNAPSHOT backup-x1
+
+asd-restore:
+	make -f $(SELF)/Makefile.SNAPSHOT restore-x1
+
 .PHONY: become ssh-any ssh-asd
 
 become:

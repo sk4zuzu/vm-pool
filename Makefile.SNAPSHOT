@@ -1,0 +1,38 @@
+
+SELF := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
+
+VIRSH := sudo virsh
+
+export
+
+.PHONY: all
+
+all:
+	@true
+
+list-%:
+	@$(VIRSH) list --all | tail -n+3 | grep -o '\b$*[^ ]*' | sort | while read DOMAIN; do \
+		echo "$$DOMAIN:"; \
+		$(VIRSH) snapshot-list --domain $$DOMAIN | tail -n+3; \
+	done
+
+backup-%:
+	@$(VIRSH) list --all | tail -n+3 | grep -o '\b$*[^ ]*' | sort | while read DOMAIN; do \
+		echo "$$DOMAIN:"; \
+		$(VIRSH) snapshot-create --domain $$DOMAIN --atomic; \
+		echo; \
+	done
+
+restore-%:
+	@$(VIRSH) list --all | tail -n+3 | grep -o '\b$*[^ ]*' | sort | while read DOMAIN; do \
+		echo "$$DOMAIN:"; \
+		$(VIRSH) snapshot-revert --domain $$DOMAIN --current --running; \
+	done
+
+delete-%:
+	@$(VIRSH) list --all | tail -n+3 | grep -o '\b$*[^ ]*' | sort | while read DOMAIN; do \
+		echo "$$DOMAIN:"; \
+		$(VIRSH) snapshot-delete --domain $$DOMAIN --current; \
+	done
+
+# vim:ts=4:sw=4:noet:
