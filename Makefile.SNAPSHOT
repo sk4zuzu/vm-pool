@@ -11,28 +11,30 @@ all:
 	@true
 
 list-%:
-	@$(VIRSH) list --all | tail -n+3 | grep -o '\b$*[^ ]*' | sort | while read DOMAIN; do \
-		echo "$$DOMAIN:"; \
-		$(VIRSH) snapshot-list --domain $$DOMAIN | tail -n+3; \
+	@$(VIRSH) list --all | grep -oP '\K\b$*\w+\b' | sort | while read DOMAIN; do \
+	    $(VIRSH) snapshot-list --domain "$$DOMAIN"; \
 	done
 
 backup-%:
-	@$(VIRSH) list --all | tail -n+3 | grep -o '\b$*[^ ]*' | sort | while read DOMAIN; do \
-		echo "$$DOMAIN:"; \
-		$(VIRSH) snapshot-create --domain $$DOMAIN --atomic; \
-		echo; \
+	@$(VIRSH) list --all | grep -oP '\K\b$*\w+\b' | sort | while read DOMAIN; do \
+	    $(VIRSH) snapshot-create --domain "$$DOMAIN" --atomic; \
 	done
 
 restore-%:
-	@$(VIRSH) list --all | tail -n+3 | grep -o '\b$*[^ ]*' | sort | while read DOMAIN; do \
-		echo "$$DOMAIN:"; \
-		$(VIRSH) snapshot-revert --domain $$DOMAIN --current --running; \
+	@$(VIRSH) list --all | grep -oP '\K\b$*\w+\b' | sort | while read DOMAIN; do \
+	    $(VIRSH) snapshot-revert --domain "$$DOMAIN" --current --running; \
 	done
 
 delete-%:
-	@$(VIRSH) list --all | tail -n+3 | grep -o '\b$*[^ ]*' | sort | while read DOMAIN; do \
-		echo "$$DOMAIN:"; \
-		$(VIRSH) snapshot-delete --domain $$DOMAIN --current; \
+	@$(VIRSH) list --all | grep -oP '\K\b$*\w+\b' | sort | while read DOMAIN; do \
+	    $(VIRSH) snapshot-delete --domain "$$DOMAIN" --current; \
+	done
+
+clean-%:
+	@$(VIRSH) list --all | grep -oP '\K\b$*\w+\b' | sort | while read DOMAIN; do \
+	    $(VIRSH) snapshot-list --domain "$$DOMAIN" | grep -oP '^\s*\K\b\d+\b' | while read UNUSED; do \
+	        $(VIRSH) snapshot-delete --domain "$$DOMAIN" --current; \
+	    done; \
 	done
 
 # vim:ts=4:sw=4:noet:

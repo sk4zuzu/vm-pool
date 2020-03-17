@@ -35,6 +35,7 @@ any-apply: any-disk
 	cd $(SELF)/LIVE/any1/ && terragrunt apply $(AUTO_APPROVE)
 
 any-destroy:
+	-make -f Makefile.SNAPSHOT clean-a1
 	cd $(SELF)/LIVE/any1/ && terragrunt destroy $(AUTO_APPROVE)
 
 .PHONY: asd-apply asd-destroy
@@ -43,6 +44,7 @@ asd-apply: any-disk
 	cd $(SELF)/LIVE/asd1/ && terragrunt apply $(AUTO_APPROVE)
 
 asd-destroy:
+	-make -f Makefile.SNAPSHOT clean-x1
 	cd $(SELF)/LIVE/asd1/ && terragrunt destroy $(AUTO_APPROVE)
 
 .PHONY: any-backup any-restore
