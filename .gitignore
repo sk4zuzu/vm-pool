@@ -2,3 +2,4 @@
 *.swo
 .terraform/
 .terragrunt-cache/
+files/

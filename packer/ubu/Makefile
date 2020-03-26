@@ -1,7 +1,7 @@
 
 SELF := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
 
-NAME := any
+NAME := ubu
 
 VERSION  := 18.04
 RELEASE  := release-20200107

@@ -11,10 +11,10 @@ inputs = {
     asd_id = "x1"
 
     ssh_keys = [
-        file("~/.ssh/id_ed25519.pub"),
+        file("~/.ssh/id_rsa.pub"),
     ]
 
-    pool_directory = "/stor/libvirt/vm_pool"
+    pool_directory = "/stor/libvirt/vm_pool_x1"
 
     network = {
         subnet  = "10.20.2.0/24"
@@ -25,15 +25,15 @@ inputs = {
         count   = 3
         vcpu    = 2
         memory  = "2048"
-        image   = "../../../../../packer/any/.cache/output/packer-any.qcow2"
+        image   = "../../../../../packer/ubu/.cache/output/packer-ubu.qcow2"
         storage = "34359738368"  # 32GiB
     }
 
     nodes2 = {
-        count   = 1
+        count   = 3
         vcpu    = 2
         memory  = "2048"
-        image   = "../../../../../packer/any/.cache/output/packer-any.qcow2"
+        image   = "../../../../../packer/ubu/.cache/output/packer-ubu.qcow2"
         storage = "17179869184"  # 16GiB
     }
 }

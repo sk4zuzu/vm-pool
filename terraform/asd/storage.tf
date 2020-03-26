@@ -1,6 +1,6 @@
 
 resource "libvirt_pool" "asd" {
-    name = "vm_pool"
+    name = "vm_pool_${var.asd_id}"
     type = "dir"
     path = var.pool_directory
 }

@@ -45,9 +45,9 @@ resource "libvirt_cloudinit_disk" "nodes" {
     write_files:
       - content: |
           net.ipv4.ip_forward = 1
-        path: /etc/sysctl.d/98-ip-forward.conf
+        path: '/etc/sysctl.d/98-ip-forward.conf'
     runcmd:
-      - ['sysctl', '-p', '/etc/sysctl.d/98-ip-forward.conf']
+      - sysctl -p '/etc/sysctl.d/98-ip-forward.conf'
     EOF
 }
 

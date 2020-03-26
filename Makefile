@@ -6,6 +6,7 @@ SSH_OPTIONS := -o ForwardAgent=yes \
                -o GlobalKnownHostsFile=/dev/null \
                -o UserKnownHostsFile=/dev/null
 
+
 .PHONY: all confirm yes requirements
 
 all:
@@ -16,6 +17,7 @@ yes:
 
 requirements: binaries extras
 
+
 .PHONY: binaries extras
 
 binaries:
@@ -24,36 +26,22 @@ binaries:
 extras:
 	make -f $(SELF)/Makefile.EXTRAS
 
-.PHONY: any-disk
 
-any-disk:
-	cd $(SELF)/packer/any/ && make build
+.PHONY: ubu-disk
 
-.PHONY: any-apply any-destroy
+ubu-disk:
+	cd $(SELF)/packer/ubu/ && make build
 
-any-apply: any-disk
-	cd $(SELF)/LIVE/any1/ && terragrunt apply $(AUTO_APPROVE)
-
-any-destroy:
-	-make -f Makefile.SNAPSHOT clean-a1
-	cd $(SELF)/LIVE/any1/ && terragrunt destroy $(AUTO_APPROVE)
 
 .PHONY: asd-apply asd-destroy
 
-asd-apply: any-disk
+asd-apply: ubu-disk
 	cd $(SELF)/LIVE/asd1/ && terragrunt apply $(AUTO_APPROVE)
 
 asd-destroy:
 	-make -f Makefile.SNAPSHOT clean-x1
 	cd $(SELF)/LIVE/asd1/ && terragrunt destroy $(AUTO_APPROVE)
 
-.PHONY: any-backup any-restore
-
-any-backup:
-	make -f $(SELF)/Makefile.SNAPSHOT backup-a1
-
-any-restore:
-	make -f $(SELF)/Makefile.SNAPSHOT restore-a1
 
 .PHONY: asd-backup asd-restore
 
@@ -63,26 +51,23 @@ asd-backup:
 asd-restore:
 	make -f $(SELF)/Makefile.SNAPSHOT restore-x1
 
-.PHONY: become ssh-any ssh-asd
+
+.PHONY: become ssh-asd
 
 become:
 	@: $(eval BECOME_ROOT := -t sudo -i)
 
-ssh-any: ssh-any10
-
 ssh-asd: ssh-asd10
-
-ssh-any%:
-	@ssh $(SSH_OPTIONS) ubuntu@10.20.1.$* $(BECOME_ROOT)
 
 ssh-asd%:
 	@ssh $(SSH_OPTIONS) ubuntu@10.20.2.$* $(BECOME_ROOT)
+
 
 .PHONY: clean
 
 clean:
 	-make clean -f $(SELF)/Makefile.BINARIES
 	-make clean -f $(SELF)/Makefile.EXTRAS
-	-cd $(SELF)/packer/any/ && make clean
+	-cd $(SELF)/packer/ubu/ && make clean
 
 # vim:ts=4:sw=4:noet:syn=make:
