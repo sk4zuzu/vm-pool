@@ -27,10 +27,13 @@ extras:
 	make -f $(SELF)/Makefile.EXTRAS
 
 
-.PHONY: ubu-disk
+.PHONY: ubu-disk rhe-disk
 
 ubu-disk:
 	cd $(SELF)/packer/ubu/ && make build
+
+rhe-disk:
+	cd $(SELF)/packer/rhe/ && make build
 
 
 .PHONY: asd-apply asd-destroy
@@ -43,6 +46,16 @@ asd-destroy:
 	cd $(SELF)/LIVE/asd1/ && terragrunt destroy $(AUTO_APPROVE)
 
 
+.PHONY: zxc-apply zxc-destroy
+
+zxc-apply: rhe-disk
+	cd $(SELF)/LIVE/zxc1/ && terragrunt apply $(AUTO_APPROVE)
+
+zxc-destroy:
+	-make -f Makefile.SNAPSHOT clean-y1
+	cd $(SELF)/LIVE/zxc1/ && terragrunt destroy $(AUTO_APPROVE)
+
+
 .PHONY: asd-backup asd-restore
 
 asd-backup:
@@ -52,15 +65,29 @@ asd-restore:
 	make -f $(SELF)/Makefile.SNAPSHOT restore-x1
 
 
-.PHONY: become ssh-asd
+.PHONY: zxc-backup zxc-restore
+
+zxc-backup:
+	make -f $(SELF)/Makefile.SNAPSHOT backup-y1
+
+zxc-restore:
+	make -f $(SELF)/Makefile.SNAPSHOT restore-y1
+
+
+.PHONY: become ssh-asd ssh-zxc
 
 become:
 	@: $(eval BECOME_ROOT := -t sudo -i)
 
 ssh-asd: ssh-asd10
 
+ssh-zxc: ssh-zxc10
+
 ssh-asd%:
 	@ssh $(SSH_OPTIONS) ubuntu@10.20.2.$* $(BECOME_ROOT)
+
+ssh-zxc%:
+	@ssh $(SSH_OPTIONS) cloud-user@10.20.3.$* $(BECOME_ROOT)
 
 
 .PHONY: clean
@@ -69,5 +96,6 @@ clean:
 	-make clean -f $(SELF)/Makefile.BINARIES
 	-make clean -f $(SELF)/Makefile.EXTRAS
 	-cd $(SELF)/packer/ubu/ && make clean
+	-cd $(SELF)/packer/rhe/ && make clean
 
 # vim:ts=4:sw=4:noet:syn=make:
