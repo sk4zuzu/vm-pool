@@ -18,9 +18,7 @@ yum install -y "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noar
 
 yum repolist enabled
 
-yum clean all
-
-yum update -y
+yum makecache
 
 yum install -y \
     curl \
