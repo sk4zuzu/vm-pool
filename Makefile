@@ -27,13 +27,13 @@ extras:
 	make -f $(SELF)/Makefile.EXTRAS
 
 
-.PHONY: ubu-disk k8s-disk rhe-disk
+.PHONY: ubu-disk kub-disk rhe-disk
 
 ubu-disk:
 	cd $(SELF)/packer/ubu/ && make build
 
-k8s-disk:
-	cd $(SELF)/packer/k8s/ && make build
+kub-disk:
+	cd $(SELF)/packer/kub/ && make build
 
 rhe-disk:
 	cd $(SELF)/packer/rhe/ && make build
@@ -52,17 +52,17 @@ asd-destroy: asd-init
 	cd $(SELF)/LIVE/asd1/ && terragrunt destroy $(AUTO_APPROVE)
 
 
-.PHONY: k8s-init k8s-apply k8s-destroy
+.PHONY: kub-init kub-apply kub-destroy
 
-k8s-init:
-	cd $(SELF)/LIVE/k8s1/ && terragrunt init
+kub-init:
+	cd $(SELF)/LIVE/kub1/ && terragrunt init
 
-k8s-apply: k8s-init k8s-disk
-	cd $(SELF)/LIVE/k8s1/ && terragrunt apply $(AUTO_APPROVE)
+kub-apply: kub-init kub-disk
+	cd $(SELF)/LIVE/kub1/ && terragrunt apply $(AUTO_APPROVE)
 
-k8s-destroy: k8s-init
+kub-destroy: kub-init
 	-make -f Makefile.SNAPSHOT clean-k1
-	cd $(SELF)/LIVE/k8s1/ && terragrunt destroy $(AUTO_APPROVE)
+	cd $(SELF)/LIVE/kub1/ && terragrunt destroy $(AUTO_APPROVE)
 
 
 .PHONY: zxc-init zxc-apply zxc-destroy
@@ -87,12 +87,12 @@ asd-restore:
 	make -f $(SELF)/Makefile.SNAPSHOT restore-x1
 
 
-.PHONY: k8s-backup k8s-restore
+.PHONY: kub-backup kub-restore
 
-k8s-backup:
+kub-backup:
 	make -f $(SELF)/Makefile.SNAPSHOT backup-k1
 
-k8s-restore:
+kub-restore:
 	make -f $(SELF)/Makefile.SNAPSHOT restore-k1
 
 
@@ -105,21 +105,21 @@ zxc-restore:
 	make -f $(SELF)/Makefile.SNAPSHOT restore-y1
 
 
-.PHONY: become ssh-asd ssh-k8s ssh-zxc
+.PHONY: become ssh-asd ssh-kub ssh-zxc
 
 become:
 	@: $(eval BECOME_ROOT := -t sudo -i)
 
 ssh-asd: ssh-asd10
 
-ssh-k8s: ssh-k8s10
+ssh-kub: ssh-kub10
 
 ssh-zxc: ssh-zxc10
 
 ssh-asd%:
 	@ssh $(SSH_OPTIONS) ubuntu@10.20.2.$* $(BECOME_ROOT)
 
-ssh-k8s%:
+ssh-kub%:
 	@ssh $(SSH_OPTIONS) ubuntu@10.20.3.$* $(BECOME_ROOT)
 
 ssh-zxc%:
@@ -132,7 +132,7 @@ clean:
 	-make clean -f $(SELF)/Makefile.BINARIES
 	-make clean -f $(SELF)/Makefile.EXTRAS
 	-cd $(SELF)/packer/ubu/ && make clean
-	-cd $(SELF)/packer/k8s/ && make clean
+	-cd $(SELF)/packer/kub/ && make clean
 	-cd $(SELF)/packer/rhe/ && make clean
 
 # vim:ts=4:sw=4:noet:syn=make:

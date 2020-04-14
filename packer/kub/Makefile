@@ -1,7 +1,7 @@
 
 SELF := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
 
-NAME := k8s
+NAME := kub
 
 VERSION  := 18.04
 RELEASE  := release-20200107

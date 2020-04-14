@@ -25,7 +25,7 @@ inputs = {
         count   = 3
         vcpu    = 2
         memory  = "2048"
-        image   = "../../../../../packer/k8s/.cache/output/packer-k8s.qcow2"
+        image   = "../../../../../packer/kub/.cache/output/packer-kub.qcow2"
         storage = "34359738368"  # 32GiB
     }
 
@@ -33,7 +33,7 @@ inputs = {
         count   = 3
         vcpu    = 2
         memory  = "2048"
-        image   = "../../../../../packer/k8s/.cache/output/packer-k8s.qcow2"
+        image   = "../../../../../packer/kub/.cache/output/packer-kub.qcow2"
         storage = "17179869184"  # 16GiB
     }
 }
