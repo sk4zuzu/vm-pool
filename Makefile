@@ -39,32 +39,41 @@ rhe-disk:
 	cd $(SELF)/packer/rhe/ && make build
 
 
-.PHONY: asd-apply asd-destroy
+.PHONY: asd-init asd-apply asd-destroy
 
-asd-apply: ubu-disk
+asd-init:
+	cd $(SELF)/LIVE/asd1/ && terragrunt init
+
+asd-apply: asd-init ubu-disk
 	cd $(SELF)/LIVE/asd1/ && terragrunt apply $(AUTO_APPROVE)
 
-asd-destroy:
+asd-destroy: asd-init
 	-make -f Makefile.SNAPSHOT clean-x1
 	cd $(SELF)/LIVE/asd1/ && terragrunt destroy $(AUTO_APPROVE)
 
 
-.PHONY: k8s-apply k8s-destroy
+.PHONY: k8s-init k8s-apply k8s-destroy
 
-k8s-apply: k8s-disk
+k8s-init:
+	cd $(SELF)/LIVE/k8s1/ && terragrunt init
+
+k8s-apply: k8s-init k8s-disk
 	cd $(SELF)/LIVE/k8s1/ && terragrunt apply $(AUTO_APPROVE)
 
-k8s-destroy:
+k8s-destroy: k8s-init
 	-make -f Makefile.SNAPSHOT clean-k1
 	cd $(SELF)/LIVE/k8s1/ && terragrunt destroy $(AUTO_APPROVE)
 
 
-.PHONY: zxc-apply zxc-destroy
+.PHONY: zxc-init zxc-apply zxc-destroy
 
-zxc-apply: rhe-disk
+zxc-init:
+	cd $(SELF)/LIVE/zxc1/ && terragrunt init
+
+zxc-apply: zxc-init rhe-disk
 	cd $(SELF)/LIVE/zxc1/ && terragrunt apply $(AUTO_APPROVE)
 
-zxc-destroy:
+zxc-destroy: zxc-init
 	-make -f Makefile.SNAPSHOT clean-y1
 	cd $(SELF)/LIVE/zxc1/ && terragrunt destroy $(AUTO_APPROVE)
 
