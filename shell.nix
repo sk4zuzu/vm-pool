@@ -7,7 +7,7 @@ stdenv.mkDerivation {
   buildInputs = [
     git
     libvirt libxslt
-    gnumake
+    gnumake pkgconfig
     go gcc
     cdrkit cloud-utils
   ];
