@@ -1,7 +1,7 @@
 
 SELF := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
 
-TERRAFORM_PROVIDER_LIBVIRT_VERSION ?= 0.6.1
+TERRAFORM_PROVIDER_LIBVIRT_VERSION ?= 0.6.2
 
 _GOPATH_ ?= $(HOME)/go
 
@@ -9,21 +9,21 @@ TARGETS := \
 $(_GOPATH_)/bin/terraform-provider-libvirt
 
 define github_release_build_and_install
-.PHONY: $(_GOPATH_)/bin/$(2) $(_GOPATH_)/src/github.com/$(1)/$(2)
+.PHONY: $(_GOPATH_)/bin/$(2)
 
 $(_GOPATH_)/bin/$(2): $(_GOPATH_)/bin/$(2)-$(3)
 	rm -f $$@ && ln -s $$< $$@
 
-$(_GOPATH_)/bin/$(2)-$(3): $(_GOPATH_)/src/github.com/$(1)/$(2)
-	cd $$</ && GOPATH=$(_GOPATH_) go build -o $$@
-
-$(_GOPATH_)/src/github.com/$(1)/$(2):
-	install -d $$@/ && cd $$@/ && git clone --branch=v$(3) https://github.com/$(1)/$(2).git . || ( \
+$(_GOPATH_)/bin/$(2)-$(3):
+	install -d $(_GOPATH_)/src/github.com/$(1)/$(2)/
+	cd $(_GOPATH_)/src/github.com/$(1)/$(2)/ && git clone --branch=v$(3) https://github.com/$(1)/$(2).git . || ( \
 		git fetch origin v$(3) \
-		&& git checkout v$(3) \
 		&& git clean -df \
+		&& git checkout . \
+		&& git checkout v$(3) \
 		&& git reset --hard v$(3) \
     )
+	cd $(_GOPATH_)/src/github.com/$(1)/$(2)/ && GOPATH=$(_GOPATH_) go build -o $$@
 endef
 
 export
