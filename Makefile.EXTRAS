@@ -8,7 +8,7 @@ _GOPATH_ ?= $(HOME)/go
 TARGETS := \
 $(_GOPATH_)/bin/terraform-provider-libvirt
 
-define github_release_build_and_install
+define GITHUB_RELEASE_BUILD_AND_INSTALL
 .PHONY: $(_GOPATH_)/bin/$(2)
 
 $(_GOPATH_)/bin/$(2): $(_GOPATH_)/bin/$(2)-$(3)
@@ -37,6 +37,6 @@ clean:
 	-rm -f $(TARGETS)
 
 $(eval \
-	$(call github_release_build_and_install,dmacvicar,terraform-provider-libvirt,$(TERRAFORM_PROVIDER_LIBVIRT_VERSION)))
+	$(call GITHUB_RELEASE_BUILD_AND_INSTALL,dmacvicar,terraform-provider-libvirt,$(TERRAFORM_PROVIDER_LIBVIRT_VERSION)))
 
 # vim:ts=4:sw=4:noet:syn=make:
