@@ -1,5 +1,5 @@
 
-resource null_resource "asd" {
+resource null_resource "zxc" {
   depends_on = [ libvirt_domain.nodes ]
 
   count = var.shutdown ? var._count : 0
