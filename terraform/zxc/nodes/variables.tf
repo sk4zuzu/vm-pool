@@ -39,6 +39,11 @@ variable "storage" {
     type = string
 }
 
+variable "shutdown" {
+    type = bool
+    default = false
+}
+
 variable "_infix" {
     type = string
 }

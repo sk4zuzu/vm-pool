@@ -36,7 +36,7 @@ resource "libvirt_domain" "nodes" {
         autoport       = true
     }
 
-    autostart = true
+    autostart = !var.shutdown
 }
 
 # vim:ts=4:sw=4:et:

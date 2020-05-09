@@ -23,4 +23,9 @@ variable "nodes2" {
     type = map
 }
 
+variable "shutdown" {
+    type = bool
+    default = false
+}
+
 # vim:ts=4:sw=4:et:

@@ -20,6 +20,8 @@ module "nodes1" {
     image   = var.nodes1["image"]
     storage = var.nodes1["storage"]
 
+    shutdown = var.shutdown
+
     _infix = "a"
     _ipgap = 10
     _count = var.nodes1["count"]
@@ -41,6 +43,8 @@ module "nodes2" {
     memory  = var.nodes2["memory"]
     image   = var.nodes2["image"]
     storage = var.nodes2["storage"]
+
+    shutdown = var.shutdown
 
     _infix = "b"
     _ipgap = 20
