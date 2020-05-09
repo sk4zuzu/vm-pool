@@ -8,6 +8,8 @@ terraform {
 }
 
 inputs = {
+    shutdown = false
+
     zxc_id = "y1"
 
     ssh_keys = [
@@ -28,7 +30,6 @@ inputs = {
         image   = "../../../../../packer/rhe/.cache/output/packer-rhe.qcow2"
         storage = "34359738368"  # 32GiB
     }
-
 
     nodes2 = {
         count   = 3

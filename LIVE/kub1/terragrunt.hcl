@@ -8,6 +8,8 @@ terraform {
 }
 
 inputs = {
+    shutdown = false
+
     asd_id = "k1"
 
     ssh_keys = [
