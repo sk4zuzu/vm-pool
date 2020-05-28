@@ -1,7 +1,7 @@
 
 resource "libvirt_network" "asd" {
     name      = var.asd_id
-    domain    = "local"
+    domain    = "asd.lh"
     addresses = [ var.network["subnet"] ]
 
     mode   = "nat"

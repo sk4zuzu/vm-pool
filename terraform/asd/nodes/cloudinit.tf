@@ -24,7 +24,7 @@ resource "libvirt_cloudinit_disk" "nodes" {
           addresses:
             - '${cidrhost(var.subnet, 1)}'
           search:
-            - 'local'
+            - 'asd.lh'
     EOF
 
     user_data = <<-EOF
