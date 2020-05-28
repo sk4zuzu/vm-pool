@@ -35,7 +35,7 @@ resource "libvirt_cloudinit_disk" "nodes" {
       - content: |
           nameserver 8.8.8.8
           nameserver 8.8.4.4
-          search local
+          search zxc.lh
         path: '/etc/resolv.conf'
       - content: |
           net.ipv4.ip_forward = 1

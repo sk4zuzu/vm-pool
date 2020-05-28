@@ -1,7 +1,7 @@
 
 resource "libvirt_network" "zxc" {
     name      = var.zxc_id
-    domain    = "local"
+    domain    = "zxc.lh"
     addresses = [ var.network["subnet"] ]
 
     mode   = "nat"
