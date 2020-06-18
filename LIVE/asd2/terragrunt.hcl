@@ -10,32 +10,32 @@ terraform {
 inputs = {
     shutdown = false
 
-    asd_id = "k1"
+    asd_id = "x2"
 
     ssh_keys = [
         file("~/.ssh/id_rsa.pub"),
     ]
 
-    pool_directory = "/stor/libvirt/vm_pool_k1"
+    pool_directory = "/stor/libvirt/vm_pool_x2"
 
     network = {
-        subnet  = "10.20.4.0/24"
-        macaddr = "52:54:20:04:00:%02x"
+        subnet  = "10.20.3.0/24"
+        macaddr = "52:54:20:03:00:%02x"
     }
 
     nodes1 = {
         count   = 3
         vcpu    = 2
         memory  = "2048"
-        image   = "../../../../../packer/kub/.cache/output/packer-kub.qcow2"
+        image   = "../../../../../packer/ubu/.cache/output/packer-ubu.qcow2"
         storage = "34359738368"  # 32GiB
     }
 
     nodes2 = {
         count   = 3
         vcpu    = 2
-        memory  = "2048"
-        image   = "../../../../../packer/kub/.cache/output/packer-kub.qcow2"
+        memory  = "3072"
+        image   = "../../../../../packer/ubu/.cache/output/packer-ubu.qcow2"
         storage = "17179869184"  # 16GiB
     }
 }
