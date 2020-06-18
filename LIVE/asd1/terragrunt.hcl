@@ -34,7 +34,7 @@ inputs = {
     nodes2 = {
         count   = 3
         vcpu    = 2
-        memory  = "2048"
+        memory  = "3072"
         image   = "../../../../../packer/ubu/.cache/output/packer-ubu.qcow2"
         storage = "17179869184"  # 16GiB
     }
