@@ -31,6 +31,8 @@ yum install -y \
     iftop nethogs \
     jq
 
+yum update -y
+
 install -d -o root -g cloud-user -m ug=rwx,o= /terraform{,/remote-exec}
 
 sync

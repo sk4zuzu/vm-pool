@@ -5,13 +5,13 @@ include $(SELF)/Makefile.IN
 
 NAME := rhe
 
-VERSION  := 7.6
-ARTIFACT := rhel-server-$(VERSION)-update-5-x86_64-kvm.qcow2
-CHECKSUM := 12ff4e11fd3d0a4de5af33344070196f4061e86121fbfe9f297d02ae52336200
+VERSION  := 7.8
+ARTIFACT := rhel-server-$(VERSION)-x86_64-kvm.qcow2
+CHECKSUM := ce4943d38e00a5c81272ebd3f3542b2d9557382d1c331c46ed553fdcca778b2d
 
 CPUS      ?= 1
 MEMORY    ?= 1024
-DISK_SIZE ?= 10240
+DISK_SIZE ?= 12288
 
 PACKER_LOG ?= 1
 HEADLESS   ?= true
