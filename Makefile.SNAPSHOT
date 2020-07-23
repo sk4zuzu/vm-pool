@@ -32,8 +32,8 @@ delete-%:
 
 clean-%:
 	@$(VIRSH) list --all | grep -oP '\K\b$*\w+\b' | sort | while read DOMAIN; do \
-	    $(VIRSH) snapshot-list --domain "$$DOMAIN" | grep -oP '^\s*\K\b\d+\b' | while read UNUSED; do \
-	        $(VIRSH) snapshot-delete --domain "$$DOMAIN" --current; \
+	    $(VIRSH) snapshot-list --domain "$$DOMAIN" | grep -oP '^\s*\K\b\d+\b' | sort -r | while read NAME; do \
+	        $(VIRSH) snapshot-delete --domain "$$DOMAIN" "$$NAME"; \
 	    done; \
 	done
 
