@@ -27,7 +27,7 @@ extras:
 	make -f $(SELF)/Makefile.EXTRAS
 
 
-.PHONY: ubu-disk kub-disk rhe-disk
+.PHONY: ubu-disk kub-disk rhe-disk cos-disk
 
 ubu-disk:
 	cd $(SELF)/packer/ubu/ && make build
@@ -37,6 +37,9 @@ kub-disk:
 
 rhe-disk:
 	cd $(SELF)/packer/rhe/ && make build
+
+cos-disk:
+	cd $(SELF)/packer/cos/ && make build
 
 
 .PHONY: asd-init asd-apply asd-destroy
@@ -91,6 +94,19 @@ zxc-destroy: zxc-init
 	cd $(SELF)/LIVE/zxc1/ && terragrunt destroy $(AUTO_APPROVE)
 
 
+.PHONY: qwe-init qwe-apply qwe-destroy
+
+qwe-init:
+	cd $(SELF)/LIVE/qwe1/ && terragrunt init
+
+qwe-apply: qwe-init rhe-disk
+	cd $(SELF)/LIVE/qwe1/ && terragrunt apply $(AUTO_APPROVE)
+
+qwe-destroy: qwe-init
+	-make -f Makefile.SNAPSHOT clean-z1
+	cd $(SELF)/LIVE/qwe1/ && terragrunt destroy $(AUTO_APPROVE)
+
+
 .PHONY: asd-backup asd-restore
 
 asd-backup:
@@ -127,7 +143,16 @@ zxc-restore:
 	make -f $(SELF)/Makefile.SNAPSHOT restore-y1
 
 
-.PHONY: become asd-ssh asd2-ssh kub-ssh zxc-ssh
+.PHONY: qwe-backup qwe-restore
+
+qwe-backup:
+	make -f $(SELF)/Makefile.SNAPSHOT backup-z1
+
+qwe-restore:
+	make -f $(SELF)/Makefile.SNAPSHOT restore-z1
+
+
+.PHONY: become asd-ssh asd2-ssh kub-ssh zxc-ssh qwe-ssh
 
 become:
 	@: $(eval BECOME_ROOT := -t sudo -i)
@@ -139,6 +164,8 @@ asd2-ssh: asd2-ssh10
 kub-ssh: kub-ssh10
 
 zxc-ssh: zxc-ssh10
+
+qwe-ssh: qwe-ssh10
 
 asd-ssh%:
 	@ssh $(SSH_OPTIONS) ubuntu@10.20.2.$* $(BECOME_ROOT)
@@ -152,6 +179,9 @@ kub-ssh%:
 zxc-ssh%:
 	@ssh $(SSH_OPTIONS) cloud-user@10.30.2.$* $(BECOME_ROOT)
 
+qwe-ssh%:
+	@ssh $(SSH_OPTIONS) centos@10.40.2.$* $(BECOME_ROOT)
+
 
 .PHONY: clean
 
@@ -161,5 +191,6 @@ clean:
 	-cd $(SELF)/packer/ubu/ && make clean
 	-cd $(SELF)/packer/kub/ && make clean
 	-cd $(SELF)/packer/rhe/ && make clean
+	-cd $(SELF)/packer/cos/ && make clean
 
 # vim:ts=4:sw=4:noet:syn=make:
