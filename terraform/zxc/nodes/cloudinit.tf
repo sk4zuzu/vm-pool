@@ -33,8 +33,7 @@ resource "libvirt_cloudinit_disk" "nodes" {
       devices: ['/']
     write_files:
       - content: |
-          nameserver 8.8.8.8
-          nameserver 8.8.4.4
+          nameserver ${cidrhost(var.subnet, 1)}
           search zxc.lh
         path: '/etc/resolv.conf'
       - content: |
