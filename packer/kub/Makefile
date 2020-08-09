@@ -57,7 +57,8 @@ define Packerfile
       "scripts": [
         "remote-exec/01-basics.sh",
         "remote-exec/02-docker.sh",
-        "remote-exec/03-kubernetes.sh"
+        "remote-exec/03-kubernetes.sh",
+        "remote-exec/04-glusterfs.sh"
       ]
     }
   ]
