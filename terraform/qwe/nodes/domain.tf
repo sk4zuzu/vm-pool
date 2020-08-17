@@ -8,6 +8,10 @@ resource "libvirt_domain" "nodes" {
 
     cloudinit = libvirt_cloudinit_disk.nodes.*.id[count.index]
 
+    cpu = {
+        mode = "host-passthrough"
+    }
+
     network_interface {
         network_name   = var.network_name
         wait_for_lease = false
