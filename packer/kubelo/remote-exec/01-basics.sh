@@ -48,5 +48,3 @@ pip3 --no-cache-dir install \
 install -d -o root -g ubuntu -m ug=rwx,o= /terraform{,/remote-exec}
 
 sync
-
-# vim:ts=4:sw=4:et:syn=sh:

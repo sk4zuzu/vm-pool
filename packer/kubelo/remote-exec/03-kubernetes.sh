@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-: ${KUBERNETES_VERSION:=1.17.4}
+: ${KUBERNETES_VERSION:=1.18.6}
 : ${KUBERNETES_VERSION_APT:=${KUBERNETES_VERSION}-00}
-: ${KUBERNETES_CNI_VERSION:=0.7.5}
+: ${KUBERNETES_CNI_VERSION:=0.8.7}
 : ${KUBERNETES_CNI_VERSION_APT:=${KUBERNETES_CNI_VERSION}-00}
-: ${HELM_VERSION:=3.1.2}
+: ${HELM_VERSION:=3.3.4}
 
 policy_rc_d_disable() (echo "exit 101" >/usr/sbin/policy-rc.d && chmod a+x /usr/sbin/policy-rc.d)
 policy_rc_d_enable()  (echo "exit 0"   >/usr/sbin/policy-rc.d && chmod a+x /usr/sbin/policy-rc.d)
@@ -43,5 +43,3 @@ curl -fsSL https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz \
 && chmod +x /usr/local/bin/helm
 
 sync
-
-# vim:ts=4:sw=4:et:syn=sh:

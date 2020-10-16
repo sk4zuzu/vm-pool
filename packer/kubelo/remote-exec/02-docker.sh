@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-: ${DOCKER_CE_VERSION:=18.09.9}
+: ${DOCKER_CE_VERSION:=19.03.13}
 : ${DOCKER_CE_VERSION_APT:=5:${DOCKER_CE_VERSION}~3-0~ubuntu-bionic}
-: ${CONTAINERD_IO_VERSION:=1.2.10}
-: ${CONTAINERD_IO_VERSION_APT:=${CONTAINERD_IO_VERSION}-3}
+: ${CONTAINERD_IO_VERSION:=1.3.7}
+: ${CONTAINERD_IO_VERSION_APT:=${CONTAINERD_IO_VERSION}-1}
 
 policy_rc_d_disable() (echo "exit 101" >/usr/sbin/policy-rc.d && chmod a+x /usr/sbin/policy-rc.d)
 policy_rc_d_enable()  (echo "exit 0"   >/usr/sbin/policy-rc.d && chmod a+x /usr/sbin/policy-rc.d)
@@ -51,5 +51,3 @@ apt-get -q clean
 systemctl start docker
 
 sync
-
-# vim:ts=4:sw=4:et:syn=sh:

@@ -1,7 +1,5 @@
-
 SELF := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
-
-NAME := kub
+NAME := kubelo
 
 VERSION  := 18.04
 RELEASE  := release-20200107
@@ -33,7 +31,6 @@ define Packerfile
       "disk_image": "true",
       "iso_url": "https://cloud-images.ubuntu.com/releases/$(VERSION)/$(RELEASE)/$(ARTIFACT)",
       "iso_checksum": "$(CHECKSUM)",
-      "iso_checksum_type": "sha256",
 
       "disk_size": "$(DISK_SIZE)",
 
@@ -57,8 +54,7 @@ define Packerfile
       "scripts": [
         "remote-exec/01-basics.sh",
         "remote-exec/02-docker.sh",
-        "remote-exec/03-kubernetes.sh",
-        "remote-exec/04-glusterfs.sh"
+        "remote-exec/03-kubernetes.sh"
       ]
     }
   ]
@@ -88,5 +84,3 @@ $(SELF)/.cache/output/packer-$(NAME).qcow2: $(SELF)/.cache/$(ARTIFACT).iso Makef
 
 clean:
 	-rm -rf $(SELF)/.cache/
-
-# vim:ts=4:sw=4:noet:syn=make:
