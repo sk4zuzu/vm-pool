@@ -68,6 +68,19 @@ k1-destroy: k1-init
 	cd $(SELF)/LIVE/k1/ && terragrunt destroy $(AUTO_APPROVE)
 
 
+.PHONY: r1-init r1-apply r1-destroy
+
+r1-init:
+	cd $(SELF)/LIVE/r1/ && terragrunt init
+
+r1-apply: r1-init redhat-disk
+	cd $(SELF)/LIVE/r1/ && terragrunt apply $(AUTO_APPROVE)
+
+r1-destroy: r1-init
+	-make -f Makefile.SNAPSHOT clean-r1
+	cd $(SELF)/LIVE/r1/ && terragrunt destroy $(AUTO_APPROVE)
+
+
 .PHONY: asd-init asd-apply asd-destroy
 
 asd-init:
@@ -79,19 +92,6 @@ asd-apply: asd-init ubu-disk
 asd-destroy: asd-init
 	-make -f Makefile.SNAPSHOT clean-x1
 	cd $(SELF)/LIVE/asd1/ && terragrunt destroy $(AUTO_APPROVE)
-
-
-.PHONY: zxc-init zxc-apply zxc-destroy
-
-zxc-init:
-	cd $(SELF)/LIVE/zxc1/ && terragrunt init
-
-zxc-apply: zxc-init rhe-disk
-	cd $(SELF)/LIVE/zxc1/ && terragrunt apply $(AUTO_APPROVE)
-
-zxc-destroy: zxc-init
-	-make -f Makefile.SNAPSHOT clean-y1
-	cd $(SELF)/LIVE/zxc1/ && terragrunt destroy $(AUTO_APPROVE)
 
 
 .PHONY: c1-backup c1-restore
@@ -112,6 +112,15 @@ k1-restore:
 	make -f $(SELF)/Makefile.SNAPSHOT restore-k1
 
 
+.PHONY: r1-backup r1-restore
+
+r1-backup:
+	make -f $(SELF)/Makefile.SNAPSHOT backup-r1
+
+r1-restore:
+	make -f $(SELF)/Makefile.SNAPSHOT restore-r1
+
+
 .PHONY: asd-backup asd-restore
 
 asd-backup:
@@ -121,16 +130,7 @@ asd-restore:
 	make -f $(SELF)/Makefile.SNAPSHOT restore-x1
 
 
-.PHONY: zxc-backup zxc-restore
-
-zxc-backup:
-	make -f $(SELF)/Makefile.SNAPSHOT backup-y1
-
-zxc-restore:
-	make -f $(SELF)/Makefile.SNAPSHOT restore-y1
-
-
-.PHONY: become c1-ssh k1-ssh asd-ssh zxc-ssh
+.PHONY: become c1-ssh k1-ssh r1-ssh asd-ssh
 
 become:
 	@: $(eval BECOME_ROOT := -t sudo -i)
@@ -139,9 +139,9 @@ c1-ssh: c1-ssh10
 
 k1-ssh: k1-ssh10
 
-asd-ssh: asd-ssh10
+r1-ssh: r1-ssh10
 
-zxc-ssh: zxc-ssh10
+asd-ssh: asd-ssh10
 
 c1-ssh%:
 	@ssh $(SSH_OPTIONS) centos@10.20.2.$* $(BECOME_ROOT)
@@ -149,11 +149,11 @@ c1-ssh%:
 k1-ssh%:
 	@ssh $(SSH_OPTIONS) ubuntu@10.30.2.$* $(BECOME_ROOT)
 
+r1-ssh%:
+	@ssh $(SSH_OPTIONS) cloud-user@10.40.2.$* $(BECOME_ROOT)
+
 asd-ssh%:
 	@ssh $(SSH_OPTIONS) ubuntu@10.20.2.$* $(BECOME_ROOT)
-
-zxc-ssh%:
-	@ssh $(SSH_OPTIONS) cloud-user@10.30.2.$* $(BECOME_ROOT)
 
 
 .PHONY: clean
