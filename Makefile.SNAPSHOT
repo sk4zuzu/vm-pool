@@ -1,5 +1,4 @@
-
-SELF := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
+SELF := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 VIRSH := sudo virsh
 
@@ -36,5 +35,3 @@ clean-%:
 	        $(VIRSH) snapshot-delete --domain "$$DOMAIN" "$$NAME"; \
 	    done; \
 	done
-
-# vim:ts=4:sw=4:noet:

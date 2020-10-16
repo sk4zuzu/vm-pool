@@ -12,5 +12,3 @@ stdenv.mkDerivation {
     cdrkit cloud-utils
   ];
 }
-
-# vim:ts=2:sw=2:et:syn=nix:

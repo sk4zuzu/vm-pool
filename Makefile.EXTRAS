@@ -1,5 +1,4 @@
-
-SELF := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
+SELF := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 PROVIDER_LIBVIRT_VERSION ?= 0.6.2
 PROVIDER_LIBVIRT_DIR     := $(HOME)/.local/share/terraform/plugins/registry.terraform.io/dmacvicar/libvirt/$(PROVIDER_LIBVIRT_VERSION)/linux_amd64
@@ -40,5 +39,3 @@ clean:
 
 $(eval \
 	$(call GITHUB_RELEASE_BUILD_AND_INSTALL,dmacvicar,terraform-provider-libvirt,$(PROVIDER_LIBVIRT_VERSION),$(PROVIDER_LIBVIRT_DIR)))
-
-# vim:ts=4:sw=4:noet:syn=make:

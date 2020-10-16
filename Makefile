@@ -1,5 +1,4 @@
-
-SELF := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
+SELF := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 SSH_OPTIONS := -o ForwardAgent=yes \
                -o StrictHostKeyChecking=no \
@@ -165,5 +164,3 @@ clean:
 	-cd $(SELF)/packer/kubelo/ && make clean
 	-cd $(SELF)/packer/redhat/ && make clean
 	-cd $(SELF)/packer/ubuntu/ && make clean
-
-# vim:ts=4:sw=4:noet:syn=make:
