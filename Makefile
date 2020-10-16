@@ -81,17 +81,17 @@ r1-destroy: r1-init
 	cd $(SELF)/LIVE/r1/ && terragrunt destroy $(AUTO_APPROVE)
 
 
-.PHONY: asd-init asd-apply asd-destroy
+.PHONY: u1-init u1-apply u1-destroy
 
-asd-init:
-	cd $(SELF)/LIVE/asd1/ && terragrunt init
+u1-init:
+	cd $(SELF)/LIVE/u1/ && terragrunt init
 
-asd-apply: asd-init ubu-disk
-	cd $(SELF)/LIVE/asd1/ && terragrunt apply $(AUTO_APPROVE)
+u1-apply: u1-init ubuntu-disk
+	cd $(SELF)/LIVE/u1/ && terragrunt apply $(AUTO_APPROVE)
 
-asd-destroy: asd-init
-	-make -f Makefile.SNAPSHOT clean-x1
-	cd $(SELF)/LIVE/asd1/ && terragrunt destroy $(AUTO_APPROVE)
+u1-destroy: u1-init
+	-make -f Makefile.SNAPSHOT clean-u1
+	cd $(SELF)/LIVE/u1/ && terragrunt destroy $(AUTO_APPROVE)
 
 
 .PHONY: c1-backup c1-restore
@@ -121,16 +121,16 @@ r1-restore:
 	make -f $(SELF)/Makefile.SNAPSHOT restore-r1
 
 
-.PHONY: asd-backup asd-restore
+.PHONY: u1-backup u1-restore
 
-asd-backup:
-	make -f $(SELF)/Makefile.SNAPSHOT backup-x1
+u1-backup:
+	make -f $(SELF)/Makefile.SNAPSHOT backup-u1
 
-asd-restore:
-	make -f $(SELF)/Makefile.SNAPSHOT restore-x1
+u1-restore:
+	make -f $(SELF)/Makefile.SNAPSHOT restore-u1
 
 
-.PHONY: become c1-ssh k1-ssh r1-ssh asd-ssh
+.PHONY: become c1-ssh k1-ssh r1-ssh u1-ssh
 
 become:
 	@: $(eval BECOME_ROOT := -t sudo -i)
@@ -141,7 +141,7 @@ k1-ssh: k1-ssh10
 
 r1-ssh: r1-ssh10
 
-asd-ssh: asd-ssh10
+u1-ssh: u1-ssh10
 
 c1-ssh%:
 	@ssh $(SSH_OPTIONS) centos@10.20.2.$* $(BECOME_ROOT)
@@ -152,8 +152,8 @@ k1-ssh%:
 r1-ssh%:
 	@ssh $(SSH_OPTIONS) cloud-user@10.40.2.$* $(BECOME_ROOT)
 
-asd-ssh%:
-	@ssh $(SSH_OPTIONS) ubuntu@10.20.2.$* $(BECOME_ROOT)
+u1-ssh%:
+	@ssh $(SSH_OPTIONS) ubuntu@10.50.2.$* $(BECOME_ROOT)
 
 
 .PHONY: clean
