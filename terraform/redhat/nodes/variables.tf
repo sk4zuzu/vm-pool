@@ -1,59 +1,56 @@
-
-variable "zxc_id" {
-    type = string
+variable "env_id" {
+  type = string
 }
 
 variable "ssh_keys" {
-    type = list
+  type = list
 }
 
 variable "storage_pool" {
-    type = string
+  type = string
 }
 
 variable "network_name" {
-    type = string
+  type = string
 }
 
 variable "subnet" {
-    type = string
+  type = string
 }
 
 variable "macaddr" {
-    type = string
+  type = string
 }
 
 variable "vcpu" {
-    type = string
+  type = string
 }
 
 variable "memory" {
-    type = string
+  type = string
 }
 
 variable "image" {
-    type = string
+  type = string
 }
 
 variable "storage" {
-    type = string
+  type = string
 }
 
 variable "shutdown" {
-    type = bool
-    default = false
+  type = bool
+  default = false
 }
 
 variable "_infix" {
-    type = string
+  type = string
 }
 
 variable "_ipgap" {
-    type = number
+  type = number
 }
 
 variable "_count" {
-    type = number
+  type = number
 }
-
-# vim:ts=4:sw=4:et:

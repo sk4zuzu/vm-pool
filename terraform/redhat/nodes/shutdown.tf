@@ -1,5 +1,4 @@
-
-resource null_resource "zxc" {
+resource null_resource "redhat" {
   depends_on = [ libvirt_domain.nodes ]
 
   count = var.shutdown ? var._count : 0
@@ -20,5 +19,3 @@ resource null_resource "zxc" {
     interpreter = ["bash", "-c"]
   }
 }
-
-# vim:ts=2:sw=2:et:syn=terraform:
