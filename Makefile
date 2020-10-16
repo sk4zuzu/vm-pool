@@ -55,19 +55,6 @@ asd-destroy: asd-init
 	cd $(SELF)/LIVE/asd1/ && terragrunt destroy $(AUTO_APPROVE)
 
 
-.PHONY: asd2-init asd2-apply asd2-destroy
-
-asd2-init:
-	cd $(SELF)/LIVE/asd2/ && terragrunt init
-
-asd2-apply: asd2-init ubu-disk
-	cd $(SELF)/LIVE/asd2/ && terragrunt apply $(AUTO_APPROVE)
-
-asd2-destroy: asd2-init
-	-make -f Makefile.SNAPSHOT clean-x2
-	cd $(SELF)/LIVE/asd2/ && terragrunt destroy $(AUTO_APPROVE)
-
-
 .PHONY: kub-init kub-apply kub-destroy
 
 kub-init:
@@ -116,15 +103,6 @@ asd-restore:
 	make -f $(SELF)/Makefile.SNAPSHOT restore-x1
 
 
-.PHONY: asd2-backup asd2-restore
-
-asd2-backup:
-	make -f $(SELF)/Makefile.SNAPSHOT backup-x2
-
-asd2-restore:
-	make -f $(SELF)/Makefile.SNAPSHOT restore-x2
-
-
 .PHONY: kub-backup kub-restore
 
 kub-backup:
@@ -152,14 +130,12 @@ qwe-restore:
 	make -f $(SELF)/Makefile.SNAPSHOT restore-z1
 
 
-.PHONY: become asd-ssh asd2-ssh kub-ssh zxc-ssh qwe-ssh
+.PHONY: become asd-ssh kub-ssh zxc-ssh qwe-ssh
 
 become:
 	@: $(eval BECOME_ROOT := -t sudo -i)
 
 asd-ssh: asd-ssh10
-
-asd2-ssh: asd2-ssh10
 
 kub-ssh: kub-ssh10
 
@@ -169,9 +145,6 @@ qwe-ssh: qwe-ssh10
 
 asd-ssh%:
 	@ssh $(SSH_OPTIONS) ubuntu@10.20.2.$* $(BECOME_ROOT)
-
-asd2-ssh%:
-	@ssh $(SSH_OPTIONS) ubuntu@10.20.3.$* $(BECOME_ROOT)
 
 kub-ssh%:
 	@ssh $(SSH_OPTIONS) ubuntu@10.20.4.$* $(BECOME_ROOT)
