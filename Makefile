@@ -55,6 +55,19 @@ c1-destroy: c1-init
 	cd $(SELF)/LIVE/c1/ && terragrunt destroy $(AUTO_APPROVE)
 
 
+.PHONY: k1-init k1-apply k1-destroy
+
+k1-init:
+	cd $(SELF)/LIVE/k1/ && terragrunt init
+
+k1-apply: k1-init kubelo-disk
+	cd $(SELF)/LIVE/k1/ && terragrunt apply $(AUTO_APPROVE)
+
+k1-destroy: k1-init
+	-make -f Makefile.SNAPSHOT clean-k1
+	cd $(SELF)/LIVE/k1/ && terragrunt destroy $(AUTO_APPROVE)
+
+
 .PHONY: asd-init asd-apply asd-destroy
 
 asd-init:
@@ -66,19 +79,6 @@ asd-apply: asd-init ubu-disk
 asd-destroy: asd-init
 	-make -f Makefile.SNAPSHOT clean-x1
 	cd $(SELF)/LIVE/asd1/ && terragrunt destroy $(AUTO_APPROVE)
-
-
-.PHONY: kub-init kub-apply kub-destroy
-
-kub-init:
-	cd $(SELF)/LIVE/kub1/ && terragrunt init
-
-kub-apply: kub-init kub-disk
-	cd $(SELF)/LIVE/kub1/ && terragrunt apply $(AUTO_APPROVE)
-
-kub-destroy: kub-init
-	-make -f Makefile.SNAPSHOT clean-k1
-	cd $(SELF)/LIVE/kub1/ && terragrunt destroy $(AUTO_APPROVE)
 
 
 .PHONY: zxc-init zxc-apply zxc-destroy
@@ -103,6 +103,15 @@ c1-restore:
 	make -f $(SELF)/Makefile.SNAPSHOT restore-c1
 
 
+.PHONY: k1-backup k1-restore
+
+k1-backup:
+	make -f $(SELF)/Makefile.SNAPSHOT backup-k1
+
+k1-restore:
+	make -f $(SELF)/Makefile.SNAPSHOT restore-k1
+
+
 .PHONY: asd-backup asd-restore
 
 asd-backup:
@@ -110,15 +119,6 @@ asd-backup:
 
 asd-restore:
 	make -f $(SELF)/Makefile.SNAPSHOT restore-x1
-
-
-.PHONY: kub-backup kub-restore
-
-kub-backup:
-	make -f $(SELF)/Makefile.SNAPSHOT backup-k1
-
-kub-restore:
-	make -f $(SELF)/Makefile.SNAPSHOT restore-k1
 
 
 .PHONY: zxc-backup zxc-restore
@@ -130,27 +130,27 @@ zxc-restore:
 	make -f $(SELF)/Makefile.SNAPSHOT restore-y1
 
 
-.PHONY: become c1-ssh asd-ssh kub-ssh zxc-ssh
+.PHONY: become c1-ssh k1-ssh asd-ssh zxc-ssh
 
 become:
 	@: $(eval BECOME_ROOT := -t sudo -i)
 
 c1-ssh: c1-ssh10
 
-asd-ssh: asd-ssh10
+k1-ssh: k1-ssh10
 
-kub-ssh: kub-ssh10
+asd-ssh: asd-ssh10
 
 zxc-ssh: zxc-ssh10
 
 c1-ssh%:
 	@ssh $(SSH_OPTIONS) centos@10.20.2.$* $(BECOME_ROOT)
 
+k1-ssh%:
+	@ssh $(SSH_OPTIONS) ubuntu@10.30.2.$* $(BECOME_ROOT)
+
 asd-ssh%:
 	@ssh $(SSH_OPTIONS) ubuntu@10.20.2.$* $(BECOME_ROOT)
-
-kub-ssh%:
-	@ssh $(SSH_OPTIONS) ubuntu@10.20.4.$* $(BECOME_ROOT)
 
 zxc-ssh%:
 	@ssh $(SSH_OPTIONS) cloud-user@10.30.2.$* $(BECOME_ROOT)
