@@ -1,7 +1,3 @@
-terraform {
-  backend "local" {}
-}
-
 module "nodes1" {
   source = "./nodes/"
 
