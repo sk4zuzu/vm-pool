@@ -27,7 +27,10 @@ extras:
 	make -f $(SELF)/Makefile.EXTRAS
 
 
-.PHONY: ubu-disk kub-disk rhe-disk cos-disk
+.PHONY: centos-disk ubu-disk kub-disk rhe-disk
+
+centos-disk:
+	cd $(SELF)/packer/centos/ && make build
 
 ubu-disk:
 	cd $(SELF)/packer/ubu/ && make build
@@ -37,9 +40,6 @@ kub-disk:
 
 rhe-disk:
 	cd $(SELF)/packer/rhe/ && make build
-
-cos-disk:
-	cd $(SELF)/packer/cos/ && make build
 
 
 .PHONY: asd-init asd-apply asd-destroy
@@ -161,9 +161,9 @@ qwe-ssh%:
 clean:
 	-make clean -f $(SELF)/Makefile.BINARIES
 	-make clean -f $(SELF)/Makefile.EXTRAS
+	-cd $(SELF)/packer/centos/ && make clean
 	-cd $(SELF)/packer/ubu/ && make clean
 	-cd $(SELF)/packer/kub/ && make clean
 	-cd $(SELF)/packer/rhe/ && make clean
-	-cd $(SELF)/packer/cos/ && make clean
 
 # vim:ts=4:sw=4:noet:syn=make:

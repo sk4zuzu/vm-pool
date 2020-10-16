@@ -21,5 +21,3 @@ yum update -y
 install -d -o root -g centos -m ug=rwx,o= /terraform{,/remote-exec}
 
 sync
-
-# vim:ts=4:sw=4:et:syn=sh:

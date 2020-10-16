@@ -1,7 +1,5 @@
-
-SELF := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
-
-NAME := cos
+SELF := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
+NAME := centos
 
 VERSION  := 7.8
 ARTIFACT := CentOS-7-x86_64-GenericCloud-2003.qcow2
@@ -32,7 +30,6 @@ define Packerfile
       "disk_image": "true",
       "iso_url": "https://cloud.centos.org/altarch/7/images/$(ARTIFACT)",
       "iso_checksum": "$(CHECKSUM)",
-      "iso_checksum_type": "sha256",
 
       "disk_size": "$(DISK_SIZE)",
 
@@ -84,5 +81,3 @@ $(SELF)/.cache/output/packer-$(NAME).qcow2: $(SELF)/.cache/$(ARTIFACT).iso Makef
 
 clean:
 	-rm -rf $(SELF)/.cache/
-
-# vim:ts=4:sw=4:noet:syn=make:
