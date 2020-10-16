@@ -1,3 +1,2 @@
 SUBSCRIPTION_USERNAME := user
 SUBSCRIPTION_PASSWORD := pass
-# vim:ts=4:sw=4:noet:syn=make:

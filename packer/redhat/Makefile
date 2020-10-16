@@ -1,9 +1,7 @@
+SELF := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
+NAME := redhat
 
-SELF := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
-
-include $(SELF)/Makefile.IN
-
-NAME := rhe
+include $(SELF)/subscription.mk
 
 VERSION  := 7.8
 ARTIFACT := rhel-server-$(VERSION)-x86_64-kvm.qcow2
@@ -34,7 +32,6 @@ define Packerfile
       "disk_image": "true",
       "iso_url": "file://$(SELF)/../../files/$(ARTIFACT)",
       "iso_checksum": "$(CHECKSUM)",
-      "iso_checksum_type": "sha256",
 
       "disk_size": "$(DISK_SIZE)",
 
@@ -90,5 +87,3 @@ $(SELF)/.cache/output/packer-$(NAME).qcow2: $(SELF)/.cache/$(ARTIFACT).iso Makef
 
 clean:
 	-rm -rf $(SELF)/.cache/
-
-# vim:ts=4:sw=4:noet:syn=make:

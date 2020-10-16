@@ -27,7 +27,7 @@ extras:
 	make -f $(SELF)/Makefile.EXTRAS
 
 
-.PHONY: centos-disk kubelo-disk ubu-disk rhe-disk
+.PHONY: centos-disk kubelo-disk redhat-disk ubu-disk
 
 centos-disk:
 	cd $(SELF)/packer/centos/ && make build
@@ -35,11 +35,11 @@ centos-disk:
 kubelo-disk:
 	cd $(SELF)/packer/kubelo/ && make build
 
+redhat-disk:
+	cd $(SELF)/packer/redhat/ && make build
+
 ubu-disk:
 	cd $(SELF)/packer/ubu/ && make build
-
-rhe-disk:
-	cd $(SELF)/packer/rhe/ && make build
 
 
 .PHONY: asd-init asd-apply asd-destroy
@@ -163,7 +163,7 @@ clean:
 	-make clean -f $(SELF)/Makefile.EXTRAS
 	-cd $(SELF)/packer/centos/ && make clean
 	-cd $(SELF)/packer/kubelo/ && make clean
+	-cd $(SELF)/packer/redhat/ && make clean
 	-cd $(SELF)/packer/ubu/ && make clean
-	-cd $(SELF)/packer/rhe/ && make clean
 
 # vim:ts=4:sw=4:noet:syn=make:
