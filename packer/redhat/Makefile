@@ -1,4 +1,6 @@
-SELF := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
+SHELL := $(shell which bash)
+SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
+
 NAME := redhat
 
 include $(SELF)/subscription.mk
