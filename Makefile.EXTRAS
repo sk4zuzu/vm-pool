@@ -1,21 +1,23 @@
 
 SELF := $(patsubst %/,%,$(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
 
-TERRAFORM_PROVIDER_LIBVIRT_VERSION ?= 0.6.2
+PROVIDER_LIBVIRT_VERSION ?= 0.6.2
+PROVIDER_LIBVIRT_DIR     := $(HOME)/.local/share/terraform/plugins/registry.terraform.io/dmacvicar/libvirt/$(PROVIDER_LIBVIRT_VERSION)/linux_amd64
 
 _GOPATH_ ?= $(HOME)/go
 
 TARGETS := \
-$(_GOPATH_)/bin/terraform-provider-libvirt
+$(PROVIDER_LIBVIRT_DIR)/terraform-provider-libvirt_v$(PROVIDER_LIBVIRT_VERSION)
 
 define GITHUB_RELEASE_BUILD_AND_INSTALL
-.PHONY: $(_GOPATH_)/bin/$(2)
+.PHONY: $(4)/$(2)_v$(3)
 
-$(_GOPATH_)/bin/$(2): $(_GOPATH_)/bin/$(2)-$(3)
+$(4)/$(2)_v$(3): $(_GOPATH_)/bin/$(2)_v$(3)
+	install -d $(4)/
 	rm -f $$@ && ln -s $$< $$@
 
-$(_GOPATH_)/bin/$(2)-$(3): SRC := $(_GOPATH_)/src/github.com/$(1)/$(2)
-$(_GOPATH_)/bin/$(2)-$(3):
+$(_GOPATH_)/bin/$(2)_v$(3): SRC := $(_GOPATH_)/src/github.com/$(1)/$(2)
+$(_GOPATH_)/bin/$(2)_v$(3):
 	install -d $${SRC}/
 	cd $${SRC}/ && git clone --branch=v$(3) https://github.com/$(1)/$(2).git . || ( \
 		git fetch origin v$(3) \
@@ -37,6 +39,6 @@ clean:
 	-rm -f $(TARGETS)
 
 $(eval \
-	$(call GITHUB_RELEASE_BUILD_AND_INSTALL,dmacvicar,terraform-provider-libvirt,$(TERRAFORM_PROVIDER_LIBVIRT_VERSION)))
+	$(call GITHUB_RELEASE_BUILD_AND_INSTALL,dmacvicar,terraform-provider-libvirt,$(PROVIDER_LIBVIRT_VERSION),$(PROVIDER_LIBVIRT_DIR)))
 
 # vim:ts=4:sw=4:noet:syn=make:
