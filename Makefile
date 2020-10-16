@@ -1,4 +1,5 @@
-SELF := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
+SHELL := $(shell which bash)
+SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 SSH_OPTIONS := -o ForwardAgent=yes \
                -o StrictHostKeyChecking=no \
