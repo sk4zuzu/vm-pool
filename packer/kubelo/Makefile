@@ -34,6 +34,7 @@ define Packerfile
       "iso_url": "https://cloud-images.ubuntu.com/releases/$(VERSION)/$(RELEASE)/$(ARTIFACT)",
       "iso_checksum": "$(CHECKSUM)",
 
+      "memory": "$(MEMORY)",
       "disk_size": "$(DISK_SIZE)",
 
       "qemuargs": [
