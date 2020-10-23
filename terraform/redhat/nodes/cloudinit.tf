@@ -7,12 +7,23 @@ resource "libvirt_cloudinit_disk" "nodes" {
   meta_data = <<-EOF
   instance-id: '${var.env_id}${var._infix}${count.index + 1}'
   local-hostname: '${var.env_id}${var._infix}${count.index + 1}'
-  network-interfaces: |
-    iface eth0 inet static
-    hwaddress ether ${format(var.macaddr, count.index + var._ipgap)}
-    address ${cidrhost(var.subnet, count.index + var._ipgap)}
-    netmask ${cidrnetmask(var.subnet)}
-    gateway ${cidrhost(var.subnet, 1)}
+  EOF
+
+  network_config = <<-EOF
+  version: 2
+  ethernets:
+    eth0:
+      addresses:
+        - '${cidrhost(var.subnet, count.index + var._ipgap)}/${split("/", var.subnet)[1]}'
+      dhcp4: false
+      dhcp6: false
+      gateway4: '${cidrhost(var.subnet, 1)}'
+      macaddress: '${lower(format(var.macaddr, count.index + var._ipgap))}'
+      nameservers:
+        addresses:
+          - '${cidrhost(var.subnet, 1)}'
+        search:
+          - 'redhat.lh'
   EOF
 
   user_data = <<-EOF
