@@ -35,6 +35,7 @@ define Packerfile
       "iso_url": "file://$(SELF)/../../files/$(ARTIFACT)",
       "iso_checksum": "$(CHECKSUM)",
 
+      "memory": "$(MEMORY)",
       "disk_size": "$(DISK_SIZE)",
 
       "qemuargs": [
