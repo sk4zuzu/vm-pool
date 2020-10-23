@@ -33,6 +33,7 @@ define Packerfile
       "iso_url": "https://cloud.centos.org/altarch/7/images/$(ARTIFACT)",
       "iso_checksum": "$(CHECKSUM)",
 
+      "memory": "$(MEMORY)",
       "disk_size": "$(DISK_SIZE)",
 
       "qemuargs": [
