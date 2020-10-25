@@ -33,8 +33,8 @@ inputs = {
   nodes2 = {
     count   = 3
     vcpu    = 2
-    memory  = "2048"
+    memory  = "3072"
     image   = "../../../../../packer/kubelo/.cache/output/packer-kubelo.qcow2"
-    storage = "17179869184"  # 16GiB
+    storage = "34359738368"  # 32GiB
   }
 }
