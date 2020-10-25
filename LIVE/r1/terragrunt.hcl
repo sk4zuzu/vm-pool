@@ -35,6 +35,6 @@ inputs = {
     vcpu    = 2
     memory  = "3072"
     image   = "../../../../../packer/redhat/.cache/output/packer-redhat.qcow2"
-    storage = "17179869184"  # 16GiB
+    storage = "34359738368"  # 32GiB
   }
 }
