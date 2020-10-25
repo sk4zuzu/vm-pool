@@ -47,7 +47,7 @@ ubuntu-disk:
 c1-init:
 	cd $(SELF)/LIVE/c1/ && terragrunt init
 
-c1-apply: c1-init centos-disk
+c1-apply: c1-init
 	cd $(SELF)/LIVE/c1/ && terragrunt apply $(AUTO_APPROVE)
 
 c1-destroy: c1-init
@@ -60,7 +60,7 @@ c1-destroy: c1-init
 k1-init:
 	cd $(SELF)/LIVE/k1/ && terragrunt init
 
-k1-apply: k1-init kubelo-disk
+k1-apply: k1-init
 	cd $(SELF)/LIVE/k1/ && terragrunt apply $(AUTO_APPROVE)
 
 k1-destroy: k1-init
@@ -73,7 +73,7 @@ k1-destroy: k1-init
 r1-init:
 	cd $(SELF)/LIVE/r1/ && terragrunt init
 
-r1-apply: r1-init redhat-disk
+r1-apply: r1-init
 	cd $(SELF)/LIVE/r1/ && terragrunt apply $(AUTO_APPROVE)
 
 r1-destroy: r1-init
@@ -86,7 +86,7 @@ r1-destroy: r1-init
 u1-init:
 	cd $(SELF)/LIVE/u1/ && terragrunt init
 
-u1-apply: u1-init ubuntu-disk
+u1-apply: u1-init
 	cd $(SELF)/LIVE/u1/ && terragrunt apply $(AUTO_APPROVE)
 
 u1-destroy: u1-init
