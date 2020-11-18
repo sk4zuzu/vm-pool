@@ -3,7 +3,7 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 PACKER_VERSION     ?= 1.6.4
 TERRAFORM_VERSION  ?= 0.13.4
-TERRAGRUNT_VERSION ?= 0.25.3
+TERRAGRUNT_VERSION ?= v0.25.3
 
 _GOPATH_ ?= $(HOME)/go
 
@@ -35,7 +35,7 @@ $(_GOPATH_)/bin/$(2): $(_GOPATH_)/bin/$(2)-$(3)
 	rm -f $$@ && ln -s $$< $$@
 
 $(_GOPATH_)/bin/$(2)-$(3):
-	curl -fSL https://github.com/$(1)/$(2)/releases/download/v$(3)/$(2)_linux_amd64 \
+	curl -fSL https://github.com/$(1)/$(2)/releases/download/$(3)/$(2)_linux_amd64 \
 	     -o $$@ \
 	&& chmod +x $$@
 endef
