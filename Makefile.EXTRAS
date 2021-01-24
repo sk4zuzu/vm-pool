@@ -1,7 +1,7 @@
 SHELL := $(shell which bash)
 SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
-PROVIDER_LIBVIRT_VERSION ?= 0.6.2
+PROVIDER_LIBVIRT_VERSION ?= 0.6.3
 PROVIDER_LIBVIRT_DIR     := $(HOME)/.local/share/terraform/plugins/registry.terraform.io/dmacvicar/libvirt/$(PROVIDER_LIBVIRT_VERSION)/linux_amd64
 
 _GOPATH_ ?= $(HOME)/go
