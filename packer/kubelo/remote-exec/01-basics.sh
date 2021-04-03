@@ -42,8 +42,7 @@ policy_rc_d_enable
 apt-get -q clean
 
 pip3 --no-cache-dir install \
-    pyyaml \
-    openshift
+    pyyaml
 
 install -d -o root -g ubuntu -m ug=rwx,o= /terraform{,/remote-exec}
 

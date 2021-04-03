@@ -3,10 +3,10 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := kubelo
 
-VERSION  := 18.04
-RELEASE  := release-20200107
+VERSION  := 20.04
+RELEASE  := focal
 ARTIFACT := ubuntu-$(VERSION)-server-cloudimg-amd64.vmdk
-CHECKSUM := c5c37881c05bfcbbd5f51bad25e5c62b26791951a14ea9da79ff9bae1fcad5a6
+CHECKSUM := 1b10d0975c0307769b004e1dd2db0c6fe42e2059db5899b1443afda662802b14
 
 CPUS      ?= 1
 MEMORY    ?= 1024
@@ -31,7 +31,7 @@ define Packerfile
       "accelerator": "kvm",
 
       "disk_image": "true",
-      "iso_url": "https://cloud-images.ubuntu.com/releases/$(VERSION)/$(RELEASE)/$(ARTIFACT)",
+      "iso_url": "https://cloud-images.ubuntu.com/releases/$(RELEASE)/release/$(ARTIFACT)",
       "iso_checksum": "$(CHECKSUM)",
 
       "memory": "$(MEMORY)",
