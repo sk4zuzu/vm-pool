@@ -1,9 +1,9 @@
 SHELL := $(shell which bash)
 SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
-PACKER_VERSION     ?= 1.6.4
-TERRAFORM_VERSION  ?= 0.13.4
-TERRAGRUNT_VERSION ?= v0.25.3
+PACKER_VERSION     ?= 1.7.1
+TERRAFORM_VERSION  ?= 0.13.6
+TERRAGRUNT_VERSION ?= v0.28.15
 
 _GOPATH_ ?= $(HOME)/go
 
