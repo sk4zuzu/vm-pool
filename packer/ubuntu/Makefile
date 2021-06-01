@@ -79,7 +79,7 @@ $(SELF)/.cache/$(ARTIFACT).iso: $(SELF)/.cache/cloud-config.yml
 build: $(SELF)/.cache/output/packer-$(NAME).qcow2
 
 $(SELF)/.cache/output/packer-$(NAME).qcow2: $(SELF)/.cache/$(ARTIFACT).iso Makefile $(wildcard $(SELF)/remote-exec/*.sh)
-	packer build -force - <<< "$$Packerfile"
+	$(SELF)/../../bin/packer build -force - <<< "$$Packerfile"
 
 .PHONY: clean
 
