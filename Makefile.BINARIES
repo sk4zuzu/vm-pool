@@ -1,24 +1,19 @@
 SHELL := $(shell which bash)
 SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
-PACKER_VERSION     ?= 1.7.1
-TERRAFORM_VERSION  ?= 0.13.6
-TERRAGRUNT_VERSION ?= v0.28.15
-
-_GOPATH_ ?= $(HOME)/go
+PACKER_VERSION     ?= 1.7.2
+TERRAFORM_VERSION  ?= 0.15.3
+TERRAGRUNT_VERSION ?= v0.29.2
 
 TARGETS = \
-$(_GOPATH_)/bin/packer \
-$(_GOPATH_)/bin/terraform \
-$(_GOPATH_)/bin/terragrunt
+$(SELF)/bin/packer \
+$(SELF)/bin/terraform \
+$(SELF)/bin/terragrunt
 
 define HASHICORP_RELEASE_INSTALL
-.PHONY: $(_GOPATH_)/bin/$(1)
-
-$(_GOPATH_)/bin/$(1): $(_GOPATH_)/bin/$(1)-$(2)
+$(SELF)/bin/$(1): $(SELF)/bin/$(1)-$(2)
 	rm -f $$@ && ln -s $$< $$@
-
-$(_GOPATH_)/bin/$(1)-$(2):
+$(SELF)/bin/$(1)-$(2):
 	install -d /tmp/$(1)-$(2)/ \
 	&& curl -fSL https://releases.hashicorp.com/$(1)/$(2)/$(1)_$(2)_linux_amd64.zip \
 	        -o /tmp/$(1)-$(2)/download.zip \
@@ -29,12 +24,9 @@ $(_GOPATH_)/bin/$(1)-$(2):
 endef
 
 define GITHUB_RELEASE_INSTALL
-.PHONY: $(_GOPATH_)/bin/$(2)
-
-$(_GOPATH_)/bin/$(2): $(_GOPATH_)/bin/$(2)-$(3)
+$(SELF)/bin/$(2): $(SELF)/bin/$(2)-$(3)
 	rm -f $$@ && ln -s $$< $$@
-
-$(_GOPATH_)/bin/$(2)-$(3):
+$(SELF)/bin/$(2)-$(3):
 	curl -fSL https://github.com/$(1)/$(2)/releases/download/$(3)/$(2)_linux_amd64 \
 	     -o $$@ \
 	&& chmod +x $$@
