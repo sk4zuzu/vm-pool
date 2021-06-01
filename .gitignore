@@ -1,5 +1,15 @@
 *.swp
 *.swo
+
 .terraform/
 .terragrunt-cache/
-files/
+.terraform.lock.hcl
+
+/bin/*
+!/bin/.gitkeep
+
+/files/*
+!/files/.gitkeep
+
+/go/*
+!/go/.gitkeep
