@@ -71,14 +71,14 @@ k1-destroy: k1-init
 .PHONY: r1-init r1-apply r1-destroy
 
 r1-init:
-	cd $(SELF)/LIVE/r1/ && terragrunt init
+	cd $(SELF)/LIVE/r1/ && $(SELF)/bin/terragrunt run-all init
 
 r1-apply: r1-init
-	cd $(SELF)/LIVE/r1/ && terragrunt apply $(AUTO_APPROVE)
+	cd $(SELF)/LIVE/r1/ && $(SELF)/bin/terragrunt run-all apply $(AUTO_APPROVE)
 
 r1-destroy: r1-init
 	-make -f Makefile.SNAPSHOT clean-r1
-	cd $(SELF)/LIVE/r1/ && terragrunt destroy $(AUTO_APPROVE)
+	cd $(SELF)/LIVE/r1/ && $(SELF)/bin/terragrunt run-all destroy $(AUTO_APPROVE)
 
 
 .PHONY: u1-init u1-apply u1-destroy
