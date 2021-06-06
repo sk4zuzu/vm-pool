@@ -13,7 +13,7 @@ all:
 
 confirm: yes
 yes:
-	@: $(eval AUTO_APPROVE := --auto-approve)
+	@: $(eval AUTO_APPROVE := --terragrunt-non-interactive)
 
 requirements: binaries extras
 
@@ -84,14 +84,14 @@ r1-destroy: r1-init
 .PHONY: u1-init u1-apply u1-destroy
 
 u1-init:
-	cd $(SELF)/LIVE/u1/ && terragrunt init
+	cd $(SELF)/LIVE/u1/ && $(SELF)/bin/terragrunt run-all init
 
 u1-apply: u1-init
-	cd $(SELF)/LIVE/u1/ && terragrunt apply $(AUTO_APPROVE)
+	cd $(SELF)/LIVE/u1/ && $(SELF)/bin/terragrunt run-all apply $(AUTO_APPROVE)
 
 u1-destroy: u1-init
 	-make -f Makefile.SNAPSHOT clean-u1
-	cd $(SELF)/LIVE/u1/ && terragrunt destroy $(AUTO_APPROVE)
+	cd $(SELF)/LIVE/u1/ && $(SELF)/bin/terragrunt run-all destroy $(AUTO_APPROVE)
 
 
 .PHONY: c1-backup c1-restore
