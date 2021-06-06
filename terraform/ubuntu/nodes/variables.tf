@@ -1,56 +1,37 @@
-variable "env_id" {
-  type = string
-}
-
-variable "ssh_keys" {
-  type = list
-}
-
-variable "storage_pool" {
-  type = string
-}
-
-variable "network_name" {
-  type = string
-}
-
-variable "subnet" {
-  type = string
-}
-
-variable "macaddr" {
-  type = string
-}
-
-variable "vcpu" {
-  type = string
-}
-
-variable "memory" {
-  type = string
-}
-
-variable "image" {
-  type = string
-}
-
-variable "storage" {
+variable "env" {
   type = string
 }
 
 variable "shutdown" {
-  type = bool
+  type    = bool
   default = false
 }
 
-variable "_infix" {
-  type = string
+variable "network" {
+  type = object({
+    name    = string
+    domain  = string
+    subnet  = string
+    macaddr = string
+  })
 }
 
-variable "_ipgap" {
-  type = number
+variable "storage" {
+  type = object({
+    pool      = string
+    directory = string
+  })
 }
 
-variable "_count" {
-  type = number
+variable "nodes" {
+  type = object({
+    count   = number
+    prefix  = string
+    offset  = number
+    vcpu    = number
+    memory  = string
+    image   = string
+    storage = string
+    keys    = string
+  })
 }

@@ -1,9 +1,8 @@
 resource "libvirt_domain" "nodes" {
-  count = var._count
-
-  name   = "${var.env_id}${var._infix}${count.index + 1}"
-  vcpu   = var.vcpu
-  memory = var.memory
+  count  = var.nodes.count
+  name   = "${var.nodes.prefix}${count.index + 1}"
+  vcpu   = var.nodes.vcpu
+  memory = var.nodes.memory
 
   cloudinit = libvirt_cloudinit_disk.nodes.*.id[count.index]
 
@@ -12,7 +11,7 @@ resource "libvirt_domain" "nodes" {
   }
 
   network_interface {
-    network_name   = var.network_name
+    network_name   = var.network.name
     wait_for_lease = false
   }
 

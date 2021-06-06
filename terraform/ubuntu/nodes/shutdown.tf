@@ -1,7 +1,7 @@
 resource null_resource "ubuntu" {
   depends_on = [ libvirt_domain.nodes ]
 
-  count = var.shutdown ? var._count : 0
+  count = var.shutdown ? var.nodes.count : 0
 
   triggers = {
     always = uuid()
@@ -14,7 +14,7 @@ resource null_resource "ubuntu" {
     environment = {
       SSH_OPTS = "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
       SSH_USER = "ubuntu"
-      SSH_HOST = cidrhost(var.subnet, count.index + var._ipgap)
+      SSH_HOST = cidrhost(var.network.subnet, count.index + var.nodes.offset)
     }
     interpreter = ["bash", "-c"]
   }
