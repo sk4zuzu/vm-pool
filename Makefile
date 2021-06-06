@@ -27,10 +27,7 @@ extras:
 	make -f $(SELF)/Makefile.EXTRAS
 
 
-.PHONY: centos-disk kubelo-disk redhat-disk ubuntu-disk
-
-centos-disk:
-	cd $(SELF)/packer/centos/ && make build
+.PHONY: kubelo-disk redhat-disk ubuntu-disk
 
 kubelo-disk:
 	cd $(SELF)/packer/kubelo/ && make build
@@ -40,19 +37,6 @@ redhat-disk:
 
 ubuntu-disk:
 	cd $(SELF)/packer/ubuntu/ && make build
-
-
-.PHONY: c1-init c1-apply c1-destroy
-
-c1-init:
-	cd $(SELF)/LIVE/c1/ && terragrunt init
-
-c1-apply: c1-init
-	cd $(SELF)/LIVE/c1/ && terragrunt apply $(AUTO_APPROVE)
-
-c1-destroy: c1-init
-	-make -f Makefile.SNAPSHOT clean-c1
-	cd $(SELF)/LIVE/c1/ && terragrunt destroy $(AUTO_APPROVE)
 
 
 .PHONY: k1-init k1-apply k1-destroy
@@ -94,15 +78,6 @@ u1-destroy: u1-init
 	cd $(SELF)/LIVE/u1/ && $(SELF)/bin/terragrunt run-all destroy $(AUTO_APPROVE)
 
 
-.PHONY: c1-backup c1-restore
-
-c1-backup:
-	make -f $(SELF)/Makefile.SNAPSHOT backup-c1
-
-c1-restore:
-	make -f $(SELF)/Makefile.SNAPSHOT restore-c1
-
-
 .PHONY: k1-backup k1-restore
 
 k1-backup:
@@ -130,21 +105,16 @@ u1-restore:
 	make -f $(SELF)/Makefile.SNAPSHOT restore-u1
 
 
-.PHONY: become c1-ssh k1-ssh r1-ssh u1-ssh
+.PHONY: become k1-ssh r1-ssh u1-ssh
 
 become:
 	@: $(eval BECOME_ROOT := -t sudo -i)
-
-c1-ssh: c1-ssh10
 
 k1-ssh: k1-ssh10
 
 r1-ssh: r1-ssh10
 
 u1-ssh: u1-ssh10
-
-c1-ssh%:
-	@ssh $(SSH_OPTIONS) centos@10.20.2.$* $(BECOME_ROOT)
 
 k1-ssh%:
 	@ssh $(SSH_OPTIONS) ubuntu@10.30.2.$* $(BECOME_ROOT)
@@ -161,7 +131,6 @@ u1-ssh%:
 clean:
 	-make clean -f $(SELF)/Makefile.BINARIES
 	-make clean -f $(SELF)/Makefile.EXTRAS
-	-cd $(SELF)/packer/centos/ && make clean
 	-cd $(SELF)/packer/kubelo/ && make clean
 	-cd $(SELF)/packer/redhat/ && make clean
 	-cd $(SELF)/packer/ubuntu/ && make clean
