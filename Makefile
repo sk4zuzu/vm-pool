@@ -27,10 +27,13 @@ extras:
 	make -f $(SELF)/Makefile.EXTRAS
 
 
-.PHONY: kubelo-disk redhat-disk ubuntu-disk
+.PHONY: kubelo-disk oracle-disk redhat-disk ubuntu-disk
 
 kubelo-disk:
 	cd $(SELF)/packer/kubelo/ && make build
+
+oracle-disk:
+	cd $(SELF)/packer/oracle/ && make build
 
 redhat-disk:
 	cd $(SELF)/packer/redhat/ && make build
@@ -132,5 +135,6 @@ clean:
 	-make clean -f $(SELF)/Makefile.BINARIES
 	-make clean -f $(SELF)/Makefile.EXTRAS
 	-cd $(SELF)/packer/kubelo/ && make clean
+	-cd $(SELF)/packer/oracle/ && make clean
 	-cd $(SELF)/packer/redhat/ && make clean
 	-cd $(SELF)/packer/ubuntu/ && make clean
