@@ -55,6 +55,19 @@ k1-destroy: k1-init
 	cd $(SELF)/LIVE/k1/ && $(SELF)/bin/terragrunt run-all destroy $(AUTO_APPROVE)
 
 
+.PHONY: o1-init o1-apply o1-destroy
+
+o1-init:
+	cd $(SELF)/LIVE/o1/ && $(SELF)/bin/terragrunt run-all init
+
+o1-apply: o1-init
+	cd $(SELF)/LIVE/o1/ && $(SELF)/bin/terragrunt run-all apply $(AUTO_APPROVE)
+
+o1-destroy: o1-init
+	-make -f Makefile.SNAPSHOT clean-o1
+	cd $(SELF)/LIVE/o1/ && $(SELF)/bin/terragrunt run-all destroy $(AUTO_APPROVE)
+
+
 .PHONY: r1-init r1-apply r1-destroy
 
 r1-init:
@@ -90,6 +103,15 @@ k1-restore:
 	make -f $(SELF)/Makefile.SNAPSHOT restore-k1
 
 
+.PHONY: o1-backup o1-restore
+
+o1-backup:
+	make -f $(SELF)/Makefile.SNAPSHOT backup-o1
+
+o1-restore:
+	make -f $(SELF)/Makefile.SNAPSHOT restore-o1
+
+
 .PHONY: r1-backup r1-restore
 
 r1-backup:
@@ -108,12 +130,14 @@ u1-restore:
 	make -f $(SELF)/Makefile.SNAPSHOT restore-u1
 
 
-.PHONY: become k1-ssh r1-ssh u1-ssh
+.PHONY: become k1-ssh o1-ssh r1-ssh u1-ssh
 
 become:
 	@: $(eval BECOME_ROOT := -t sudo -i)
 
 k1-ssh: k1-ssh10
+
+o1-ssh: o1-ssh10
 
 r1-ssh: r1-ssh10
 
@@ -121,6 +145,9 @@ u1-ssh: u1-ssh10
 
 k1-ssh%:
 	@ssh $(SSH_OPTIONS) ubuntu@10.30.2.$* $(BECOME_ROOT)
+
+o1-ssh%:
+	@ssh $(SSH_OPTIONS) cloud-user@10.20.2.$* $(BECOME_ROOT)
 
 r1-ssh%:
 	@ssh $(SSH_OPTIONS) cloud-user@10.40.2.$* $(BECOME_ROOT)
