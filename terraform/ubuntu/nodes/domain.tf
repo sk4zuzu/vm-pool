@@ -6,7 +6,7 @@ resource "libvirt_domain" "nodes" {
 
   cloudinit = libvirt_cloudinit_disk.nodes.*.id[count.index]
 
-  cpu = {
+  cpu {
     mode = "host-passthrough"
   }
 
