@@ -3,15 +3,16 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := kubelo
 
-VERSION  := 20.04
-RELEASE  := focal
-ARTIFACT := ubuntu-$(VERSION)-server-cloudimg-amd64.vmdk
-CHECKSUM := 1b10d0975c0307769b004e1dd2db0c6fe42e2059db5899b1443afda662802b14
+RELEASE  := focal/20211129
+ARTIFACT := focal-server-cloudimg-amd64.vmdk
+
+CHECKSUM := 704849ce4802aad1260fe7df469856228b186e0b8cb7f3f699f4f7d8d74dd37f
 
 CPUS      ?= 1
 MEMORY    ?= 1024
 DISK_SIZE ?= 10240
 
+PACKER     := $(SELF)/../../bin/packer
 PACKER_LOG ?= 1
 HEADLESS   ?= true
 
@@ -23,45 +24,40 @@ chpasswd:
   expire: false
 endef
 
-define Packerfile
-{
-  "builders": [
-    {
-      "type": "qemu",
-      "accelerator": "kvm",
+define PACKERFILE
+source "qemu" "$(NAME)" {
+  accelerator = "kvm"
 
-      "disk_image": "true",
-      "iso_url": "https://cloud-images.ubuntu.com/releases/$(RELEASE)/release/$(ARTIFACT)",
-      "iso_checksum": "$(CHECKSUM)",
+  disk_image   = true
+  iso_url      = "https://cloud-images.ubuntu.com/$(RELEASE)/$(ARTIFACT)"
+  iso_checksum = "$(CHECKSUM)"
 
-      "memory": "$(MEMORY)",
-      "disk_size": "$(DISK_SIZE)",
+  memory    = "$(MEMORY)"
+  disk_size = "$(DISK_SIZE)"
 
-      "qemuargs": [
-        ["-fda", "$(SELF)/.cache/$(ARTIFACT).iso"]
-      ],
-
-      "ssh_username": "ubuntu",
-      "ssh_password": "ubuntu",
-
-      "output_directory": "$(SELF)/.cache/output/",
-      "vm_name": "packer-$(NAME).qcow2",
-
-      "headless": $(HEADLESS)
-    }
-  ],
-  "provisioners": [
-    {
-      "type": "shell",
-      "execute_command": "sudo -iu root {{.Vars}} {{.Path}}",
-      "scripts": [
-        "remote-exec/01-basics.sh",
-        "remote-exec/02-docker.sh",
-        "remote-exec/03-kubernetes.sh",
-        "remote-exec/04-iscsi.sh"
-      ]
-    }
+  qemuargs = [
+    ["-fda", "$(SELF)/.cache/$(ARTIFACT).iso"],
   ]
+
+  ssh_username = "ubuntu"
+  ssh_password = "ubuntu"
+
+  output_directory = "$(SELF)/.cache/output/"
+  vm_name          = "packer-$(NAME).qcow2"
+
+  headless = $(HEADLESS)
+}
+build {
+  sources = ["source.qemu.$(NAME)"]
+  provisioner "shell" {
+    execute_command = "sudo -iu root {{.Vars}} bash {{.Path}}"
+    scripts = [
+      "remote-exec/01-basics.sh",
+      "remote-exec/02-docker.sh",
+      "remote-exec/03-kubernetes.sh",
+      "remote-exec/04-iscsi.sh",
+    ]
+  }
 }
 endef
 
@@ -82,7 +78,8 @@ $(SELF)/.cache/$(ARTIFACT).iso: $(SELF)/.cache/cloud-config.yml
 build: $(SELF)/.cache/output/packer-$(NAME).qcow2
 
 $(SELF)/.cache/output/packer-$(NAME).qcow2: $(SELF)/.cache/$(ARTIFACT).iso Makefile $(wildcard $(SELF)/remote-exec/*.sh)
-	$(SELF)/../../bin/packer build -force - <<< "$$Packerfile"
+	if ! [[ -e $(SELF)/.cache/build.pkr.hcl ]]; then ln -s /dev/stdin $(SELF)/.cache/build.pkr.hcl; fi
+	$(PACKER) build -force $(SELF)/.cache/build.pkr.hcl <<< "$$PACKERFILE"
 
 .PHONY: clean
 
