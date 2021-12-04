@@ -7,12 +7,14 @@ include $(SELF)/subscription.mk
 
 VERSION  := 7.8
 ARTIFACT := rhel-server-$(VERSION)-x86_64-kvm.qcow2
+
 CHECKSUM := ce4943d38e00a5c81272ebd3f3542b2d9557382d1c331c46ed553fdcca778b2d
 
 CPUS      ?= 1
 MEMORY    ?= 1024
 DISK_SIZE ?= 12288
 
+PACKER     := $(SELF)/../../bin/packer
 PACKER_LOG ?= 1
 HEADLESS   ?= true
 
@@ -24,46 +26,41 @@ chpasswd:
   expire: false
 endef
 
-define Packerfile
-{
-  "builders": [
-    {
-      "type": "qemu",
-      "accelerator": "kvm",
+define PACKERFILE
+source "qemu" "$(NAME)" {
+  accelerator = "kvm"
 
-      "disk_image": "true",
-      "iso_url": "file://$(SELF)/../../files/$(ARTIFACT)",
-      "iso_checksum": "$(CHECKSUM)",
+  disk_image   = true
+  iso_url      = "file://$(SELF)/../../files/$(ARTIFACT)"
+  iso_checksum = "$(CHECKSUM)"
 
-      "memory": "$(MEMORY)",
-      "disk_size": "$(DISK_SIZE)",
+  memory    = "$(MEMORY)"
+  disk_size = "$(DISK_SIZE)"
 
-      "qemuargs": [
-        ["-fda", "$(SELF)/.cache/$(ARTIFACT).iso"]
-      ],
-
-      "ssh_username": "cloud-user",
-      "ssh_password": "redhat",
-
-      "output_directory": "$(SELF)/.cache/output/",
-      "vm_name": "packer-$(NAME).qcow2",
-
-      "headless": $(HEADLESS)
-    }
-  ],
-  "provisioners": [
-    {
-      "type": "shell",
-      "environment_vars": [
-        "SUBSCRIPTION_USERNAME=$(SUBSCRIPTION_USERNAME)",
-        "SUBSCRIPTION_PASSWORD=$(SUBSCRIPTION_PASSWORD)"
-      ],
-      "execute_command": "sudo -iu root {{.Vars}} {{.Path}}",
-      "scripts": [
-        "remote-exec/01-basics.sh"
-      ]
-    }
+  qemuargs = [
+    ["-fda", "$(SELF)/.cache/$(ARTIFACT).iso"],
   ]
+
+  ssh_username = "cloud-user"
+  ssh_password = "redhat"
+
+  output_directory = "$(SELF)/.cache/output/"
+  vm_name          = "packer-$(NAME).qcow2"
+
+  headless = $(HEADLESS)
+}
+build {
+  sources = ["source.qemu.$(NAME)"]
+  provisioner "shell" {
+    environment_vars = [
+      "SUBSCRIPTION_USERNAME=$(SUBSCRIPTION_USERNAME)",
+      "SUBSCRIPTION_PASSWORD=$(SUBSCRIPTION_PASSWORD)",
+    ]
+    execute_command = "sudo -iu root {{.Vars}} bash {{.Path}}"
+    scripts = [
+      "remote-exec/01-basics.sh",
+    ]
+  }
 }
 endef
 
@@ -84,7 +81,8 @@ $(SELF)/.cache/$(ARTIFACT).iso: $(SELF)/.cache/cloud-config.yml
 build: $(SELF)/.cache/output/packer-$(NAME).qcow2
 
 $(SELF)/.cache/output/packer-$(NAME).qcow2: $(SELF)/.cache/$(ARTIFACT).iso Makefile $(wildcard $(SELF)/remote-exec/*.sh)
-	$(SELF)/../../bin/packer build -force - <<< "$$Packerfile"
+	if ! [[ -e $(SELF)/.cache/build.pkr.hcl ]]; then ln -s /dev/stdin $(SELF)/.cache/build.pkr.hcl; fi
+	$(PACKER) build -force $(SELF)/.cache/build.pkr.hcl <<< "$$PACKERFILE"
 
 .PHONY: clean
 
