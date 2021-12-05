@@ -3,11 +3,10 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := ubuntu
 
-VERSION  := 18.04
-RELEASE  := release-20200107
-ARTIFACT := ubuntu-$(VERSION)-server-cloudimg-amd64.vmdk
+RELEASE  := focal/20211129
+ARTIFACT := focal-server-cloudimg-amd64.vmdk
 
-CHECKSUM := c5c37881c05bfcbbd5f51bad25e5c62b26791951a14ea9da79ff9bae1fcad5a6
+CHECKSUM := 704849ce4802aad1260fe7df469856228b186e0b8cb7f3f699f4f7d8d74dd37f
 
 CPUS      ?= 1
 MEMORY    ?= 1024
@@ -30,7 +29,7 @@ source "qemu" "$(NAME)" {
   accelerator = "kvm"
 
   disk_image   = true
-  iso_url      = "https://cloud-images.ubuntu.com/releases/$(VERSION)/$(RELEASE)/$(ARTIFACT)"
+  iso_url      = "https://cloud-images.ubuntu.com/$(RELEASE)/$(ARTIFACT)"
   iso_checksum = "$(CHECKSUM)"
 
   memory    = "$(MEMORY)"
