@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-: ${DOCKER_CE_VERSION:=19.03.15}
-: ${DOCKER_CE_VERSION_APT:=5:${DOCKER_CE_VERSION}~3-0~ubuntu-focal}
-: ${CONTAINERD_IO_VERSION:=1.3.7}
-: ${CONTAINERD_IO_VERSION_APT:=${CONTAINERD_IO_VERSION}-1}
+: "${DOCKER_CE_VERSION:=20.10.11}"
+: "${DOCKER_CE_VERSION_APT:=5:${DOCKER_CE_VERSION}~3-0~ubuntu-focal}"
+: "${CONTAINERD_IO_VERSION:=1.4.12}"
+: "${CONTAINERD_IO_VERSION_APT:=${CONTAINERD_IO_VERSION}-1}"
 
 policy_rc_d_disable() (echo "exit 101" >/usr/sbin/policy-rc.d && chmod a+x /usr/sbin/policy-rc.d)
 policy_rc_d_enable()  (echo "exit 0"   >/usr/sbin/policy-rc.d && chmod a+x /usr/sbin/policy-rc.d)

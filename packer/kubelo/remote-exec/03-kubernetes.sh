@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
-: ${KUBERNETES_VERSION:=1.18.9}
-: ${KUBERNETES_VERSION_APT:=${KUBERNETES_VERSION}-00}
-: ${KUBERNETES_CNI_VERSION:=0.8.7}
-: ${KUBERNETES_CNI_VERSION_APT:=${KUBERNETES_CNI_VERSION}-00}
-: ${HELM_VERSION:=3.5.3}
+: "${KUBERNETES_VERSION:=1.21.7}"
+: "${KUBERNETES_VERSION_APT:=${KUBERNETES_VERSION}-00}"
+: "${KUBERNETES_CNI_VERSION:=0.8.7}"
+: "${KUBERNETES_CNI_VERSION_APT:=${KUBERNETES_CNI_VERSION}-00}"
+: "${ETCD_VERSION:=3.4.13}"
+: "${HELM_VERSION:=3.7.1}"
 
 policy_rc_d_disable() (echo "exit 101" >/usr/sbin/policy-rc.d && chmod a+x /usr/sbin/policy-rc.d)
 policy_rc_d_enable()  (echo "exit 0"   >/usr/sbin/policy-rc.d && chmod a+x /usr/sbin/policy-rc.d)
@@ -38,7 +39,11 @@ policy_rc_d_enable
 
 apt-get -q clean
 
-curl -fsSL https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz \
+curl -fsSL "https://storage.googleapis.com/etcd/v${ETCD_VERSION}/etcd-v${ETCD_VERSION}-linux-amd64.tar.gz" \
+| tar -xz -f- --strip-components=1 -C /usr/local/bin/ "etcd-v${ETCD_VERSION}-linux-amd64"/{etcd,etcdctl} \
+&& chmod +x /usr/local/bin/{etcd,etcdctl}
+
+curl -fsSL "https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz" \
 | tar -xz -f- --strip-components=1 -C /usr/local/bin/ linux-amd64/helm \
 && chmod +x /usr/local/bin/helm
 
