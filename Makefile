@@ -27,7 +27,10 @@ extras:
 	make -f $(SELF)/Makefile.EXTRAS
 
 
-.PHONY: kubelo-disk oracle-disk redhat-disk ubuntu-disk
+.PHONY: alpine-disk kubelo-disk oracle-disk redhat-disk ubuntu-disk
+
+alpine-disk:
+	cd $(SELF)/packer/alpine/ && make build
 
 kubelo-disk:
 	cd $(SELF)/packer/kubelo/ && make build
@@ -43,6 +46,19 @@ redhat-disk:
 
 ubuntu-disk:
 	cd $(SELF)/packer/ubuntu/ && make build
+
+
+.PHONY: a1-init a1-apply a1-destroy
+
+a1-init:
+	cd $(SELF)/LIVE/a1/ && $(SELF)/bin/terragrunt run-all init
+
+a1-apply: a1-init
+	cd $(SELF)/LIVE/a1/ && $(SELF)/bin/terragrunt run-all apply $(AUTO_APPROVE)
+
+a1-destroy: a1-init
+	-make -f Makefile.SNAPSHOT clean-a1
+	cd $(SELF)/LIVE/a1/ && $(SELF)/bin/terragrunt run-all destroy $(AUTO_APPROVE)
 
 
 .PHONY: k1-init k1-apply k1-destroy
@@ -110,6 +126,15 @@ u1-destroy: u1-init
 	cd $(SELF)/LIVE/u1/ && $(SELF)/bin/terragrunt run-all destroy $(AUTO_APPROVE)
 
 
+.PHONY: a1-backup a1-restore
+
+a1-backup:
+	make -f $(SELF)/Makefile.SNAPSHOT backup-a1
+
+a1-restore:
+	make -f $(SELF)/Makefile.SNAPSHOT restore-a1
+
+
 .PHONY: k1-backup k1-restore
 
 k1-backup:
@@ -155,10 +180,12 @@ u1-restore:
 	make -f $(SELF)/Makefile.SNAPSHOT restore-u1
 
 
-.PHONY: become k1-ssh n1-ssh o1-ssh r1-ssh u1-ssh
+.PHONY: become a1-ssh k1-ssh n1-ssh o1-ssh r1-ssh u1-ssh
 
 become:
 	@: $(eval BECOME_ROOT := -t sudo -i)
+
+a1-ssh: a1-ssh10
 
 k1-ssh: k1-ssh10
 
@@ -169,6 +196,9 @@ o1-ssh: o1-ssh10
 r1-ssh: r1-ssh10
 
 u1-ssh: u1-ssh10
+
+a1-ssh%:
+	@ssh $(SSH_OPTIONS) alpine@10.70.2.$* $(BECOME_ROOT)
 
 k1-ssh%:
 	@ssh $(SSH_OPTIONS) ubuntu@10.30.2.$* $(BECOME_ROOT)
@@ -191,6 +221,7 @@ u1-ssh%:
 clean:
 	-make clean -f $(SELF)/Makefile.BINARIES
 	-make clean -f $(SELF)/Makefile.EXTRAS
+	-cd $(SELF)/packer/alpine/ && make clean
 	-cd $(SELF)/packer/kubelo/ && make clean
 	-cd $(SELF)/packer/nebula/ && make clean
 	-cd $(SELF)/packer/oracle/ && make clean
