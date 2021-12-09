@@ -30,8 +30,9 @@ source "qemu" "$(NAME)" {
   net_device     = "virtio-net"
   disk_interface = "virtio"
 
-  communicator     = "none"
-  shutdown_command = "echo packer | sudo -S shutdown -P now"
+  ssh_username     = "root"
+  ssh_password     = "asd"
+  shutdown_command = "/sbin/poweroff"
 
   output_directory = "$(SELF)/.cache/output/"
   vm_name          = "packer-$(NAME).qcow2"
@@ -43,9 +44,6 @@ source "qemu" "$(NAME)" {
   boot_command = [
     "root<enter><wait1s>",
 
-    "set -o pipefail<enter>",
-
-    "setup-keymap us us<enter>",
     "setup-hostname alpine<enter>",
 
     "cat >/etc/network/interfaces <<EOF<enter>",
@@ -62,33 +60,32 @@ source "qemu" "$(NAME)" {
     "rc-service networking start<enter>",
     "rc-update add networking boot<enter>",
 
-    "setup-timezone<enter>",
-    "UTC<enter>",
-
     "cat >/etc/apk/repositories <<EOF<enter>",
     "http://dl-cdn.alpinelinux.org/alpine/v$(RELEASE)/main<enter>",
     "http://dl-cdn.alpinelinux.org/alpine/v$(RELEASE)/community<enter>",
     "EOF<enter>",
 
-    "apk --no-cache add dropbear openssh-client<enter>",
-    "rc-service dropbear start<enter>",
-    "rc-update add dropbear<enter>",
+    "apk --no-cache add bash openssh openssh-server-pam<enter>",
+    "echo PermitRootLogin yes >>/etc/ssh/sshd_config<enter>",
+    "rc-service sshd start<enter>",
+    "rc-update add sshd<enter>",
 
-    "apk --no-cache add openntpd<enter>",
-    "rc-service openntpd start<enter>",
-    "rc-update add openntpd<enter>",
-
-    "apk --no-cache add util-linux cloud-init<enter>",
-    "setup-cloud-init<enter>",
-
-    "yes | setup-disk -m sys /dev/vda<enter>",
-
-    "sync<enter>",
-    "poweroff<enter>",
+    "passwd root <<EOF<enter>",
+    "asd<enter>",
+    "asd<enter>",
+    "asd<enter>",
+    "EOF<enter>",
   ]
 }
 build {
   sources = ["source.qemu.$(NAME)"]
+  provisioner "shell" {
+    execute_command = "bash --login {{.Path}}"
+    scripts = [
+      "remote-exec/01-basics.sh",
+      "remote-exec/99-setup.sh",
+    ]
+  }
 }
 endef
 
