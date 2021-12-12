@@ -99,7 +99,7 @@ all: build
 
 build: $(SELF)/.cache/output/packer-$(NAME).qcow2
 
-$(SELF)/.cache/output/packer-$(NAME).qcow2: Makefile
+$(SELF)/.cache/output/packer-$(NAME).qcow2: Makefile $(wildcard $(SELF)/remote-exec/*.sh)
 	mkdir -p $(SELF)/.cache/
 	if ! [[ -e $(SELF)/.cache/build.pkr.hcl ]]; then ln -s /dev/stdin $(SELF)/.cache/build.pkr.hcl; fi
 	$(PACKER) build -force $(SELF)/.cache/build.pkr.hcl <<< "$$PACKERFILE"

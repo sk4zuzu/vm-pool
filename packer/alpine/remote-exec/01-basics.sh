@@ -8,6 +8,7 @@ apk --no-cache add \
     vim mc htop \
     iproute2 nmap nmap-ncat \
     iftop nethogs pv \
-    jq
+    jq \
+    fd ripgrep bat
 
 sync
