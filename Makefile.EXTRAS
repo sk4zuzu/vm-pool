@@ -1,7 +1,7 @@
 SHELL := $(shell which bash)
 SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
-PROVIDER_LIBVIRT_VERSION ?= 0.6.11
+PROVIDER_LIBVIRT_VERSION ?= 0.6.12
 PROVIDER_LIBVIRT_DIR     := $(HOME)/.local/share/terraform/plugins/registry.terraform.io/dmacvicar/libvirt/$(PROVIDER_LIBVIRT_VERSION)/linux_amd64
 
 GOPATH := $(SELF)/go
@@ -17,7 +17,7 @@ $(SELF)/bin/$(2)_v$(3): SRC := $(GOPATH)/src/github.com/$(1)/$(2)
 $(SELF)/bin/$(2)_v$(3):
 	install -d $${SRC}/
 	cd $${SRC}/ && git clone --branch=v$(3) https://github.com/$(1)/$(2).git . || ( \
-		git fetch origin v$(3) \
+		git fetch origin \
 		&& git clean -df \
 		&& git checkout . \
 		&& git checkout v$(3) \
