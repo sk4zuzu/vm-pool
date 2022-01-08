@@ -15,16 +15,13 @@ confirm: yes
 yes:
 	@: $(eval AUTO_APPROVE := --terragrunt-non-interactive)
 
-requirements: binaries extras
+requirements: binaries
 
 
-.PHONY: binaries extras
+.PHONY: binaries
 
 binaries:
 	make -f $(SELF)/Makefile.BINARIES
-
-extras:
-	make -f $(SELF)/Makefile.EXTRAS
 
 
 .PHONY: alpine-disk kubelo-disk oracle-disk redhat-disk ubuntu-disk
@@ -220,7 +217,6 @@ u1-ssh%:
 
 clean:
 	-make clean -f $(SELF)/Makefile.BINARIES
-	-make clean -f $(SELF)/Makefile.EXTRAS
 	-cd $(SELF)/packer/alpine/ && make clean
 	-cd $(SELF)/packer/kubelo/ && make clean
 	-cd $(SELF)/packer/nebula/ && make clean

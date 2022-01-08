@@ -10,6 +10,3 @@
 
 /files/*
 !/files/.gitkeep
-
-/go/*
-!/go/.gitkeep
