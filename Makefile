@@ -24,10 +24,13 @@ binaries:
 	make -f $(SELF)/Makefile.BINARIES
 
 
-.PHONY: alpine-disk kubelo-disk oracle-disk redhat-disk ubuntu-disk
+.PHONY: alpine-disk centos-disk kubelo-disk oracle-disk redhat-disk ubuntu-disk
 
 alpine-disk:
 	cd $(SELF)/packer/alpine/ && make build
+
+centos-disk:
+	cd $(SELF)/packer/centos/ && make build
 
 kubelo-disk:
 	cd $(SELF)/packer/kubelo/ && make build
@@ -56,6 +59,19 @@ a1-apply: a1-init
 a1-destroy: a1-init
 	-make -f Makefile.SNAPSHOT clean-a1
 	cd $(SELF)/LIVE/a1/ && $(SELF)/bin/terragrunt run-all destroy $(AUTO_APPROVE)
+
+
+.PHONY: c1-init c1-apply c1-destroy
+
+c1-init:
+	cd $(SELF)/LIVE/c1/ && $(SELF)/bin/terragrunt run-all init
+
+c1-apply: c1-init
+	cd $(SELF)/LIVE/c1/ && $(SELF)/bin/terragrunt run-all apply $(AUTO_APPROVE)
+
+c1-destroy: c1-init
+	-make -f Makefile.SNAPSHOT clean-c1
+	cd $(SELF)/LIVE/c1/ && $(SELF)/bin/terragrunt run-all destroy $(AUTO_APPROVE)
 
 
 .PHONY: k1-init k1-apply k1-destroy
@@ -132,6 +148,15 @@ a1-restore:
 	make -f $(SELF)/Makefile.SNAPSHOT restore-a1
 
 
+.PHONY: c1-backup c1-restore
+
+c1-backup:
+	make -f $(SELF)/Makefile.SNAPSHOT backup-c1
+
+c1-restore:
+	make -f $(SELF)/Makefile.SNAPSHOT restore-c1
+
+
 .PHONY: k1-backup k1-restore
 
 k1-backup:
@@ -177,12 +202,14 @@ u1-restore:
 	make -f $(SELF)/Makefile.SNAPSHOT restore-u1
 
 
-.PHONY: become a1-ssh k1-ssh n1-ssh o1-ssh r1-ssh u1-ssh
+.PHONY: become a1-ssh c1-ssh k1-ssh n1-ssh o1-ssh r1-ssh u1-ssh
 
 become:
 	@: $(eval BECOME_ROOT := -t sudo -i)
 
 a1-ssh: a1-ssh10
+
+c1-ssh: c1-ssh10
 
 k1-ssh: k1-ssh10
 
@@ -196,6 +223,9 @@ u1-ssh: u1-ssh10
 
 a1-ssh%:
 	@ssh $(SSH_OPTIONS) alpine@10.70.2.$* $(BECOME_ROOT)
+
+c1-ssh%:
+	@ssh $(SSH_OPTIONS) centos@10.80.2.$* $(BECOME_ROOT)
 
 k1-ssh%:
 	@ssh $(SSH_OPTIONS) ubuntu@10.30.2.$* $(BECOME_ROOT)
@@ -218,6 +248,7 @@ u1-ssh%:
 clean:
 	-make clean -f $(SELF)/Makefile.BINARIES
 	-cd $(SELF)/packer/alpine/ && make clean
+	-cd $(SELF)/packer/centos/ && make clean
 	-cd $(SELF)/packer/kubelo/ && make clean
 	-cd $(SELF)/packer/nebula/ && make clean
 	-cd $(SELF)/packer/oracle/ && make clean
