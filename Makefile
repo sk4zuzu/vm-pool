@@ -222,25 +222,25 @@ r1-ssh: r1-ssh10
 u1-ssh: u1-ssh10
 
 a1-ssh%:
-	@ssh $(SSH_OPTIONS) alpine@10.70.2.$* $(BECOME_ROOT)
+	@ssh $(SSH_OPTIONS) alpine@10.20.2.$* $(BECOME_ROOT)
 
 c1-ssh%:
-	@ssh $(SSH_OPTIONS) centos@10.80.2.$* $(BECOME_ROOT)
+	@ssh $(SSH_OPTIONS) centos@10.30.2.$* $(BECOME_ROOT)
 
 k1-ssh%:
-	@ssh $(SSH_OPTIONS) ubuntu@10.30.2.$* $(BECOME_ROOT)
+	@ssh $(SSH_OPTIONS) ubuntu@10.40.2.$* $(BECOME_ROOT)
 
 n1-ssh%:
-	@ssh $(SSH_OPTIONS) ubuntu@10.60.2.$* $(BECOME_ROOT)
+	@ssh $(SSH_OPTIONS) ubuntu@10.50.2.$* $(BECOME_ROOT)
 
 o1-ssh%:
-	@ssh $(SSH_OPTIONS) cloud-user@10.20.2.$* $(BECOME_ROOT)
+	@ssh $(SSH_OPTIONS) cloud-user@10.60.2.$* $(BECOME_ROOT)
 
 r1-ssh%:
-	@ssh $(SSH_OPTIONS) cloud-user@10.40.2.$* $(BECOME_ROOT)
+	@ssh $(SSH_OPTIONS) cloud-user@10.70.2.$* $(BECOME_ROOT)
 
 u1-ssh%:
-	@ssh $(SSH_OPTIONS) ubuntu@10.50.2.$* $(BECOME_ROOT)
+	@ssh $(SSH_OPTIONS) ubuntu@10.80.2.$* $(BECOME_ROOT)
 
 
 .PHONY: clean

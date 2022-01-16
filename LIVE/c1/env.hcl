@@ -6,8 +6,8 @@ locals {
   network = {
     name    = local.env
     domain  = "centos.lh"
-    macaddr = "52:54:80:02:00:%02x"
-    subnet  = "10.80.2.0/24"
+    macaddr = "52:54:30:02:00:%02x"
+    subnet  = "10.30.2.0/24"
   }
 
   storage = {
