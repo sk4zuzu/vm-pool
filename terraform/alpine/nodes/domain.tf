@@ -29,7 +29,7 @@ resource "libvirt_domain" "nodes" {
 
   disk {
     volume_id = libvirt_volume.nodes.*.id[count.index]
-	}
+  }
 
   graphics {
     type           = "spice"

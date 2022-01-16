@@ -4,8 +4,8 @@ resource "libvirt_cloudinit_disk" "nodes" {
   pool  = var.storage.pool
 
   meta_data = <<-EOF
-  instance-id: '${var.nodes.prefix}${count.index + 1}'
-  local-hostname: '${var.nodes.prefix}${count.index + 1}'
+  instance-id: ${var.nodes.prefix}${count.index + 1}
+  local-hostname: ${var.nodes.prefix}${count.index + 1}
   network-interfaces: |
     iface eth0 inet static
     hwaddress ether ${format(var.network.macaddr, count.index + var.nodes.offset)}
@@ -28,7 +28,7 @@ resource "libvirt_cloudinit_disk" "nodes" {
     expire: false
   growpart:
     mode: auto
-    devices: ['/']
+    devices: [/]
   write_files:
     - content: |
         nameserver ${cidrhost(var.network.subnet, 1)}

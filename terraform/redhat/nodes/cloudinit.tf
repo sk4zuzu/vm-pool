@@ -4,8 +4,8 @@ resource "libvirt_cloudinit_disk" "nodes" {
   pool  = var.storage.pool
 
   meta_data = <<-EOF
-  instance-id: '${var.nodes.prefix}${count.index + 1}'
-  local-hostname: '${var.nodes.prefix}${count.index + 1}'
+  instance-id: ${var.nodes.prefix}${count.index + 1}
+  local-hostname: ${var.nodes.prefix}${count.index + 1}
   EOF
 
   network_config = <<-EOF
@@ -13,25 +13,25 @@ resource "libvirt_cloudinit_disk" "nodes" {
   ethernets:
     eth0:
       addresses:
-        - '${cidrhost(var.network.subnet, count.index + var.nodes.offset)}/${split("/", var.network.subnet)[1]}'
+        - ${cidrhost(var.network.subnet, count.index + var.nodes.offset)}/${split("/", var.network.subnet)[1]}
       dhcp4: false
       dhcp6: false
-      gateway4: '${cidrhost(var.network.subnet, 1)}'
-      macaddress: '${lower(format(var.network.macaddr, count.index + var.nodes.offset))}'
+      gateway4: ${cidrhost(var.network.subnet, 1)}
+      macaddress: ${lower(format(var.network.macaddr, count.index + var.nodes.offset))}
       nameservers:
         addresses:
-          - '${cidrhost(var.network.subnet, 1)}'
+          - ${cidrhost(var.network.subnet, 1)}
         search:
-          - '${var.network.domain}'
+          - ${var.network.domain}
   EOF
 
   user_data = <<-EOF
   #cloud-config
   ssh_pwauth: false
   users:
-    - name: 'cloud-user'
+    - name: cloud-user
       ssh_authorized_keys: ${jsonencode(var.nodes.keys)}
-    - name: 'root'
+    - name: root
       ssh_authorized_keys: ${jsonencode(var.nodes.keys)}
   chpasswd:
     list:
@@ -39,21 +39,21 @@ resource "libvirt_cloudinit_disk" "nodes" {
     expire: false
   growpart:
     mode: auto
-    devices: ['/']
+    devices: [/]
   write_files:
     - content: |
         nameserver ${cidrhost(var.network.subnet, 1)}
         search ${var.network.domain}
-      path: '/etc/resolv.conf'
+      path: /etc/resolv.conf
     - content: |
         net.ipv4.ip_forward = 1
-      path: '/etc/sysctl.d/98-ip-forward.conf'
+      path: /etc/sysctl.d/98-ip-forward.conf
   bootcmd:
-    - sed -i 's|^HWADDR=|MACADDR=|' '/etc/sysconfig/network-scripts/ifcfg-eth0'
+    - sed -i 's|^HWADDR=|MACADDR=|' /etc/sysconfig/network-scripts/ifcfg-eth0
     - systemctl disable NetworkManager && systemctl stop NetworkManager
     - systemctl enable network && systemctl start network
     - ifdown eth0 && ifup eth0
   runcmd:
-    - sysctl -p '/etc/sysctl.d/98-ip-forward.conf'
+    - sysctl -p /etc/sysctl.d/98-ip-forward.conf
   EOF
 }
