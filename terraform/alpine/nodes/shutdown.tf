@@ -1,4 +1,4 @@
-resource null_resource "ubuntu" {
+resource null_resource "alpine" {
   depends_on = [ libvirt_domain.nodes ]
 
   count = var.shutdown ? var.nodes.count : 0
@@ -13,7 +13,7 @@ resource null_resource "ubuntu" {
     EOF
     environment = {
       SSH_OPTS = "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
-      SSH_USER = "ubuntu"
+      SSH_USER = "alpine"
       SSH_HOST = cidrhost(var.network.subnet, count.index + var.nodes.offset)
     }
     interpreter = ["bash", "-c"]
