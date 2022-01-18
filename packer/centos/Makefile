@@ -52,6 +52,7 @@ build {
     execute_command = "sudo -iu root {{.Vars}} bash {{.Path}}"
     scripts = [
       "remote-exec/01-basics.sh",
+      "remote-exec/02-selinux.sh",
     ]
   }
 }
