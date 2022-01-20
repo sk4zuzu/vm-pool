@@ -56,11 +56,10 @@ endef
 
 all:
 
-confirm: yes
-yes:
+c confirm:
 	@: $(eval AUTO_APPROVE := --terragrunt-non-interactive)
 
-become:
+b become:
 	@: $(eval BECOME_ROOT := -t sudo -i)
 
 requirements: binaries
