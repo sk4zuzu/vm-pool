@@ -16,7 +16,7 @@ locals {
   }
 
   nodes1 = {
-    count   = 3
+    count   = 1
     prefix  = "${local.env}a"
     offset  = 10
     vcpu    = 2
@@ -27,11 +27,11 @@ locals {
   }
 
   nodes2 = {
-    count   = 3
+    count   = 2
     prefix  = "${local.env}b"
     offset  = 20
     vcpu    = 2
-    memory  = "3072"
+    memory  = "4096"
     image   = "${get_parent_terragrunt_dir()}/../../packer/ubuntu/.cache/output/packer-ubuntu.qcow2"
     storage = "34359738368"  # 32GiB
     keys    = file("~/.ssh/id_rsa.pub")
