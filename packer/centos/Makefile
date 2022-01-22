@@ -53,6 +53,7 @@ build {
     scripts = [
       "remote-exec/01-basics.sh",
       "remote-exec/02-selinux.sh",
+      "remote-exec/03-systemd.sh",
     ]
   }
 }
