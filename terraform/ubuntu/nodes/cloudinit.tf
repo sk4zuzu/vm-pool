@@ -17,7 +17,7 @@ resource "libvirt_cloudinit_disk" "nodes" {
       dhcp4: false
       dhcp6: false
       gateway4: ${cidrhost(var.network.subnet, 1)}
-      macaddress: ${format(var.network.macaddr, count.index + var.nodes.offset)}
+      macaddress: '${lower(format(var.network.macaddr, count.index + var.nodes.offset))}'
       nameservers:
         addresses:
           - ${cidrhost(var.network.subnet, 1)}

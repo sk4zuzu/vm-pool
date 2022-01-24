@@ -8,7 +8,7 @@ resource "libvirt_cloudinit_disk" "nodes" {
   local-hostname: ${var.nodes.prefix}${count.index + 1}
   network-interfaces: |
     iface eth0 inet static
-    hwaddress ether ${format(var.network.macaddr, count.index + var.nodes.offset)}
+    hwaddress ether ${lower(format(var.network.macaddr, count.index + var.nodes.offset))}
     address ${cidrhost(var.network.subnet, count.index + var.nodes.offset)}
     netmask ${cidrnetmask(var.network.subnet)}
     gateway ${cidrhost(var.network.subnet, 1)}
