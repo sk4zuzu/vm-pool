@@ -5,7 +5,7 @@ locals {
 
   network = {
     name    = local.env
-    domain  = "nebula.lh"
+    domain  = "ubuntu.lh"
     macaddr = "52:54:50:02:00:%02x"
     subnet  = "10.50.2.0/24"
   }
