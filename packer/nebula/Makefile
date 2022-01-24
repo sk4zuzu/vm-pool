@@ -3,10 +3,10 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := nebula
 
-RELEASE  := focal/20211129
+RELEASE  := focal/20220118
 ARTIFACT := focal-server-cloudimg-amd64.vmdk
 
-CHECKSUM := 704849ce4802aad1260fe7df469856228b186e0b8cb7f3f699f4f7d8d74dd37f
+CHECKSUM := ab84aed67976aecbff51fc4deff21c76e396fa4cb55da57d87270a8428853768
 
 CPUS      ?= 1
 MEMORY    ?= 1024
@@ -54,7 +54,6 @@ build {
     scripts = [
       "remote-exec/01-basics.sh",
       "remote-exec/02-libvirt.sh",
-      "remote-exec/03-opennebula.sh",
     ]
   }
 }
