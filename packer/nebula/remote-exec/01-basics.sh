@@ -30,6 +30,9 @@ apt-get -q install -y --no-install-recommends \
     iftop nethogs \
     jq
 
+apt-get -q install -y --no-install-recommends \
+    libxml2-utils
+
 policy_rc_d_enable
 
 apt-get -q clean
