@@ -11,7 +11,7 @@ resource "libvirt_cloudinit_disk" "nodes" {
   network_config = <<-EOF
   version: 2
   ethernets:
-    ens3:
+    eth0:
       addresses:
         - ${cidrhost(var.network.subnet, count.index + var.nodes.offset)}/${split("/", var.network.subnet)[1]}
       dhcp4: false
@@ -40,6 +40,12 @@ resource "libvirt_cloudinit_disk" "nodes" {
   growpart:
     mode: auto
     devices: [/]
+  %{ if length(var.nodes.mounts) > 0 }
+  mounts:
+  %{ endif }
+  %{ for mount in var.nodes.mounts }
+    - [ ${mount.target}, ${mount.path}, '9p', 'trans=virtio,version=9p2000.L,${mount.ro ? "r" : "rw"}', '0', '0' ]
+  %{ endfor }
   write_files:
     - content: |
         net.ipv4.ip_forward = 1

@@ -31,6 +31,16 @@ resource "libvirt_domain" "nodes" {
     volume_id = libvirt_volume.nodes.*.id[count.index]
   }
 
+  dynamic "filesystem" {
+    for_each = var.nodes.mounts
+    content {
+      accessmode = "mapped"
+      target     = filesystem.value.target
+      source     = filesystem.value.source
+      readonly   = filesystem.value.ro
+    }
+  }
+
   graphics {
     type           = "spice"
     listen_type    = "address"
