@@ -24,16 +24,18 @@ locals {
     image   = "${get_parent_terragrunt_dir()}/../../packer/ubuntu/.cache/output/packer-ubuntu.qcow2"
     storage = "34359738368"  # 32GiB
     keys    = file("~/.ssh/id_rsa.pub")
+    mounts  = []
   }
 
   nodes2 = {
     count   = 2
     prefix  = "${local.env}b"
     offset  = 20
-    vcpu    = 2
-    memory  = "4096"
+    vcpu    = 8
+    memory  = "6144"
     image   = "${get_parent_terragrunt_dir()}/../../packer/ubuntu/.cache/output/packer-ubuntu.qcow2"
     storage = "34359738368"  # 32GiB
     keys    = file("~/.ssh/id_rsa.pub")
+    mounts  = []
   }
 }
