@@ -57,6 +57,7 @@ build {
   provisioner "shell" {
     execute_command = "sudo -iu root {{.Vars}} bash {{.Path}}"
     scripts = [
+      "remote-exec/00-kernel.sh",
       "remote-exec/01-basics.sh",
     ]
   }
