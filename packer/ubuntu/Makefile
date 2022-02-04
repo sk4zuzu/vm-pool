@@ -8,6 +8,11 @@ ARTIFACT := focal-server-cloudimg-amd64.vmdk
 
 CHECKSUM := ab84aed67976aecbff51fc4deff21c76e396fa4cb55da57d87270a8428853768
 
+#RELEASE  := bionic/20220131
+#ARTIFACT := bionic-server-cloudimg-amd64.vmdk
+#
+#CHECKSUM := ea0d2c225ac3061a5dc90f1fc64a3e4fe0d7c4b299a7e4e3336fe424ebf84be4
+
 CPUS      ?= 1
 MEMORY    ?= 1024
 DISK_SIZE ?= 10240
