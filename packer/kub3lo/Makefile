@@ -83,7 +83,7 @@ build {
     execute_command = "bash --login {{.Path}}"
     scripts = [
       "remote-exec/01-basics.sh",
-      "remote-exec/02-haproxy.sh",
+      "remote-exec/02-extras.sh",
       "remote-exec/50-setup.sh",
       "remote-exec/51-k3s.sh",
       "remote-exec/52-helm.sh",
