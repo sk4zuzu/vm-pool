@@ -69,6 +69,7 @@ binaries:
 
 $(eval $(call PACKER_TASKS,alpine))
 $(eval $(call PACKER_TASKS,centos))
+$(eval $(call PACKER_TASKS,kub3lo))
 $(eval $(call PACKER_TASKS,kubelo))
 $(eval $(call PACKER_TASKS,nebula))
 $(eval $(call PACKER_TASKS,oracle))
@@ -78,6 +79,7 @@ $(eval $(call PACKER_TASKS,ubuntu))
 $(eval $(call TERRAFORM_TASKS,a1,$$(AUTO_APPROVE)))
 $(eval $(call TERRAFORM_TASKS,c1,$$(AUTO_APPROVE)))
 $(eval $(call TERRAFORM_TASKS,k1,$$(AUTO_APPROVE)))
+$(eval $(call TERRAFORM_TASKS,k3,$$(AUTO_APPROVE)))
 $(eval $(call TERRAFORM_TASKS,n1,$$(AUTO_APPROVE)))
 $(eval $(call TERRAFORM_TASKS,o1,$$(AUTO_APPROVE)))
 $(eval $(call TERRAFORM_TASKS,r1,$$(AUTO_APPROVE)))
@@ -86,6 +88,7 @@ $(eval $(call TERRAFORM_TASKS,u1,$$(AUTO_APPROVE)))
 $(eval $(call BACKUP_TASKS,a1))
 $(eval $(call BACKUP_TASKS,c1))
 $(eval $(call BACKUP_TASKS,k1))
+$(eval $(call BACKUP_TASKS,k3))
 $(eval $(call BACKUP_TASKS,n1))
 $(eval $(call BACKUP_TASKS,o1))
 $(eval $(call BACKUP_TASKS,r1))
@@ -94,6 +97,7 @@ $(eval $(call BACKUP_TASKS,u1))
 $(eval $(call SSH_TASKS,a1,$$(BECOME_ROOT),alpine@10.20.2.))
 $(eval $(call SSH_TASKS,c1,$$(BECOME_ROOT),centos@10.30.2.))
 $(eval $(call SSH_TASKS,k1,$$(BECOME_ROOT),ubuntu@10.40.2.))
+$(eval $(call SSH_TASKS,k3,$$(BECOME_ROOT),alpine@10.44.2.))
 $(eval $(call SSH_TASKS,n1,$$(BECOME_ROOT),ubuntu@10.50.2.))
 $(eval $(call SSH_TASKS,o1,$$(BECOME_ROOT),cloud-user@10.60.2.))
 $(eval $(call SSH_TASKS,r1,$$(BECOME_ROOT),cloud-user@10.70.2.))
@@ -105,6 +109,7 @@ clean:
 	-make clean -f $(SELF)/Makefile.BINARIES
 	-cd $(SELF)/packer/alpine/ && make clean
 	-cd $(SELF)/packer/centos/ && make clean
+	-cd $(SELF)/packer/kub3lo/ && make clean
 	-cd $(SELF)/packer/kubelo/ && make clean
 	-cd $(SELF)/packer/nebula/ && make clean
 	-cd $(SELF)/packer/oracle/ && make clean
