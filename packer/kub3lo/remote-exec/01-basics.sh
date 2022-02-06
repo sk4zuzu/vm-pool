@@ -8,6 +8,7 @@ apk --no-cache add \
     curl \
     e2fsprogs-extra \
     fd \
+    gawk \
     gzip \
     htop \
     iftop iproute2 \

@@ -50,8 +50,11 @@ cat >/mnt/etc/update-extlinux.d/override.conf <<EOF
 default_kernel_opts="quiet rootfstype=ext4 cgroup_enable=cpuset cgroup_enable=memory cgroup_memory=1"
 EOF
 
-cat >>/mnt/etc/fstab <<EOF
-cgroup /sys/fs/cgroup cgroup defaults 0 0
+awk -i inplace -f- /mnt/etc/fstab <<'EOF'
+$2 == "/" { $4 = $4 ",rshared" }
+$1 == "cgroup" { cgroup = 1 }
+{ print }
+END { if (!cgroup) print "cgroup /sys/fs/cgroup cgroup defaults 0 0" >>FILENAME }
 EOF
 
 chroot /mnt/ /sbin/update-extlinux
