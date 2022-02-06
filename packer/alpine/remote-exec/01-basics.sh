@@ -6,6 +6,7 @@ set -x
 apk --no-cache add \
     bash bat \
     curl \
+    e2fsprogs-extra \
     fd \
     gzip \
     htop \
@@ -19,6 +20,7 @@ apk --no-cache add \
     sudo \
     tar \
     vim \
+    xfsprogs-extra \
     zip \
     zstd
 
