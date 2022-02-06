@@ -3,10 +3,10 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := alpine
 
-RELEASE  := 3.14
-ARTIFACT := alpine-virt-$(RELEASE).2-x86_64.iso
+RELEASE  := 3.15
+ARTIFACT := alpine-virt-$(RELEASE).0-x86_64.iso
 
-CHECKSUM := fcba6ecc8419da955d326a12b2f6d9d8f885a420a1112e0cf1910914c4c814a7
+CHECKSUM := e97eaedb3bff39a081d1d7e67629d5c0e8fb39677d6a9dd1eaf2752e39061e02
 
 CPUS      ?= 1
 MEMORY    ?= 1024
@@ -54,7 +54,7 @@ source "qemu" "$(NAME)" {
     "EOF<enter>",
 
     "cat >/etc/resolv.conf <<EOF<enter>",
-    "nameserver 8.8.8.8<enter>",
+    "nameserver 1.1.1.1<enter>",
     "EOF<enter>",
 
     "rc-service networking start<enter>",
@@ -83,7 +83,7 @@ build {
     execute_command = "bash --login {{.Path}}"
     scripts = [
       "remote-exec/01-basics.sh",
-      "remote-exec/99-setup.sh",
+      "remote-exec/50-setup.sh",
     ]
   }
 }

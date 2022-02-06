@@ -4,11 +4,22 @@ set -o errexit -o nounset -o pipefail
 set -x
 
 apk --no-cache add \
-    openssh-client curl \
-    vim mc htop \
-    iproute2 nmap nmap-ncat \
-    iftop nethogs pv \
+    bash bat \
+    curl \
+    fd \
+    gzip \
+    htop \
+    iftop iproute2 \
     jq \
-    fd ripgrep bat
+    mc \
+    nethogs nmap nmap-ncat \
+    openssh-client \
+    pv python3 \
+    ripgrep \
+    sudo \
+    tar \
+    vim \
+    zip \
+    zstd
 
 sync
