@@ -16,26 +16,34 @@ locals {
   }
 
   nodes1 = {
-    count   = 1
+    count   = 3
     prefix  = "${local.env}a"
     offset  = 10
     vcpu    = 2
-    memory  = "2048"
+    memory  = "1024"
     image   = "${get_parent_terragrunt_dir()}/../../packer/ubuntu/.cache/output/packer-ubuntu.qcow2"
     storage = "34359738368"  # 32GiB
     keys    = file("~/.ssh/id_rsa.pub")
+    disks   = []
     mounts  = []
   }
 
   nodes2 = {
-    count   = 2
+    count   = 3
     prefix  = "${local.env}b"
     offset  = 20
-    vcpu    = 8
-    memory  = "6144"
+    vcpu    = 2
+    memory  = "1024"
     image   = "${get_parent_terragrunt_dir()}/../../packer/ubuntu/.cache/output/packer-ubuntu.qcow2"
     storage = "34359738368"  # 32GiB
     keys    = file("~/.ssh/id_rsa.pub")
-    mounts  = []
+    disks = [{
+      name = "vdb"
+      size = "68719476736"  # 64GiB
+    },{
+      name = "vdc"
+      size = "68719476736"  # 64GiB
+    }]
+    mounts = []
   }
 }
