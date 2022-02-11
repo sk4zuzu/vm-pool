@@ -31,6 +31,13 @@ resource "libvirt_domain" "nodes" {
     volume_id = libvirt_volume.nodes.*.id[count.index]
   }
 
+  dynamic "disk" {
+    for_each = var.nodes.disks
+    content {
+      volume_id = libvirt_volume.nodes_extra["${var.nodes.prefix}${count.index + 1}-${disk.value.name}"].id
+    }
+  }
+
   dynamic "filesystem" {
     for_each = var.nodes.mounts
     content {
