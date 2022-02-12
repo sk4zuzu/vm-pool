@@ -1,5 +1,5 @@
-resource null_resource "oracle" {
-  depends_on = [ libvirt_domain.nodes ]
+resource "null_resource" "oracle" {
+  depends_on = [libvirt_domain.nodes]
 
   count = var.shutdown ? var.nodes.count : 0
 

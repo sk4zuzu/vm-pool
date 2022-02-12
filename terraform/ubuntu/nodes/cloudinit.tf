@@ -40,12 +40,12 @@ resource "libvirt_cloudinit_disk" "nodes" {
   growpart:
     mode: auto
     devices: [/]
-  %{ if length(var.nodes.mounts) > 0 }
+  %{if length(var.nodes.mounts) > 0}
   mounts:
-  %{ endif }
-  %{ for mount in var.nodes.mounts }
+  %{endif}
+  %{for mount in var.nodes.mounts}
     - [ ${mount.target}, ${mount.path}, '9p', 'trans=virtio,version=9p2000.L,${mount.ro ? "r" : "rw"}', '0', '0' ]
-  %{ endfor }
+  %{endfor}
   write_files:
     - content: |
         net.ipv4.ip_forward = 1
