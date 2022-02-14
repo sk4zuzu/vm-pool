@@ -3,10 +3,10 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := nebula
 
-RELEASE  := focal/20220118
+RELEASE  := focal/20220213
 ARTIFACT := focal-server-cloudimg-amd64.vmdk
 
-CHECKSUM := ab84aed67976aecbff51fc4deff21c76e396fa4cb55da57d87270a8428853768
+CHECKSUM := bb6fbb84972f9559406a54154508e5d0604f58cc81e835b81ff9c50e36832a52
 
 CPUS      ?= 1
 MEMORY    ?= 1024
