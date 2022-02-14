@@ -24,6 +24,8 @@ locals {
     image   = "${get_parent_terragrunt_dir()}/../../packer/kubelo/.cache/output/packer-kubelo.qcow2"
     storage = "34359738368"  # 32GiB
     keys    = file("~/.ssh/id_rsa.pub")
+    disks   = []
+    mounts  = []
   }
 
   nodes2 = {
@@ -35,5 +37,7 @@ locals {
     image   = "${get_parent_terragrunt_dir()}/../../packer/kubelo/.cache/output/packer-kubelo.qcow2"
     storage = "34359738368"  # 32GiB
     keys    = file("~/.ssh/id_rsa.pub")
+    disks   = []
+    mounts  = []
   }
 }
