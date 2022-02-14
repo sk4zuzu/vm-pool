@@ -25,17 +25,55 @@ __Base software__:
 __Terraform providers__:
 - [terraform-provider-libvirt (Github)](https://github.com/dmacvicar/terraform-provider-libvirt/releases)
 
-### 2.2 INCLUDED AUTOMATION
+### 2.2 RUNNING VM-POOL IN UBUNTU
 
-If you're using [NixOS](https://nixos.org/) you can just enter Nix shell and continue from there:
-```bash
-$ nix-shell
+```shell
+apt update && apt install -y \
+  cloud-image-utils \
+  curl \
+  genisoimage \
+  libvirt-clients \
+  libvirt-daemon-system \
+  make \
+  qemu \
+  qemu-kvm \
+  qemu-system-x86 \
+  unzip
 ```
 
-## 3. USAGE
+```shell
+gawk -i inplace -f- /etc/libvirt/qemu.conf <<'EOF'
+/^#*user[^=]*=/ { $0 = "user = \"root\"" }
+/^#*group[^=]*=/ { $0 = "group = \"root\"" }
+/^#*security_driver[^=]*=/ { $0 = "security_driver = \"none\"" }
+{ print }
+EOF
+```
 
-Please look at [fake-vpc](https://github.com/sk4zuzu/fake-vpc) as it is very similar to this project.
+```shell
+systemctl restart libvirtd
+```
 
-![:thinking-face:](https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/160/twitter/233/thinking-face_1f914.png)
+```shell
+make requirements
+```
 
-[//]: # ( vim:set ts=2 sw=2 et syn=markdown: )
+```shell
+make alpine-disk confirm a1-destroy a1-apply
+```
+
+### 2.3 RUNNING VM-POOL IN NIXOS
+
+If you're using [NixOS](https://nixos.org/) you can just enter Nix shell and continue from there:
+
+```shell
+nix-shell
+```
+
+```shell
+make requirements
+```
+
+```shell
+make alpine-disk confirm a1-destroy a1-apply
+```
