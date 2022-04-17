@@ -16,7 +16,7 @@ locals {
   }
 
   nodes1 = {
-    count   = 3
+    count   = 1
     prefix  = "${local.env}a"
     offset  = 10
     vcpu    = 2
@@ -38,7 +38,7 @@ locals {
   }
 
   nodes2 = {
-    count   = 1
+    count   = 2
     prefix  = "${local.env}b"
     offset  = 20
     vcpu    = 4
@@ -46,6 +46,11 @@ locals {
     image   = "${get_parent_terragrunt_dir()}/../../packer/nebula/.cache/output/packer-nebula.qcow2"
     storage = "94489280512"  # 88GiB
     keys    = file("~/.ssh/id_rsa.pub")
-    mounts  = []
+    mounts = [{
+      target = "datastores"
+      source = "/stor/9p/${local.env}/_var_lib_one_datastores/"
+      path   = "/var/lib/one/datastores/"
+      ro     = false
+    }]
   }
 }
