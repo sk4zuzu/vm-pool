@@ -3,10 +3,10 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := nebula
 
-RELEASE  := focal/20220213
-ARTIFACT := focal-server-cloudimg-amd64.vmdk
+RELEASE  := focal/release-20220118
+ARTIFACT := ubuntu-20.04-server-cloudimg-amd64.img
 
-CHECKSUM := bb6fbb84972f9559406a54154508e5d0604f58cc81e835b81ff9c50e36832a52
+CHECKSUM := e1264d4cca6c6c537e92f4e676cdc3cddbc5d7fe627d1d439d7e6973ebc2e216
 
 CPUS      ?= 1
 MEMORY    ?= 1024
@@ -29,7 +29,7 @@ source "qemu" "$(NAME)" {
   accelerator = "kvm"
 
   disk_image   = true
-  iso_url      = "https://cloud-images.ubuntu.com/$(RELEASE)/$(ARTIFACT)"
+  iso_url      = "https://cloud-images.ubuntu.com/releases/$(RELEASE)/$(ARTIFACT)"
   iso_checksum = "$(CHECKSUM)"
 
   memory    = "$(MEMORY)"
@@ -37,6 +37,7 @@ source "qemu" "$(NAME)" {
 
   qemuargs = [
     ["-fda", "$(SELF)/.cache/$(ARTIFACT).iso"],
+    ["-serial", "stdio"],
   ]
 
   ssh_username = "ubuntu"
