@@ -3,15 +3,10 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := ubuntu
 
-RELEASE  := focal/20220213
-ARTIFACT := focal-server-cloudimg-amd64.vmdk
+RELEASE  := focal/20220411.2
+ARTIFACT := ubuntu-20.04-server-cloudimg-amd64.img
 
-CHECKSUM := bb6fbb84972f9559406a54154508e5d0604f58cc81e835b81ff9c50e36832a52
-
-#RELEASE  := bionic/20220131
-#ARTIFACT := bionic-server-cloudimg-amd64.vmdk
-#
-#CHECKSUM := ea0d2c225ac3061a5dc90f1fc64a3e4fe0d7c4b299a7e4e3336fe424ebf84be4
+CHECKSUM := 6e3ce31fe3a5523023650ba988c12d5fc2544bd0a95f435474841e2dec5836d9
 
 CPUS      ?= 1
 MEMORY    ?= 1024
@@ -34,7 +29,7 @@ source "qemu" "$(NAME)" {
   accelerator = "kvm"
 
   disk_image   = true
-  iso_url      = "https://cloud-images.ubuntu.com/$(RELEASE)/$(ARTIFACT)"
+  iso_url      = "https://cloud-images.ubuntu.com/releases/$(RELEASE)/$(ARTIFACT)"
   iso_checksum = "$(CHECKSUM)"
 
   memory    = "$(MEMORY)"
@@ -42,6 +37,7 @@ source "qemu" "$(NAME)" {
 
   qemuargs = [
     ["-fda", "$(SELF)/.cache/$(ARTIFACT).iso"],
+    ["-serial", "stdio"],
   ]
 
   ssh_username = "ubuntu"
