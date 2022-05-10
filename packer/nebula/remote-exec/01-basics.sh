@@ -24,6 +24,15 @@ deb mirror://mirrors.ubuntu.com/mirrors.txt $RELEASE-updates universe
 deb mirror://mirrors.ubuntu.com/mirrors.txt $RELEASE multiverse
 deb mirror://mirrors.ubuntu.com/mirrors.txt $RELEASE-updates multiverse
 deb mirror://mirrors.ubuntu.com/mirrors.txt $RELEASE-backports main restricted universe multiverse
+
+deb http://archive.ubuntu.com/ubuntu $RELEASE main restricted
+deb http://archive.ubuntu.com/ubuntu $RELEASE-updates main restricted
+deb http://archive.ubuntu.com/ubuntu $RELEASE universe
+deb http://archive.ubuntu.com/ubuntu $RELEASE-updates universe
+deb http://archive.ubuntu.com/ubuntu $RELEASE multiverse
+deb http://archive.ubuntu.com/ubuntu $RELEASE-updates multiverse
+deb http://archive.ubuntu.com/ubuntu $RELEASE-backports main restricted universe multiverse
+
 deb http://security.ubuntu.com/ubuntu $RELEASE-security main restricted
 deb http://security.ubuntu.com/ubuntu $RELEASE-security universe
 deb http://security.ubuntu.com/ubuntu $RELEASE-security multiverse
