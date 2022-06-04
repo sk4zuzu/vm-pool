@@ -6,8 +6,8 @@ locals {
   network = {
     name    = local.env
     domain  = "oracle.lh"
-    macaddr = "52:54:60:02:00:%02x"
-    subnet  = "10.60.2.0/24"
+    macaddr = "52:54:02:60:00:%02x"
+    subnet  = "10.2.60.0/24"
   }
 
   storage = {

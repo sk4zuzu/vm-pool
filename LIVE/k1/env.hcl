@@ -6,8 +6,8 @@ locals {
   network = {
     name    = local.env
     domain  = "kubelo.lh"
-    macaddr = "52:54:40:02:00:%02x"
-    subnet  = "10.40.2.0/24"
+    macaddr = "52:54:02:40:00:%02x"
+    subnet  = "10.2.40.0/24"
   }
 
   storage = {

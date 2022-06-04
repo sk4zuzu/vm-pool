@@ -6,8 +6,8 @@ locals {
   network = {
     name    = local.env
     domain  = "redhat.lh"
-    macaddr = "52:54:70:02:00:%02x"
-    subnet  = "10.70.2.0/24"
+    macaddr = "52:54:02:70:00:%02x"
+    subnet  = "10.2.70.0/24"
   }
 
   storage = {

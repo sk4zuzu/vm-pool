@@ -94,14 +94,14 @@ $(eval $(call BACKUP_TASKS,o1))
 $(eval $(call BACKUP_TASKS,r1))
 $(eval $(call BACKUP_TASKS,u1))
 
-$(eval $(call SSH_TASKS,a1,$$(BECOME_ROOT),alpine@10.20.2.))
-$(eval $(call SSH_TASKS,c1,$$(BECOME_ROOT),centos@10.30.2.))
-$(eval $(call SSH_TASKS,k1,$$(BECOME_ROOT),ubuntu@10.40.2.))
-$(eval $(call SSH_TASKS,k3,$$(BECOME_ROOT),alpine@10.44.2.))
-$(eval $(call SSH_TASKS,n1,$$(BECOME_ROOT),ubuntu@10.50.2.))
-$(eval $(call SSH_TASKS,o1,$$(BECOME_ROOT),cloud-user@10.60.2.))
-$(eval $(call SSH_TASKS,r1,$$(BECOME_ROOT),cloud-user@10.70.2.))
-$(eval $(call SSH_TASKS,u1,$$(BECOME_ROOT),ubuntu@10.80.2.))
+$(eval $(call SSH_TASKS,a1,$$(BECOME_ROOT),alpine@10.2.20.))
+$(eval $(call SSH_TASKS,c1,$$(BECOME_ROOT),centos@10.2.30.))
+$(eval $(call SSH_TASKS,k1,$$(BECOME_ROOT),ubuntu@10.2.40.))
+$(eval $(call SSH_TASKS,k3,$$(BECOME_ROOT),alpine@10.2.42.))
+$(eval $(call SSH_TASKS,n1,$$(BECOME_ROOT),ubuntu@10.2.50.))
+$(eval $(call SSH_TASKS,o1,$$(BECOME_ROOT),cloud-user@10.2.60.))
+$(eval $(call SSH_TASKS,r1,$$(BECOME_ROOT),cloud-user@10.2.70.))
+$(eval $(call SSH_TASKS,u1,$$(BECOME_ROOT),ubuntu@10.2.80.))
 
 .PHONY: clean
 

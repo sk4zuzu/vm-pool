@@ -6,8 +6,8 @@ locals {
   network = {
     name    = local.env
     domain  = "alpine.lh"
-    macaddr = "52:54:20:02:00:%02x"
-    subnet  = "10.20.2.0/24"
+    macaddr = "52:54:02:20:00:%02x"
+    subnet  = "10.2.20.0/24"
   }
 
   storage = {
