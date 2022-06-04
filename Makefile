@@ -67,6 +67,7 @@ requirements: binaries
 binaries:
 	make -f $(SELF)/Makefile.BINARIES
 
+$(eval $(call PACKER_TASKS,almaos))
 $(eval $(call PACKER_TASKS,alpine))
 $(eval $(call PACKER_TASKS,centos))
 $(eval $(call PACKER_TASKS,kub3lo))
@@ -107,6 +108,7 @@ $(eval $(call SSH_TASKS,u1,$$(BECOME_ROOT),ubuntu@10.2.80.))
 
 clean:
 	-make clean -f $(SELF)/Makefile.BINARIES
+	-cd $(SELF)/packer/almaos/ && make clean
 	-cd $(SELF)/packer/alpine/ && make clean
 	-cd $(SELF)/packer/centos/ && make clean
 	-cd $(SELF)/packer/kub3lo/ && make clean
