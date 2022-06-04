@@ -1,9 +1,9 @@
 SHELL := $(shell which bash)
 SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
-PACKER_VERSION     ?= 1.8.0
-TERRAFORM_VERSION  ?= 1.1.8
-TERRAGRUNT_VERSION ?= v0.36.7
+PACKER_VERSION     ?= 1.8.1
+TERRAFORM_VERSION  ?= 1.2.1
+TERRAGRUNT_VERSION ?= v0.37.1
 
 TARGETS = \
 $(SELF)/bin/packer \
