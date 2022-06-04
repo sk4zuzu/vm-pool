@@ -1,13 +1,13 @@
 locals {
   shutdown = false
 
-  env = "c1"
+  env = "c2"
 
   network = {
     name    = local.env
     domain  = "centos.lh"
-    macaddr = "52:54:02:30:00:%02x"
-    subnet  = "10.2.30.0/24"
+    macaddr = "52:54:02:31:00:%02x"
+    subnet  = "10.2.31.0/24"
   }
 
   storage = {
