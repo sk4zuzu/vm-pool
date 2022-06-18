@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-: "${K3S_VERSION:=1.23.3}"
+: "${K3S_VERSION:=1.23.7}"
 
 set -o errexit -o nounset -o pipefail
 set -x

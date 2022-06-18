@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-: "${HELM_VERSION:=3.8.0}"
+: "${HELM_VERSION:=3.8.2}"
 
 set -o errexit -o nounset -o pipefail
 set -x
