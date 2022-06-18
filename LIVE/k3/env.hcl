@@ -21,7 +21,7 @@ locals {
     offset  = 10
     vcpu    = 2
     memory  = "2048"
-    image   = "${get_parent_terragrunt_dir()}/../../packer/kub3lo/.cache/output/packer-kub3lo.qcow2"
+    image   = "${get_parent_terragrunt_dir()}/../../packer/kub3lo/k3s/.cache/output/packer-kub3lo.qcow2"
     storage = "12884901888"  # 12GiB
     keys    = file("~/.ssh/id_rsa.pub")
   }
@@ -32,7 +32,7 @@ locals {
     offset  = 20
     vcpu    = 2
     memory  = "3072"
-    image   = "${get_parent_terragrunt_dir()}/../../packer/kub3lo/.cache/output/packer-kub3lo.qcow2"
+    image   = "${get_parent_terragrunt_dir()}/../../packer/kub3lo/k3s/.cache/output/packer-kub3lo.qcow2"
     storage = "34359738368"  # 32GiB
     keys    = file("~/.ssh/id_rsa.pub")
   }
