@@ -20,7 +20,7 @@ locals {
     prefix  = "${local.env}a"
     offset  = 10
     vcpu    = 2
-    memory  = "1024"
+    memory  = "2048"
     image   = "${get_parent_terragrunt_dir()}/../../packer/ubuntu/.cache/output/packer-ubuntu.qcow2"
     storage = "34359738368"  # 32GiB
     keys    = file("~/.ssh/id_rsa.pub")
@@ -33,7 +33,7 @@ locals {
     prefix  = "${local.env}b"
     offset  = 20
     vcpu    = 2
-    memory  = "1024"
+    memory  = "3072"
     image   = "${get_parent_terragrunt_dir()}/../../packer/ubuntu/.cache/output/packer-ubuntu.qcow2"
     storage = "34359738368"  # 32GiB
     keys    = file("~/.ssh/id_rsa.pub")
