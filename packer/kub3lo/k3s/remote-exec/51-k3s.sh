@@ -9,7 +9,7 @@ curl -fsSL "https://github.com/k3s-io/k3s/releases/download/v$K3S_VERSION%2Bk3s1
 | install -m u=rwx,go=rx /dev/fd/0 "/mnt/usr/local/bin/k3s-$K3S_VERSION"
 
 ln -s "k3s-$K3S_VERSION" /mnt/usr/local/bin/k3s
-ln -s "k3s-$K3S_VERSION" /mnt/usr/local/bin/kubectl
+ln -s "k3s"              /mnt/usr/local/bin/kubectl
 
 install -m u=rwx,go=rx -d /mnt/var/lib/rancher/
 install -m u=rwx,go=rx -d /mnt/var/lib/rancher/k3s/
