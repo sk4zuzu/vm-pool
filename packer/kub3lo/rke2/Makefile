@@ -57,7 +57,6 @@ build {
       "remote-exec/01-basics.sh",
       "remote-exec/02-extras.sh",
       "remote-exec/51-rke2.sh",
-      "remote-exec/52-kubectl.sh",
     ]
   }
 }
