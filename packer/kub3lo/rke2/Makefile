@@ -58,7 +58,6 @@ build {
       "remote-exec/02-extras.sh",
       "remote-exec/51-rke2.sh",
       "remote-exec/52-kubectl.sh",
-      "remote-exec/53-helm.sh",
     ]
   }
 }

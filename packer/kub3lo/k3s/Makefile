@@ -91,7 +91,6 @@ build {
       "remote-exec/02-extras.sh",
       "remote-exec/50-setup.sh",
       "remote-exec/51-k3s.sh",
-      "remote-exec/52-helm.sh",
     ]
   }
 }
