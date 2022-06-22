@@ -3,13 +3,12 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := ubuntu
 
-RELEASE  := focal/release-20220615
-ARTIFACT := ubuntu-20.04-server-cloudimg-amd64.img
-
-CHECKSUM := 75a04c7eed58e76dc51f61288b647bc120882378c28e928359948c0db9c7dc45
+RELEASE  := 22.04/release-20220616
+ARTIFACT := ubuntu-22.04-server-cloudimg-amd64.img
+CHECKSUM := 8be55b6b21b0932245e5169fb532dae0e0ff3d541e2866e61ce12e7c38be8315
 
 CPUS      ?= 1
-MEMORY    ?= 1024
+MEMORY    ?= 2048
 DISK_SIZE ?= 10240
 
 PACKER     := $(SELF)/../../bin/packer
@@ -36,7 +35,7 @@ source "qemu" "$(NAME)" {
   disk_size = "$(DISK_SIZE)"
 
   qemuargs = [
-    ["-fda", "$(SELF)/.cache/$(ARTIFACT).iso"],
+    ["-cdrom", "$(SELF)/.cache/$(ARTIFACT).iso"],
     ["-serial", "stdio"],
   ]
 
