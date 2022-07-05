@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-: "${RKE2_RELEASE:=1.23.7}"
-: "${RKE2_VERSION:=v${RKE2_RELEASE}%2Brke2r2}"
+: "${RKE2_RELEASE:=1.24.1}"
+: "${RKE2_VERSION:=v${RKE2_RELEASE}+rke2r2}"
 
 set -o errexit -o nounset -o pipefail
 set -x
