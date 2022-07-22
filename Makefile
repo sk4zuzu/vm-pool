@@ -70,6 +70,7 @@ binaries:
 $(eval $(call PACKER_TASKS,almaos))
 $(eval $(call PACKER_TASKS,alpine))
 $(eval $(call PACKER_TASKS,centos))
+$(eval $(call PACKER_TASKS,debian))
 $(eval $(call PACKER_TASKS,kub3lo))
 $(eval $(call PACKER_TASKS,kubelo))
 $(eval $(call PACKER_TASKS,nebula))
@@ -117,6 +118,7 @@ clean:
 	-cd $(SELF)/packer/almaos/ && make clean
 	-cd $(SELF)/packer/alpine/ && make clean
 	-cd $(SELF)/packer/centos/ && make clean
+	-cd $(SELF)/packer/debian/ && make clean
 	-cd $(SELF)/packer/kub3lo/ && make clean
 	-cd $(SELF)/packer/kubelo/ && make clean
 	-cd $(SELF)/packer/nebula/ && make clean
