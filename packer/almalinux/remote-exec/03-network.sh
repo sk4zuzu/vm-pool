@@ -10,8 +10,7 @@ network:
   config: disabled
 EOF
 
-dnf install -y \
-    systemd-networkd
+dnf install -y systemd-networkd
 
 systemctl enable systemd-networkd
 

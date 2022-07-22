@@ -1,7 +1,7 @@
 SHELL := $(shell which bash)
 SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
-NAME := almaos
+NAME := almalinux
 
 VERSION  := 8.6
 ARTIFACT := AlmaLinux-8-GenericCloud-8.6-20220513.x86_64.qcow2
@@ -67,7 +67,7 @@ export
 all: build
 
 $(SELF)/.cache/cloud-config.yml:
-	mkdir -p $(SELF)/.cache/ && echo "$$CLOUD_CONFIG" >$@
+	install -d $(SELF)/.cache/ && echo "$$CLOUD_CONFIG" >$@
 
 $(SELF)/.cache/$(ARTIFACT).iso: $(SELF)/.cache/cloud-config.yml
 	cloud-localds $@ $^

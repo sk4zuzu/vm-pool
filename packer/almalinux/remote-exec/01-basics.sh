@@ -3,8 +3,7 @@
 set -o errexit -o nounset -o pipefail
 set -x
 
-dnf install -y \
-    epel-release
+dnf install -y epel-release
 
 dnf install -y \
     ca-certificates curl \
