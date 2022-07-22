@@ -8,7 +8,7 @@ export DEBIAN_FRONTEND=noninteractive
 set -o errexit -o nounset -o pipefail
 set -x
 
-awk -i inplace -f- /etc/cloud/cloud.cfg <<'EOF'
+gawk -i inplace -f- /etc/cloud/cloud.cfg <<'EOF'
 $1 == "apt_preserve_sources_list:" { $2 = "true"; found=1 }
 { print }
 END { if (!found) print "apt_preserve_sources_list: true" >> FILENAME }
