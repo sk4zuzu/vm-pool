@@ -52,8 +52,8 @@ build {
   provisioner "shell" {
     execute_command = "sudo -iu root {{.Vars}} bash {{.Path}}"
     scripts = [
-      "remote-exec/00-kernel.sh",
       "remote-exec/01-basics.sh",
+      "remote-exec/02-kernel.sh",
     ]
   }
 }
@@ -66,7 +66,7 @@ export
 all: build
 
 $(SELF)/.cache/cloud-config.yml:
-	mkdir -p $(SELF)/.cache/ && echo "$$CLOUD_CONFIG" >$@
+	install -d $(SELF)/.cache/ && echo "$$CLOUD_CONFIG" >$@
 
 $(SELF)/.cache/$(ARTIFACT).iso: $(SELF)/.cache/cloud-config.yml
 	cloud-localds $@ $^
