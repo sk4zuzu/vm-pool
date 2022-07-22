@@ -77,6 +77,7 @@ $(eval $(call PACKER_TASKS,kubelo))
 $(eval $(call PACKER_TASKS,nebula))
 $(eval $(call PACKER_TASKS,oracle))
 $(eval $(call PACKER_TASKS,redhat))
+$(eval $(call PACKER_TASKS,rocky))
 $(eval $(call PACKER_TASKS,ubuntu))
 
 $(eval $(call TERRAFORM_TASKS,a1,$$(AUTO_APPROVE)))
@@ -132,4 +133,5 @@ clean:
 	-cd $(SELF)/packer/nebula/ && make clean
 	-cd $(SELF)/packer/oracle/ && make clean
 	-cd $(SELF)/packer/redhat/ && make clean
+	-cd $(SELF)/packer/rocky/ && make clean
 	-cd $(SELF)/packer/ubuntu/ && make clean
