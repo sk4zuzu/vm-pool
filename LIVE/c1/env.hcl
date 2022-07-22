@@ -5,7 +5,7 @@ locals {
 
   network = {
     name    = local.env
-    domain  = "almaos.lh"
+    domain  = "centos.lh"
     macaddr = "52:54:02:30:00:%02x"
     subnet  = "10.2.30.0/24"
   }
@@ -21,7 +21,7 @@ locals {
     offset  = 10
     vcpu    = 2
     memory  = "2048"
-    image   = "${get_parent_terragrunt_dir()}/../../packer/almaos/.cache/output/packer-almaos.qcow2"
+    image   = "${get_parent_terragrunt_dir()}/../../packer/centos/.cache/output/packer-centos.qcow2"
     storage = "34359738368"  # 32GiB
     keys    = file("~/.ssh/id_rsa.pub")
   }
@@ -32,7 +32,7 @@ locals {
     offset  = 20
     vcpu    = 2
     memory  = "4096"
-    image   = "${get_parent_terragrunt_dir()}/../../packer/almaos/.cache/output/packer-almaos.qcow2"
+    image   = "${get_parent_terragrunt_dir()}/../../packer/centos/.cache/output/packer-centos.qcow2"
     storage = "34359738368"  # 32GiB
     keys    = file("~/.ssh/id_rsa.pub")
   }
