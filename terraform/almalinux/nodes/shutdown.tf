@@ -1,4 +1,4 @@
-resource "null_resource" "almaos" {
+resource "null_resource" "almalinux" {
   depends_on = [libvirt_domain.nodes]
 
   count = var.shutdown ? var.nodes.count : 0
