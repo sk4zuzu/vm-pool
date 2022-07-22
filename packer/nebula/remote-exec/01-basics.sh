@@ -8,7 +8,7 @@ export DEBIAN_FRONTEND=noninteractive
 set -o errexit -o nounset -o pipefail
 set -x
 
-awk -i inplace -f- /etc/cloud/cloud.cfg <<'EOF'
+gawk -i inplace -f- /etc/cloud/cloud.cfg <<'EOF'
 $1 == "apt_preserve_sources_list:" { $2 = "true"; found=1 }
 { print }
 END { if (!found) print "apt_preserve_sources_list: true" >> FILENAME }
@@ -52,11 +52,14 @@ apt-get -q install -y --no-install-recommends \
     software-properties-common
 
 apt-get -q install -y --no-install-recommends \
+    gawk \
+    htop \
+    iftop iproute2 \
+    jq \
+    mc \
+    net-tools netcat nethogs nmap \
     pv \
-    vim mc htop \
-    net-tools iproute2 netcat nmap \
-    iftop nethogs \
-    jq
+    vim
 
 apt-get -q install -y --no-install-recommends \
     libxml2-utils
