@@ -45,11 +45,13 @@ apt-get -q install -y --no-install-recommends \
     software-properties-common
 
 apt-get -q install -y --no-install-recommends \
+    htop \
+    iftop iproute2 \
+    jq \
+    mc \
+    net-tools netcat nethogs nmap \
     pv \
-    vim mc htop \
-    net-tools iproute2 netcat nmap \
-    iftop nethogs \
-    jq
+    vim
 
 apt-get -q install -y --no-install-recommends \
     haproxy
