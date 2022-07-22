@@ -6,6 +6,9 @@ TERRAFORM_VERSION  ?= 1.2.1
 TERRAGRUNT_VERSION ?= v0.37.1
 
 TARGETS = \
+$(SELF)/bin/OVMF.fd \
+$(SELF)/bin/OVMF_CODE.fd \
+$(SELF)/bin/OVMF_VARS.fd \
 $(SELF)/bin/packer \
 $(SELF)/bin/terraform \
 $(SELF)/bin/terragrunt
@@ -40,6 +43,15 @@ all: $(TARGETS)
 
 clean:
 	-rm -f $(TARGETS)
+
+$(SELF)/bin/OVMF.fd:
+	curl -fsSL -o $@ https://retrage.github.io/edk2-nightly/bin/RELEASEX64_OVMF.fd
+
+$(SELF)/bin/OVMF_CODE.fd:
+	curl -fsSL -o $@ https://retrage.github.io/edk2-nightly/bin/RELEASEX64_OVMF_CODE.fd
+
+$(SELF)/bin/OVMF_VARS.fd:
+	curl -fsSL -o $@ https://retrage.github.io/edk2-nightly/bin/RELEASEX64_OVMF_VARS.fd
 
 $(eval \
 	$(call HASHICORP_RELEASE_INSTALL,packer,$(PACKER_VERSION)))
