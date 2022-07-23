@@ -3,20 +3,22 @@
 set -o errexit -o nounset -o pipefail
 set -x
 
-yum install -y "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
+dnf install -y oracle-epel-release-el8
 
-yum install -y \
-    ca-certificates \
-    sudo wget gpg curl
-
-yum install -y \
+dnf install -y \
+    ca-certificates curl \
+    gpg \
+    htop \
+    iftop iproute \
+    jq \
+    mc \
+    net-tools netcat nethogs nmap \
     pv \
-    vim mc htop \
-    net-tools iproute2 netcat nmap \
-    iftop nethogs \
-    jq
+    sudo \
+    vim \
+    wget
 
-yum update -y
+dnf update -y
 
 install -d -o root -g cloud-user -m ug=rwx,o= /terraform{,/remote-exec}
 

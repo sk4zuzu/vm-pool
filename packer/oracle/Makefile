@@ -3,10 +3,10 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := oracle
 
-VERSION  := 7U9
-ARTIFACT := OL$(VERSION)_x86_64-olvm-b86.qcow2
-
-CHECKSUM := 2ef4c10c0f6a0b17844742adc9ede7eb64a2c326e374068b7175f2ecbb1956fb
+RELEASE  := OL8/u6
+VERSION  := 8U6_x86_64-kvm-b135
+ARTIFACT := OL$(VERSION).qcow
+CHECKSUM := 7675f0ed70de40095ffe6c44fe352923db52026f90a5fbd5a352f5bc0041bd7b
 
 CPUS      ?= 1
 MEMORY    ?= 1024
@@ -34,7 +34,7 @@ source "qemu" "$(NAME)" {
   accelerator = "kvm"
 
   disk_image   = true
-  iso_url      = "http://yum.oracle.com/templates/OracleLinux/OL7/u9/x86_64/$(ARTIFACT)"
+  iso_url      = "https://yum.oracle.com/templates/OracleLinux/$(RELEASE)/x86_64/$(ARTIFACT)"
   iso_checksum = "$(CHECKSUM)"
 
   memory    = "$(MEMORY)"
