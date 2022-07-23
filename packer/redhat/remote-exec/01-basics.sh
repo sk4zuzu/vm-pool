@@ -10,28 +10,26 @@ subscription-manager register \
     --force
 
 subscription-manager repos \
-    --enable rhel-7-server-rpms \
-    --enable rhel-7-server-extras-rpms \
-    --enable rhel-server-rhscl-7-rpms
+    --enable codeready-builder-for-rhel-8-x86_64-rpms
 
-yum install -y "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
+dnf install -y "https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm"
 
-yum repolist enabled
+dnf repolist enabled
 
-yum makecache fast
+dnf makecache
 
-yum update -y
+dnf update -y
 
-yum install -y \
+dnf install -y \
     curl \
-    wget
-
-yum install -y \
+    htop \
+    iftop iproute \
+    jq \
+    mc \
+    net-tools netcat nethogs nmap \
     pv \
-    vim mc htop \
-    net-tools iproute2 netcat nmap \
-    iftop nethogs \
-    jq
+    vim \
+    wget
 
 install -d -o root -g cloud-user -m ug=rwx,o= /terraform{,/remote-exec}
 

@@ -5,10 +5,10 @@ NAME := redhat
 
 include $(SELF)/subscription.mk
 
-VERSION  := 7.8
-ARTIFACT := rhel-server-$(VERSION)-x86_64-kvm.qcow2
-
-CHECKSUM := ce4943d38e00a5c81272ebd3f3542b2d9557382d1c331c46ed553fdcca778b2d
+# https://access.redhat.com/downloads/content/479/ver=/rhel---8/8.6/x86_64/product-software
+VERSION  := 8.6
+ARTIFACT := rhel-$(VERSION)-x86_64-kvm.qcow2
+CHECKSUM := c9b32bef88d605d754b932aad0140e1955ab9446818c70c4c36ca75d6f442fe9
 
 CPUS      ?= 1
 MEMORY    ?= 1024
@@ -38,7 +38,7 @@ source "qemu" "$(NAME)" {
   disk_size = "$(DISK_SIZE)"
 
   qemuargs = [
-    ["-fda", "$(SELF)/.cache/$(ARTIFACT).iso"],
+    ["-cdrom", "$(SELF)/.cache/$(ARTIFACT).iso"],
   ]
 
   ssh_username = "cloud-user"
