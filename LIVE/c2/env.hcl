@@ -21,7 +21,7 @@ locals {
     offset  = 10
     vcpu    = 2
     memory  = "2048"
-    image   = "${get_parent_terragrunt_dir()}/../../packer/alma/.cache/output/packer-almalinux.qcow2"
+    image   = "${get_parent_terragrunt_dir()}/../../packer/almalinux/.cache/output/packer-almalinux.qcow2"
     storage = "34359738368"  # 32GiB
     keys    = file("~/.ssh/id_rsa.pub")
   }
@@ -32,7 +32,7 @@ locals {
     offset  = 20
     vcpu    = 2
     memory  = "4096"
-    image   = "${get_parent_terragrunt_dir()}/../../packer/alma/.cache/output/packer-almalinux.qcow2"
+    image   = "${get_parent_terragrunt_dir()}/../../packer/almalinux/.cache/output/packer-almalinux.qcow2"
     storage = "34359738368"  # 32GiB
     keys    = file("~/.ssh/id_rsa.pub")
   }
