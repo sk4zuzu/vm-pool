@@ -1,5 +1,5 @@
-generate "provider" {
-  path      = "provider.tf"
+generate "terraform" {
+  path      = "terraform.tf"
   if_exists = "overwrite_terragrunt"
   contents  = <<EOF
 terraform {
@@ -11,6 +11,13 @@ terraform {
     }
   }
 }
+EOF
+}
+
+generate "provider" {
+  path      = "provider.tf"
+  if_exists = "overwrite_terragrunt"
+  contents  = <<EOF
 provider "libvirt" {
   uri = "qemu:///system"
 }
