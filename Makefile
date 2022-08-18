@@ -94,6 +94,7 @@ $(eval $(call TERRAFORM_TASKS,n1,$$(AUTO_APPROVE)))
 $(eval $(call TERRAFORM_TASKS,o1,$$(AUTO_APPROVE)))
 $(eval $(call TERRAFORM_TASKS,r1,$$(AUTO_APPROVE)))
 $(eval $(call TERRAFORM_TASKS,u1,$$(AUTO_APPROVE)))
+$(eval $(call TERRAFORM_TASKS,v1,$$(AUTO_APPROVE)))
 
 $(eval $(call BACKUP_TASKS,a1))
 $(eval $(call BACKUP_TASKS,c1))
@@ -108,6 +109,7 @@ $(eval $(call BACKUP_TASKS,n1))
 $(eval $(call BACKUP_TASKS,o1))
 $(eval $(call BACKUP_TASKS,r1))
 $(eval $(call BACKUP_TASKS,u1))
+$(eval $(call BACKUP_TASKS,v1))
 
 $(eval $(call SSH_TASKS,a1,$$(BECOME_ROOT),,alpine@10.2.20.))
 $(eval $(call SSH_TASKS,c1,$$(BECOME_ROOT),,centos@10.2.30.))
@@ -122,6 +124,7 @@ $(eval $(call SSH_TASKS,n1,$$(BECOME_ROOT),,ubuntu@10.2.50.))
 $(eval $(call SSH_TASKS,o1,$$(BECOME_ROOT),,cloud-user@10.2.60.))
 $(eval $(call SSH_TASKS,r1,$$(BECOME_ROOT),,cloud-user@10.2.70.))
 $(eval $(call SSH_TASKS,u1,$$(BECOME_ROOT),,ubuntu@10.2.80.))
+$(eval $(call SSH_TASKS,v1,$$(BECOME_ROOT),,ubuntu@10.2.51.))
 
 .PHONY: clean
 
