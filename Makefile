@@ -74,6 +74,7 @@ $(eval $(call PACKER_TASKS,debian))
 $(eval $(call PACKER_TASKS,fedora))
 $(eval $(call PACKER_TASKS,kub3lo))
 $(eval $(call PACKER_TASKS,kubelo))
+$(eval $(call PACKER_TASKS,libvirt))
 $(eval $(call PACKER_TASKS,nebula))
 $(eval $(call PACKER_TASKS,oracle))
 $(eval $(call PACKER_TASKS,redhat))
@@ -133,6 +134,7 @@ clean:
 	-cd $(SELF)/packer/fedora/ && make clean
 	-cd $(SELF)/packer/kub3lo/ && make clean
 	-cd $(SELF)/packer/kubelo/ && make clean
+	-cd $(SELF)/packer/libvirt/ && make clean
 	-cd $(SELF)/packer/nebula/ && make clean
 	-cd $(SELF)/packer/oracle/ && make clean
 	-cd $(SELF)/packer/redhat/ && make clean
