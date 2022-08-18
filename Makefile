@@ -49,7 +49,7 @@ define SSH_TASKS
 $(1)-ssh: $(1)-ssh10
 
 $(1)-ssh%:
-	@ssh $(SSH_OPTIONS) $(3)$$* $(2)
+	@ssh $(SSH_OPTIONS) $(if $(3),-o ProxyCommand='ssh $(SSH_OPTIONS) $(3) -W %h:%p',) $(4)$$* $(2)
 endef
 
 .PHONY: all confirm yes become requirements binaries
@@ -108,19 +108,19 @@ $(eval $(call BACKUP_TASKS,o1))
 $(eval $(call BACKUP_TASKS,r1))
 $(eval $(call BACKUP_TASKS,u1))
 
-$(eval $(call SSH_TASKS,a1,$$(BECOME_ROOT),alpine@10.2.20.))
-$(eval $(call SSH_TASKS,c1,$$(BECOME_ROOT),centos@10.2.30.))
-$(eval $(call SSH_TASKS,c2,$$(BECOME_ROOT),almalinux@10.2.31.))
-$(eval $(call SSH_TASKS,c3,$$(BECOME_ROOT),rocky@10.2.32.))
-$(eval $(call SSH_TASKS,d1,$$(BECOME_ROOT),debian@10.2.81.))
-$(eval $(call SSH_TASKS,f1,$$(BECOME_ROOT),fedora@10.2.90.))
-$(eval $(call SSH_TASKS,k1,$$(BECOME_ROOT),ubuntu@10.2.40.))
-$(eval $(call SSH_TASKS,k2,$$(BECOME_ROOT),ubuntu@10.2.41.))
-$(eval $(call SSH_TASKS,k3,$$(BECOME_ROOT),alpine@10.2.42.))
-$(eval $(call SSH_TASKS,n1,$$(BECOME_ROOT),ubuntu@10.2.50.))
-$(eval $(call SSH_TASKS,o1,$$(BECOME_ROOT),cloud-user@10.2.60.))
-$(eval $(call SSH_TASKS,r1,$$(BECOME_ROOT),cloud-user@10.2.70.))
-$(eval $(call SSH_TASKS,u1,$$(BECOME_ROOT),ubuntu@10.2.80.))
+$(eval $(call SSH_TASKS,a1,$$(BECOME_ROOT),,alpine@10.2.20.))
+$(eval $(call SSH_TASKS,c1,$$(BECOME_ROOT),,centos@10.2.30.))
+$(eval $(call SSH_TASKS,c2,$$(BECOME_ROOT),,almalinux@10.2.31.))
+$(eval $(call SSH_TASKS,c3,$$(BECOME_ROOT),,rocky@10.2.32.))
+$(eval $(call SSH_TASKS,d1,$$(BECOME_ROOT),,debian@10.2.81.))
+$(eval $(call SSH_TASKS,f1,$$(BECOME_ROOT),,fedora@10.2.90.))
+$(eval $(call SSH_TASKS,k1,$$(BECOME_ROOT),,ubuntu@10.2.40.))
+$(eval $(call SSH_TASKS,k2,$$(BECOME_ROOT),,ubuntu@10.2.41.))
+$(eval $(call SSH_TASKS,k3,$$(BECOME_ROOT),,alpine@10.2.42.))
+$(eval $(call SSH_TASKS,n1,$$(BECOME_ROOT),,ubuntu@10.2.50.))
+$(eval $(call SSH_TASKS,o1,$$(BECOME_ROOT),,cloud-user@10.2.60.))
+$(eval $(call SSH_TASKS,r1,$$(BECOME_ROOT),,cloud-user@10.2.70.))
+$(eval $(call SSH_TASKS,u1,$$(BECOME_ROOT),,ubuntu@10.2.80.))
 
 .PHONY: clean
 
