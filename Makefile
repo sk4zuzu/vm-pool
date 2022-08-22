@@ -62,6 +62,10 @@ c confirm:
 b become:
 	@: $(eval BECOME_ROOT := -t sudo -i)
 
+# EXAMPLE: make c v1-{destroy,apply} sleep30 u2-{destroy,apply}
+s% sleep%:
+	seq $* | while read -r RETRY; do echo "$$RETRY" && sleep 1; done
+
 requirements: binaries
 
 binaries:
