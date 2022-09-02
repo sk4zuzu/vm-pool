@@ -14,7 +14,7 @@ rc-update add openntpd
 apk --no-cache add util-linux cloud-init
 setup-cloud-init
 
-(yes | setup-disk -v -m sys /dev/vda) || true
+(yes | setup-disk -v -m sys /dev/vda) ||:
 
 mount /dev/vda3 /mnt/
 mount /dev/vda1 /mnt/boot/
@@ -23,7 +23,7 @@ mount -t proc /proc /mnt/proc/
 mount --rbind /sys /mnt/sys/
 mount --rbind /dev /mnt/dev/
 
-cat >/mnt/etc/ssh/sshd_config <<EOF
+cat >/mnt/etc/ssh/sshd_config <<'EOF'
 AuthorizedKeysFile .ssh/authorized_keys
 AllowAgentForwarding yes
 AllowTcpForwarding yes
@@ -33,7 +33,7 @@ Subsystem sftp /usr/lib/ssh/sftp-server
 PermitRootLogin yes
 EOF
 
-cat >/mnt/etc/cgconfig.conf <<EOF
+cat >/mnt/etc/cgconfig.conf <<'EOF'
 mount {
   blkio   = /cgroup/blkio;
   cpu     = /cgroup/cpu;
@@ -46,7 +46,7 @@ mount {
 }
 EOF
 
-cat >/mnt/etc/update-extlinux.d/override.conf <<EOF
+cat >/mnt/etc/update-extlinux.d/override.conf <<'EOF'
 default_kernel_opts="quiet rootfstype=ext4 cgroup_enable=cpuset cgroup_enable=memory cgroup_memory=1"
 EOF
 
