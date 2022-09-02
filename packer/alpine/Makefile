@@ -44,42 +44,18 @@ source "qemu" "$(NAME)" {
 
   headless = $(HEADLESS)
 
+  http_directory = "$(SELF)/remote-exec/"
+
   boot_wait = "10s"
 
   boot_command = [
     "root<enter><wait1s>",
 
-    "setup-hostname alpine<enter>",
+    "ifconfig eth0 up && udhcpc -i eth0<enter>",
 
-    "cat >/etc/network/interfaces <<EOF<enter>",
-    "auto lo<enter>",
-    "iface lo inet loopback<enter>",
-    "auto eth0<enter>",
-    "iface eth0 inet dhcp<enter>",
-    "EOF<enter>",
+    "wget -qO /root/00-bootstrap.sh http://{{.HTTPIP}}:{{.HTTPPort}}/00-bootstrap.sh<enter>",
 
-    "cat >/etc/resolv.conf <<EOF<enter>",
-    "nameserver 1.1.1.1<enter>",
-    "EOF<enter>",
-
-    "rc-service networking start<enter>",
-    "rc-update add networking boot<enter>",
-
-    "cat >/etc/apk/repositories <<EOF<enter>",
-    "http://dl-cdn.alpinelinux.org/alpine/v$(RELEASE)/main<enter>",
-    "http://dl-cdn.alpinelinux.org/alpine/v$(RELEASE)/community<enter>",
-    "EOF<enter>",
-
-    "apk --no-cache add bash openssh openssh-server-pam<enter>",
-    "echo PermitRootLogin yes >>/etc/ssh/sshd_config<enter>",
-    "rc-service sshd start<enter>",
-    "rc-update add sshd<enter>",
-
-    "passwd root <<EOF<enter>",
-    "asd<enter>",
-    "asd<enter>",
-    "asd<enter>",
-    "EOF<enter>",
+    "/bin/ash /root/00-bootstrap.sh<enter>",
   ]
 }
 build {
