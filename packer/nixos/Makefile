@@ -3,11 +3,10 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := nixos
 
-RELEASE  := 22.05
-VERSION  := $(RELEASE).3893.040c6d8374d
+RELEASE  := 22.11
+VERSION  := $(RELEASE)pre422009.fdebb81f45a
 ARTIFACT := nixos-minimal-$(VERSION)-x86_64-linux.iso
-
-CHECKSUM := 16974f7f31ed3a39f0bfcc3cb4eda0295b65c3d32fc9cc0b7da60d9a8e580ab3
+CHECKSUM := cb41a4246f645bd16870cf19de264ed53ef0bc9b266615402fbaa29e0b77e6a5
 
 CPUS      ?= 1
 MEMORY    ?= 1024
@@ -22,7 +21,7 @@ source "qemu" "$(NAME)" {
   accelerator = "kvm"
 
   disk_image   = false
-  iso_url      = "https://releases.nixos.org/nixos/$(RELEASE)/nixos-$(VERSION)/$(ARTIFACT)"
+  iso_url      = "https://releases.nixos.org/nixos/unstable/nixos-$(VERSION)/$(ARTIFACT)"
   iso_checksum = "$(CHECKSUM)"
 
   memory    = "$(MEMORY)"
