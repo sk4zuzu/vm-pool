@@ -82,6 +82,7 @@ $(eval $(call PACKER_TASKS,kubelo))
 $(eval $(call PACKER_TASKS,libvirt))
 $(eval $(call PACKER_TASKS,nebula))
 $(eval $(call PACKER_TASKS,nixos))
+$(eval $(call PACKER_TASKS,openbsd))
 $(eval $(call PACKER_TASKS,oracle))
 $(eval $(call PACKER_TASKS,redhat))
 $(eval $(call PACKER_TASKS,rocky))
@@ -89,6 +90,7 @@ $(eval $(call PACKER_TASKS,ubuntu))
 
 $(eval $(call TERRAFORM_TASKS,a1,$$(AUTO_APPROVE)))
 $(eval $(call TERRAFORM_TASKS,b1,$$(AUTO_APPROVE)))
+$(eval $(call TERRAFORM_TASKS,b2,$$(AUTO_APPROVE)))
 $(eval $(call TERRAFORM_TASKS,c1,$$(AUTO_APPROVE)))
 $(eval $(call TERRAFORM_TASKS,c2,$$(AUTO_APPROVE)))
 $(eval $(call TERRAFORM_TASKS,c3,$$(AUTO_APPROVE)))
@@ -107,6 +109,7 @@ $(eval $(call TERRAFORM_TASKS,x1,$$(AUTO_APPROVE)))
 
 $(eval $(call BACKUP_TASKS,a1))
 $(eval $(call BACKUP_TASKS,b1))
+$(eval $(call BACKUP_TASKS,b2))
 $(eval $(call BACKUP_TASKS,c1))
 $(eval $(call BACKUP_TASKS,c2))
 $(eval $(call BACKUP_TASKS,c3))
@@ -125,6 +128,7 @@ $(eval $(call BACKUP_TASKS,x1))
 
 $(eval $(call SSH_TASKS,a1,$$(BECOME_ROOT),,alpine@10.2.20.))
 $(eval $(call SSH_TASKS,b1,$$(BECOME_ROOT),,freebsd@10.2.110.))
+$(eval $(call SSH_TASKS,b2,$$(BECOME_ROOT),,openbsd@10.2.111.))
 $(eval $(call SSH_TASKS,c1,$$(BECOME_ROOT),,centos@10.2.30.))
 $(eval $(call SSH_TASKS,c2,$$(BECOME_ROOT),,almalinux@10.2.31.))
 $(eval $(call SSH_TASKS,c3,$$(BECOME_ROOT),,rocky@10.2.32.))
@@ -156,6 +160,7 @@ clean:
 	-cd $(SELF)/packer/libvirt/ && make clean
 	-cd $(SELF)/packer/nixos/ && make clean
 	-cd $(SELF)/packer/nebula/ && make clean
+	-cd $(SELF)/packer/openbsd/ && make clean
 	-cd $(SELF)/packer/oracle/ && make clean
 	-cd $(SELF)/packer/redhat/ && make clean
 	-cd $(SELF)/packer/rocky/ && make clean
