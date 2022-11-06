@@ -1,0 +1,9 @@
+What timezone are you in = UTC
+System hostname = openbsd
+Start sshd(8) by default = yes
+Allow root ssh login = yes
+Password for root = asd
+Location of sets = cd0
+Set name(s) = -game*.tgz -x*.tgz
+Continue without verification = yes
+URL to autopartitioning template for disklabel = http://10.0.2.2:8686/00-disklabel.txt
