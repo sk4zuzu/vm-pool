@@ -4,9 +4,9 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 NAME := kub3lo
 
 RELEASE  := 3.16
-VERSION  := $(RELEASE).0
+VERSION  := $(RELEASE).2
 ARTIFACT := alpine-virt-$(VERSION)-x86_64.iso
-CHECKSUM := ba8007f74f9b54fbae3b2520da577831b4834778a498d732f091260c61aa7ca1
+CHECKSUM := 6c7cb998ec2c8925d5a1239410a4d224b771203f916a18f8015f31169dd767a2
 
 CPUS      ?= 1
 MEMORY    ?= 1024
@@ -49,12 +49,8 @@ source "qemu" "$(NAME)" {
 
   boot_command = [
     "root<enter><wait1s>",
-
     "ifconfig eth0 up && udhcpc -i eth0<enter>",
-
-    "wget -qO /root/00-bootstrap.sh http://{{.HTTPIP}}:{{.HTTPPort}}/00-bootstrap.sh<enter>",
-
-    "/bin/ash /root/00-bootstrap.sh<enter>",
+    "wget -qO- http://{{.HTTPIP}}:{{.HTTPPort}}/00-bootstrap.sh | ash<enter>",
   ]
 }
 build {
