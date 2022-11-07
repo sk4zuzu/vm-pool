@@ -16,7 +16,7 @@ locals {
   network = {
     name    = local.env
     domain  = "ubuntu.lh"
-    macaddr = "52:54:02:81:00:%02x"
+    macaddr = "52:54:02:00:81:%02x"
     subnet  = "10.2.81.0/24"
   }
 

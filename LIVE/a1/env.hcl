@@ -6,7 +6,7 @@ locals {
   network = {
     name    = local.env
     domain  = "alpine.lh"
-    macaddr = "52:54:02:20:00:%02x"
+    macaddr = "52:54:02:00:20:%02x"
     subnet  = "10.2.20.0/24"
   }
 
@@ -16,7 +16,7 @@ locals {
   }
 
   nodes1 = {
-    count   = 3
+    count   = 1
     prefix  = "${local.env}a"
     offset  = 10
     vcpu    = 2
@@ -27,7 +27,7 @@ locals {
   }
 
   nodes2 = {
-    count   = 3
+    count   = 2
     prefix  = "${local.env}b"
     offset  = 20
     vcpu    = 2

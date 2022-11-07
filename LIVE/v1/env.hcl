@@ -6,7 +6,7 @@ locals {
   network = {
     name    = local.env
     domain  = "libvirt.lh"
-    macaddr = "52:54:02:51:00:%02x"
+    macaddr = "52:54:02:00:51:%02x"
     subnet  = "10.2.51.0/24"
   }
 

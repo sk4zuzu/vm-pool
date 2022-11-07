@@ -6,7 +6,7 @@ locals {
   network = {
     name    = local.env
     domain  = "nixos.lh"
-    macaddr = "52:54:02:10:00:%02x"
+    macaddr = "52:54:02:01:00:%02x"
     subnet  = "10.2.100.0/24"
   }
 

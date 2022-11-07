@@ -6,7 +6,7 @@ locals {
   network = {
     name    = local.env
     domain  = "kubelo.lh"
-    macaddr = "52:54:02:40:00:%02x"
+    macaddr = "52:54:02:00:40:%02x"
     subnet  = "10.2.40.0/24"
   }
 

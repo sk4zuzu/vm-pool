@@ -6,7 +6,7 @@ locals {
   network = {
     name    = local.env
     domain  = "centos.lh"
-    macaddr = "52:54:02:30:00:%02x"
+    macaddr = "52:54:02:00:30:%02x"
     subnet  = "10.2.30.0/24"
   }
 
@@ -31,7 +31,7 @@ locals {
     prefix  = "${local.env}b"
     offset  = 20
     vcpu    = 2
-    memory  = "4096"
+    memory  = "3072"
     image   = "${get_parent_terragrunt_dir()}/../../packer/centos/.cache/output/packer-centos.qcow2"
     storage = "34359738368"  # 32GiB
     keys    = file("~/.ssh/id_rsa.pub")

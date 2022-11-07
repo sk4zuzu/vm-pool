@@ -6,7 +6,7 @@ locals {
   network = {
     name    = local.env
     domain  = "fedora.lh"
-    macaddr = "52:54:02:90:00:%02x"
+    macaddr = "52:54:02:00:90:%02x"
     subnet  = "10.2.90.0/24"
   }
 
@@ -16,7 +16,7 @@ locals {
   }
 
   nodes1 = {
-    count   = 3
+    count   = 1
     prefix  = "${local.env}a"
     offset  = 10
     vcpu    = 2
@@ -29,7 +29,7 @@ locals {
   }
 
   nodes2 = {
-    count   = 3
+    count   = 2
     prefix  = "${local.env}b"
     offset  = 20
     vcpu    = 2

@@ -6,7 +6,7 @@ locals {
   network = {
     name    = local.env
     domain  = "rocky.lh"
-    macaddr = "52:54:02:32:00:%02x"
+    macaddr = "52:54:02:00:32:%02x"
     subnet  = "10.2.32.0/24"
   }
 
@@ -39,7 +39,7 @@ locals {
       vars = "${get_parent_terragrunt_dir()}/../../bin/OVMF_VARS.fd"
     }
     vcpu     = 2
-    memory   = "4096"
+    memory   = "3072"
     image    = "${get_parent_terragrunt_dir()}/../../packer/rocky/.cache/output/packer-rocky.qcow2"
     storage  = "34359738368"  # 32GiB
     keys     = file("~/.ssh/id_rsa.pub")
