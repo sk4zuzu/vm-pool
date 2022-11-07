@@ -6,7 +6,8 @@ NAME := redhat
 include $(SELF)/subscription.mk
 
 # https://access.redhat.com/downloads/content/479/ver=/rhel---8/8.6/x86_64/product-software
-VERSION  := 8.6
+RELEASE  := 8
+VERSION  := $(RELEASE).6
 ARTIFACT := rhel-$(VERSION)-x86_64-kvm.qcow2
 CHECKSUM := c9b32bef88d605d754b932aad0140e1955ab9446818c70c4c36ca75d6f442fe9
 
@@ -21,7 +22,7 @@ HEADLESS   ?= true
 define CLOUD_CONFIG
 #cloud-config
 ssh_pwauth: true
-password: redhat
+password: asd
 chpasswd:
   expire: false
 endef
@@ -42,7 +43,7 @@ source "qemu" "$(NAME)" {
   ]
 
   ssh_username = "cloud-user"
-  ssh_password = "redhat"
+  ssh_password = "asd"
 
   output_directory = "$(SELF)/.cache/output/"
   vm_name          = "packer-$(NAME).qcow2"

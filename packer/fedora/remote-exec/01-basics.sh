@@ -19,6 +19,4 @@ dnf install -y \
     pv \
     vim
 
-install -d -o root -g fedora -m ug=rwx,o= /terraform{,/remote-exec}
-
 sync

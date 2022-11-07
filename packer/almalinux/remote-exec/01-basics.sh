@@ -20,6 +20,4 @@ dnf install -y \
     pv \
     vim
 
-install -d -o root -g almalinux -m ug=rwx,o= /terraform{,/remote-exec}
-
 sync

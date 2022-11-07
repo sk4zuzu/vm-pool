@@ -31,6 +31,4 @@ dnf install -y \
     vim \
     wget
 
-install -d -o root -g cloud-user -m ug=rwx,o= /terraform{,/remote-exec}
-
 sync

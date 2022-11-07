@@ -67,6 +67,4 @@ apt-get -q clean
 pip3 --no-cache-dir install \
     pyyaml
 
-install -d -o root -g ubuntu -m ug=rwx,o= /terraform{,/remote-exec}
-
 sync

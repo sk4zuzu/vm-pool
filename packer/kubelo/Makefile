@@ -3,8 +3,9 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := kubelo
 
-RELEASE  := focal/release-20220711
-ARTIFACT := ubuntu-20.04-server-cloudimg-amd64.img
+RELEASE  := 20.04
+VERSION  := release-20220711
+ARTIFACT := ubuntu-$(RELEASE)-server-cloudimg-amd64.img
 CHECKSUM := 692406940d6a8d6eb8196732b83a7fcb9d5bed4bcf493526a1aece05ceca452b
 
 CPUS      ?= 1
@@ -17,7 +18,7 @@ HEADLESS   ?= true
 
 define CLOUD_CONFIG
 #cloud-config
-password: ubuntu
+password: asd
 ssh_pwauth: true
 chpasswd:
   expire: false
@@ -28,7 +29,7 @@ source "qemu" "$(NAME)" {
   accelerator = "kvm"
 
   disk_image   = true
-  iso_url      = "https://cloud-images.ubuntu.com/releases/$(RELEASE)/$(ARTIFACT)"
+  iso_url      = "https://cloud-images.ubuntu.com/releases/$(RELEASE)/$(VERSION)/$(ARTIFACT)"
   iso_checksum = "$(CHECKSUM)"
 
   memory    = "$(MEMORY)"
@@ -39,7 +40,7 @@ source "qemu" "$(NAME)" {
   ]
 
   ssh_username = "ubuntu"
-  ssh_password = "ubuntu"
+  ssh_password = "asd"
 
   output_directory = "$(SELF)/.cache/output/"
   vm_name          = "packer-$(NAME).qcow2"

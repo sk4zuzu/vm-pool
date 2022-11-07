@@ -35,6 +35,4 @@ policy_rc_d_enable
 
 apt-get -q clean
 
-install -d -o root -g debian -m ug=rwx,o= /terraform{,/remote-exec}
-
 sync

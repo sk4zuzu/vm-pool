@@ -6,7 +6,6 @@ NAME := alpine
 RELEASE  := 3.16
 VERSION  := $(RELEASE).0
 ARTIFACT := alpine-virt-$(VERSION)-x86_64.iso
-
 CHECKSUM := ba8007f74f9b54fbae3b2520da577831b4834778a498d732f091260c61aa7ca1
 
 CPUS      ?= 1

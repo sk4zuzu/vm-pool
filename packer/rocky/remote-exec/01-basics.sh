@@ -22,6 +22,4 @@ dnf install -y \
     pv \
     vim
 
-install -d -o root -g rocky -m ug=rwx,o= /terraform{,/remote-exec}
-
 sync

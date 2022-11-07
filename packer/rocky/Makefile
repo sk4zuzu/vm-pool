@@ -20,7 +20,7 @@ HEADLESS   ?= true
 define CLOUD_CONFIG
 #cloud-config
 ssh_pwauth: true
-password: rocky
+password: asd
 chpasswd:
   expire: false
 endef
@@ -45,7 +45,7 @@ source "qemu" "$(NAME)" {
   ]
 
   ssh_username = "rocky"
-  ssh_password = "rocky"
+  ssh_password = "asd"
 
   output_directory = "$(SELF)/.cache/output/"
   vm_name          = "packer-$(NAME).qcow2"

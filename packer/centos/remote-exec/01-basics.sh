@@ -16,6 +16,4 @@ yum install -y \
     iftop nethogs \
     jq
 
-install -d -o root -g centos -m ug=rwx,o= /terraform{,/remote-exec}
-
 sync

@@ -3,8 +3,9 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := debian
 
-RELEASE  := bullseye/20220711-1073
-ARTIFACT := debian-11-generic-amd64-20220711-1073.qcow2
+RELEASE  := bullseye
+VERSION  := 20220711-1073
+ARTIFACT := debian-11-generic-amd64-$(VERSION).qcow2
 CHECKSUM := 6f6896d5740efb095d30e5118aeced30eda596dd5cddc28929767dc568f1833d84621a7b71d0aa403fcae3aef9c566ce7403b5a59dcaa74f6d3ea0e171ec38b0
 
 CPUS      ?= 1
@@ -17,7 +18,7 @@ HEADLESS   ?= true
 
 define CLOUD_CONFIG
 #cloud-config
-password: debian
+password: asd
 ssh_pwauth: true
 chpasswd:
   expire: false
@@ -28,7 +29,7 @@ source "qemu" "$(NAME)" {
   accelerator = "kvm"
 
   disk_image   = true
-  iso_url      = "https://cloud.debian.org/images/cloud/$(RELEASE)/$(ARTIFACT)"
+  iso_url      = "https://cloud.debian.org/images/cloud/$(RELEASE)/$(VERSION)/$(ARTIFACT)"
   iso_checksum = "$(CHECKSUM)"
 
   memory    = "$(MEMORY)"
@@ -40,7 +41,7 @@ source "qemu" "$(NAME)" {
   ]
 
   ssh_username = "debian"
-  ssh_password = "debian"
+  ssh_password = "asd"
 
   output_directory = "$(SELF)/.cache/output/"
   vm_name          = "packer-$(NAME).qcow2"
@@ -54,7 +55,7 @@ build {
     scripts = [
       "remote-exec/01-basics.sh",
       "remote-exec/02-kernel.sh",
-      "remote-exec/03-systemd.sh",
+      "remote-exec/99-fixes.sh",
     ]
   }
 }

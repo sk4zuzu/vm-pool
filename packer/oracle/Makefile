@@ -25,7 +25,7 @@ users:
     lock_passwd: false
 chpasswd:
   list:
-    - cloud-user:oracle
+    - cloud-user:asd
   expire: false
 endef
 
@@ -45,7 +45,7 @@ source "qemu" "$(NAME)" {
   ]
 
   ssh_username = "cloud-user"
-  ssh_password = "oracle"
+  ssh_password = "asd"
 
   output_directory = "$(SELF)/.cache/output/"
   vm_name          = "packer-$(NAME).qcow2"

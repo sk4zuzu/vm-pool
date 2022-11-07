@@ -3,7 +3,8 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := centos
 
-VERSION  := 7.5
+RELEASE  := 7
+VERSION  := $(RELEASE).5
 ARTIFACT := CentOS-7-x86_64-GenericCloud-1804_02.qcow2
 CHECKSUM := d7d720e4c2970a4dade749bf504bf8afe8b638a30c614efc43a6c769c1b5bc46
 
@@ -18,7 +19,7 @@ HEADLESS   ?= true
 define CLOUD_CONFIG
 #cloud-config
 ssh_pwauth: true
-password: centos
+password: asd
 chpasswd:
   expire: false
 endef
@@ -28,7 +29,7 @@ source "qemu" "$(NAME)" {
   accelerator = "kvm"
 
   disk_image   = true
-  iso_url      = "https://cloud.centos.org/centos/7/images/$(ARTIFACT)"
+  iso_url      = "https://cloud.centos.org/centos/$(RELEASE)/images/$(ARTIFACT)"
   iso_checksum = "$(CHECKSUM)"
 
   memory    = "$(MEMORY)"
@@ -39,7 +40,7 @@ source "qemu" "$(NAME)" {
   ]
 
   ssh_username = "centos"
-  ssh_password = "centos"
+  ssh_password = "asd"
 
   output_directory = "$(SELF)/.cache/output/"
   vm_name          = "packer-$(NAME).qcow2"

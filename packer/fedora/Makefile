@@ -3,8 +3,9 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := fedora
 
-RELEASE  := 36/Cloud
-ARTIFACT := Fedora-Cloud-Base-36-1.5.x86_64.qcow2
+RELEASE  := 36
+VERSION  := $(RELEASE)-1.5
+ARTIFACT := Fedora-Cloud-Base-$(VERSION).x86_64.qcow2
 CHECKSUM := ca9e514cc2f4a7a0188e7c68af60eb4e573d2e6850cc65b464697223f46b4605
 
 CPUS      ?= 1
@@ -18,7 +19,7 @@ HEADLESS   ?= true
 define CLOUD_CONFIG
 #cloud-config
 ssh_pwauth: true
-password: fedora
+password: asd
 chpasswd:
   expire: false
 endef
@@ -28,7 +29,7 @@ source "qemu" "$(NAME)" {
   accelerator = "kvm"
 
   disk_image   = true
-  iso_url      = "https://download.fedoraproject.org/pub/fedora/linux/releases/$(RELEASE)/x86_64/images/$(ARTIFACT)"
+  iso_url      = "https://download.fedoraproject.org/pub/fedora/linux/releases/$(RELEASE)/Cloud/x86_64/images/$(ARTIFACT)"
   iso_checksum = "$(CHECKSUM)"
 
   memory    = "$(MEMORY)"
@@ -40,7 +41,7 @@ source "qemu" "$(NAME)" {
   ]
 
   ssh_username = "fedora"
-  ssh_password = "fedora"
+  ssh_password = "asd"
 
   output_directory = "$(SELF)/.cache/output/"
   vm_name          = "packer-$(NAME).qcow2"

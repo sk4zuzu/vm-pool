@@ -3,8 +3,9 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := libvirt
 
-RELEASE  := 22.04/release-20220616
-ARTIFACT := ubuntu-22.04-server-cloudimg-amd64.img
+RELEASE  := 22.04
+VERSION  := release-20220616
+ARTIFACT := ubuntu-$(RELEASE)-server-cloudimg-amd64.img
 CHECKSUM := 8be55b6b21b0932245e5169fb532dae0e0ff3d541e2866e61ce12e7c38be8315
 
 CPUS      ?= 1
@@ -17,7 +18,7 @@ HEADLESS   ?= true
 
 define CLOUD_CONFIG
 #cloud-config
-password: ubuntu
+password: asd
 ssh_pwauth: true
 chpasswd:
   expire: false
@@ -28,7 +29,7 @@ source "qemu" "$(NAME)" {
   accelerator = "kvm"
 
   disk_image   = true
-  iso_url      = "https://cloud-images.ubuntu.com/releases/$(RELEASE)/$(ARTIFACT)"
+  iso_url      = "https://cloud-images.ubuntu.com/releases/$(RELEASE)/$(VERSION)/$(ARTIFACT)"
   iso_checksum = "$(CHECKSUM)"
 
   memory    = "$(MEMORY)"
@@ -40,7 +41,7 @@ source "qemu" "$(NAME)" {
   ]
 
   ssh_username = "ubuntu"
-  ssh_password = "ubuntu"
+  ssh_password = "asd"
 
   output_directory = "$(SELF)/.cache/output/"
   vm_name          = "packer-$(NAME).qcow2"

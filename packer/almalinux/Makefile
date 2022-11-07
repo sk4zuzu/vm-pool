@@ -3,8 +3,9 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := almalinux
 
-VERSION  := 8.6
-ARTIFACT := AlmaLinux-8-GenericCloud-8.6-20220513.x86_64.qcow2
+RELEASE  := 8
+VERSION  := $(RELEASE).6-20220513
+ARTIFACT := AlmaLinux-$(RELEASE)-GenericCloud-$(VERSION).x86_64.qcow2
 CHECKSUM := 1563c0b09d98e7a606e1e737f1c810830aeb0cbe37ac5585f3696be62f0a32b4
 
 CPUS      ?= 1
@@ -18,7 +19,7 @@ HEADLESS   ?= true
 define CLOUD_CONFIG
 #cloud-config
 ssh_pwauth: true
-password: almalinux
+password: asd
 chpasswd:
   expire: false
 endef
@@ -28,7 +29,7 @@ source "qemu" "$(NAME)" {
   accelerator = "kvm"
 
   disk_image   = true
-  iso_url      = "https://repo.almalinux.org/almalinux/8/cloud/x86_64/images/$(ARTIFACT)"
+  iso_url      = "https://repo.almalinux.org/almalinux/$(RELEASE)/cloud/x86_64/images/$(ARTIFACT)"
   iso_checksum = "$(CHECKSUM)"
 
   memory    = "$(MEMORY)"
@@ -40,7 +41,7 @@ source "qemu" "$(NAME)" {
   ]
 
   ssh_username = "almalinux"
-  ssh_password = "almalinux"
+  ssh_password = "asd"
 
   output_directory = "$(SELF)/.cache/output/"
   vm_name          = "packer-$(NAME).qcow2"
