@@ -30,7 +30,7 @@ resource "libvirt_cloudinit_disk" "nodes" {
       ssh_authorized_keys: ${jsonencode(var.nodes.keys)}
   chpasswd:
     list:
-      - 'alpine:#alpine@!?'
+      - alpine:asd
     expire: false
   growpart:
     mode: auto

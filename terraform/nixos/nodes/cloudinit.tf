@@ -34,7 +34,9 @@ resource "libvirt_cloudinit_disk" "nodes" {
       ssh_authorized_keys: ${jsonencode(var.nodes.keys)}
   chpasswd:
     list:
-      - 'nixos:#nixos@!?'
+      - nixos:asd
     expire: false
+  runcmd:
+    - systemctl restart systemd-resolved.service
   EOF
 }

@@ -35,7 +35,7 @@ resource "libvirt_cloudinit_disk" "nodes" {
       ssh_authorized_keys: ${jsonencode(var.nodes.keys)}
   chpasswd:
     list:
-      - 'fedora:#fedora@!?'
+      - fedora:asd
     expire: false
   growpart:
     mode: auto

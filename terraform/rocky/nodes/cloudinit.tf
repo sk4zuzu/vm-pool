@@ -18,7 +18,7 @@ resource "libvirt_cloudinit_disk" "nodes" {
       ssh_authorized_keys: ${jsonencode(var.nodes.keys)}
   chpasswd:
     list:
-      - 'rocky:#rocky@!?'
+      - rocky:asd
     expire: false
   growpart:
     mode: auto

@@ -36,7 +36,7 @@ resource "libvirt_cloudinit_disk" "nodes" {
       ssh_authorized_keys: ${jsonencode(var.nodes.keys)}
   chpasswd:
     list:
-      - 'cloud-user:#oracle@!?'
+      - cloud-user:asd
     expire: false
   growpart:
     mode: auto

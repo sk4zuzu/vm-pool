@@ -35,7 +35,7 @@ resource "libvirt_cloudinit_disk" "nodes" {
       ssh_authorized_keys: ${jsonencode(var.nodes.keys)}
   chpasswd:
     list:
-      - 'debian:#debian@!?'
+      - debian:asd
     expire: false
   growpart:
     mode: auto
@@ -47,6 +47,10 @@ resource "libvirt_cloudinit_disk" "nodes" {
     - [ ${mount.target}, ${mount.path}, '9p', 'trans=virtio,version=9p2000.L,${mount.ro ? "r" : "rw"}', '0', '0' ]
   %{endfor}
   write_files:
+    - content: |
+        nameserver ${cidrhost(var.network.subnet, 1)}
+        search ${var.network.domain}
+      path: /etc/resolv.conf
     - content: |
         net.ipv4.ip_forward = 1
       path: /etc/sysctl.d/98-ip-forward.conf
