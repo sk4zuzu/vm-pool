@@ -75,6 +75,7 @@ $(eval $(call PACKER_TASKS,almalinux))
 $(eval $(call PACKER_TASKS,alpine))
 $(eval $(call PACKER_TASKS,centos))
 $(eval $(call PACKER_TASKS,debian))
+$(eval $(call PACKER_TASKS,dflybsd))
 $(eval $(call PACKER_TASKS,fedora))
 $(eval $(call PACKER_TASKS,freebsd))
 $(eval $(call PACKER_TASKS,kub3lo))
@@ -93,6 +94,7 @@ $(eval $(call TERRAFORM_TASKS,a1,$$(AUTO_APPROVE)))
 $(eval $(call TERRAFORM_TASKS,b1,$$(AUTO_APPROVE)))
 $(eval $(call TERRAFORM_TASKS,b2,$$(AUTO_APPROVE)))
 $(eval $(call TERRAFORM_TASKS,b3,$$(AUTO_APPROVE)))
+$(eval $(call TERRAFORM_TASKS,b4,$$(AUTO_APPROVE)))
 $(eval $(call TERRAFORM_TASKS,c1,$$(AUTO_APPROVE)))
 $(eval $(call TERRAFORM_TASKS,c2,$$(AUTO_APPROVE)))
 $(eval $(call TERRAFORM_TASKS,c3,$$(AUTO_APPROVE)))
@@ -113,6 +115,7 @@ $(eval $(call BACKUP_TASKS,a1))
 $(eval $(call BACKUP_TASKS,b1))
 $(eval $(call BACKUP_TASKS,b2))
 $(eval $(call BACKUP_TASKS,b3))
+$(eval $(call BACKUP_TASKS,b4))
 $(eval $(call BACKUP_TASKS,c1))
 $(eval $(call BACKUP_TASKS,c2))
 $(eval $(call BACKUP_TASKS,c3))
@@ -133,6 +136,7 @@ $(eval $(call SSH_TASKS,a1,$$(BECOME_ROOT),,alpine@10.2.20.))
 $(eval $(call SSH_TASKS,b1,$$(BECOME_ROOT),,freebsd@10.2.110.))
 $(eval $(call SSH_TASKS,b2,$$(BECOME_ROOT),,openbsd@10.2.111.))
 $(eval $(call SSH_TASKS,b3,$$(BECOME_ROOT),,netbsd@10.2.112.))
+$(eval $(call SSH_TASKS,b4,$$(BECOME_ROOT),,dflybsd@10.2.113.))
 $(eval $(call SSH_TASKS,c1,$$(BECOME_ROOT),,centos@10.2.30.))
 $(eval $(call SSH_TASKS,c2,$$(BECOME_ROOT),,almalinux@10.2.31.))
 $(eval $(call SSH_TASKS,c3,$$(BECOME_ROOT),,rocky@10.2.32.))
@@ -157,6 +161,7 @@ clean:
 	-cd $(SELF)/packer/alpine/ && make clean
 	-cd $(SELF)/packer/centos/ && make clean
 	-cd $(SELF)/packer/debian/ && make clean
+	-cd $(SELF)/packer/dflysbd/ && make clean
 	-cd $(SELF)/packer/fedora/ && make clean
 	-cd $(SELF)/packer/freebsd/ && make clean
 	-cd $(SELF)/packer/kub3lo/ && make clean
