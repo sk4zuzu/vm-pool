@@ -1,7 +1,7 @@
 resource "libvirt_network" "self" {
   name      = var.network.name
   domain    = var.network.domain
-  addresses = [ var.network.subnet ]
+  addresses = [var.network.subnet]
 
   mode   = "nat"
   bridge = var.network.name
