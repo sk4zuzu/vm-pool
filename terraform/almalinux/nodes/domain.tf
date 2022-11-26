@@ -14,13 +14,22 @@ resource "libvirt_domain" "nodes" {
     network_name   = var.network.name
     wait_for_lease = false
   }
+  dynamic "network_interface" {
+    for_each = toset([
+      "${var.env}none1",
+      "${var.env}none2",
+    ])
+    content {
+      network_name   = network_interface.value
+      wait_for_lease = false
+    }
+  }
 
   console {
     type        = "pty"
     target_port = "0"
     target_type = "serial"
   }
-
   console {
     type        = "pty"
     target_type = "virtio"
