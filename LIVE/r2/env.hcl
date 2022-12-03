@@ -1,13 +1,13 @@
 locals {
   shutdown = false
 
-  env = "c3"
+  env = "r2"
 
   network = {
     name    = local.env
     domain  = "rocky.lh"
-    macaddr = "52:54:02:00:32:%02x"
-    subnet  = "10.2.32.0/24"
+    macaddr = "52:54:02:00:71:%02x"
+    subnet  = "10.2.71.0/24"
   }
 
   storage = {
