@@ -60,7 +60,6 @@ build {
       "remote-exec/01-basics.sh",
       "remote-exec/02-kernel.sh",
       "remote-exec/03-selinux.sh",
-      "remote-exec/04-network.sh",
     ]
   }
 }
