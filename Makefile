@@ -77,6 +77,7 @@ $(eval $(call PACKER_TASKS,alpine))
 $(eval $(call PACKER_TASKS,archlinux))
 $(eval $(call PACKER_TASKS,centos))
 $(eval $(call PACKER_TASKS,debian))
+$(eval $(call PACKER_TASKS,devuan))
 $(eval $(call PACKER_TASKS,dflybsd))
 $(eval $(call PACKER_TASKS,fedora))
 $(eval $(call PACKER_TASKS,freebsd))
@@ -171,6 +172,7 @@ clean:
 	-cd $(SELF)/packer/archlinux/ && make clean
 	-cd $(SELF)/packer/centos/ && make clean
 	-cd $(SELF)/packer/debian/ && make clean
+	-cd $(SELF)/packer/devuan/ && make clean
 	-cd $(SELF)/packer/dflysbd/ && make clean
 	-cd $(SELF)/packer/fedora/ && make clean
 	-cd $(SELF)/packer/freebsd/ && make clean
