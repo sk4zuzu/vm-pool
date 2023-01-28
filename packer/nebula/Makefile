@@ -3,10 +3,10 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := nebula
 
-RELEASE  := 20.04
-VERSION  := release-20220118
+RELEASE  := 22.04
+VERSION  := release-20230107
 ARTIFACT := ubuntu-$(RELEASE)-server-cloudimg-amd64.img
-CHECKSUM := e1264d4cca6c6c537e92f4e676cdc3cddbc5d7fe627d1d439d7e6973ebc2e216
+CHECKSUM := 3100a27357a0133a145f2843afc697ce6f883940e0e6d342e335bc6b9c6c4d10
 
 CPUS      ?= 1
 MEMORY    ?= 1024
@@ -36,7 +36,7 @@ source "qemu" "$(NAME)" {
   disk_size = "$(DISK_SIZE)"
 
   qemuargs = [
-    ["-fda", "$(SELF)/.cache/$(ARTIFACT).iso"],
+    ["-cdrom", "$(SELF)/.cache/$(ARTIFACT).iso"],
     ["-serial", "stdio"],
   ]
 
