@@ -92,6 +92,7 @@ $(eval $(call PACKER_TASKS,oracle))
 $(eval $(call PACKER_TASKS,redhat))
 $(eval $(call PACKER_TASKS,rocky))
 $(eval $(call PACKER_TASKS,ubuntu))
+$(eval $(call PACKER_TASKS,windows))
 
 $(eval $(call TERRAFORM_TASKS,a1,$$(AUTO_APPROVE)))
 $(eval $(call TERRAFORM_TASKS,b1,$$(AUTO_APPROVE)))
@@ -190,3 +191,4 @@ clean:
 	-cd $(SELF)/packer/redhat/ && make clean
 	-cd $(SELF)/packer/rocky/ && make clean
 	-cd $(SELF)/packer/ubuntu/ && make clean
+	-cd $(SELF)/packer/windows/ && make clean
