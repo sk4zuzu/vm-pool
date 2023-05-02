@@ -3,10 +3,10 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := alpine
 
-RELEASE  := 3.16
-VERSION  := $(RELEASE).2
+RELEASE  := 3.17
+VERSION  := $(RELEASE).3
 ARTIFACT := alpine-virt-$(VERSION)-x86_64.iso
-CHECKSUM := 6c7cb998ec2c8925d5a1239410a4d224b771203f916a18f8015f31169dd767a2
+CHECKSUM := 3ae1f6304346ce99e5eafddf0132c86c0fc7136ffad767a2c725501d8a9d5c04
 
 CPUS      ?= 1
 MEMORY    ?= 1024
