@@ -3,7 +3,7 @@ generate "terraform" {
   if_exists = "overwrite_terragrunt"
   contents  = <<EOF
 terraform {
-  required_version = "1.3.5"
+  required_version = "1.4.6"
   required_providers {
     libvirt = {
       source  = "dmacvicar/libvirt"
