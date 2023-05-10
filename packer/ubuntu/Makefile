@@ -4,9 +4,9 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 NAME := ubuntu
 
 RELEASE  := 22.04
-VERSION  := release-20220616
+VERSION  := release-20230427
 ARTIFACT := ubuntu-$(RELEASE)-server-cloudimg-amd64.img
-CHECKSUM := 8be55b6b21b0932245e5169fb532dae0e0ff3d541e2866e61ce12e7c38be8315
+CHECKSUM := 9bbe9364e2989c1cce2c1669b7a91c2bbd139052876a8c81cd52c0faaefb6474
 
 CPUS      ?= 1
 MEMORY    ?= 2048
@@ -36,6 +36,8 @@ source "qemu" "$(NAME)" {
   disk_size = "$(DISK_SIZE)"
 
   qemuargs = [
+    ["-cpu", "host"],
+    ["-smp", "cpus=$(CPUS)"],
     ["-cdrom", "$(SELF)/.cache/$(ARTIFACT).iso"],
     ["-serial", "stdio"],
   ]

@@ -56,7 +56,7 @@ apt-get -q install -y --no-install-recommends \
     htop \
     iftop iproute2 \
     jq \
-    mc \
+    make mc \
     net-tools netcat nethogs nmap \
     pv \
     vim
