@@ -9,9 +9,9 @@ NAME := almalinux
 #CHECKSUM := 1563c0b09d98e7a606e1e737f1c810830aeb0cbe37ac5585f3696be62f0a32b4
 
 RELEASE  := 9
-VERSION  := $(RELEASE).1-20221118
+VERSION  := $(RELEASE).2-20230513
 ARTIFACT := AlmaLinux-$(RELEASE)-GenericCloud-$(VERSION).x86_64.qcow2
-CHECKSUM := 1e93210a0c534de76ae01dc02e8224be14264fa8d54ad6cff9af15b673c6db1a
+CHECKSUM := 207d885ca8140e3106098e946cfc04088b0e21f50d24815051520d452eae0a50
 
 CPUS      ?= 1
 MEMORY    ?= 1024
@@ -42,6 +42,7 @@ source "qemu" "$(NAME)" {
 
   qemuargs = [
     ["-cpu", "host"],
+    ["-smp", "cpus=$(CPUS)"],
     ["-cdrom", "$(SELF)/.cache/$(ARTIFACT).iso"],
     ["-serial", "stdio"],
   ]
