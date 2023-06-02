@@ -16,24 +16,14 @@ locals {
   }
 
   mounts = [{
-    target = "nfs1"
-    source = "/stor/9p/${local.env}/_opt_nfs1/"
-    path   = "/opt/nfs1/"
+    target = "datastores"
+    source = "/stor/9p/${local.env}/_var_lib_one_datastores/"
+    path   = "/var/lib/one/datastores/"
     ro     = false
   },{
-    target = "nfs2"
-    source = "/stor/9p/${local.env}/_opt_nfs2/"
-    path   = "/opt/nfs2/"
-    ro     = false
-  },{
-    target = "nfs3"
-    source = "/stor/9p/${local.env}/_opt_nfs3/"
-    path   = "/opt/nfs3/"
-    ro     = false
-  },{
-    target = "nfs4"
-    source = "/stor/9p/${local.env}/_opt_nfs4/"
-    path   = "/opt/nfs4/"
+    target = "git"
+    source = "/home/asd/_git/"
+    path   = "/home/almalinux/_git/"
     ro     = false
   }]
 
@@ -44,19 +34,19 @@ locals {
     vcpu    = 2
     memory  = "2048"
     image   = "${get_parent_terragrunt_dir()}/../../packer/almalinux_9p/.cache/output/packer-almalinux_9p.qcow2"
-    storage = "34359738368"  # 32GiB
+    storage = "94489280512"  # 88GiB
     keys    = file("~/.ssh/id_rsa.pub")
     mounts  = local.mounts
   }
 
   nodes2 = {
-    count   = 4
+    count   = 2
     prefix  = "${local.env}b"
     offset  = 20
-    vcpu    = 2
+    vcpu    = 4
     memory  = "3072"
     image   = "${get_parent_terragrunt_dir()}/../../packer/almalinux_9p/.cache/output/packer-almalinux_9p.qcow2"
-    storage = "34359738368"  # 32GiB
+    storage = "94489280512"  # 88GiB
     keys    = file("~/.ssh/id_rsa.pub")
     mounts  = local.mounts
   }
