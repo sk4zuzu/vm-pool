@@ -27,7 +27,7 @@ apt-get -q install -y --no-install-recommends \
     iftop iproute2 \
     jq \
     mc \
-    net-tools netcat nethogs nmap \
+    net-tools netcat-openbsd nethogs nmap \
     pv \
     vim
 

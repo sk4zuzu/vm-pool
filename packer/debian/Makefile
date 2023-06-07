@@ -3,10 +3,10 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := debian
 
-RELEASE  := bullseye
-VERSION  := 20220711-1073
-ARTIFACT := debian-11-generic-amd64-$(VERSION).qcow2
-CHECKSUM := 6f6896d5740efb095d30e5118aeced30eda596dd5cddc28929767dc568f1833d84621a7b71d0aa403fcae3aef9c566ce7403b5a59dcaa74f6d3ea0e171ec38b0
+RELEASE  := bookworm
+VERSION  := 20230531-1397
+ARTIFACT := debian-12-generic-amd64-$(VERSION).qcow2
+CHECKSUM := 84123ea7225934fe157535d7587498fdd2838299d3b57c76d8eac4e59faafb028b9b68ceadeddcccdc8c1586bf978a7d93e5c65142fb9de67d375b37945657d0
 
 CPUS      ?= 1
 MEMORY    ?= 2048
@@ -36,6 +36,8 @@ source "qemu" "$(NAME)" {
   disk_size = "$(DISK_SIZE)"
 
   qemuargs = [
+    ["-cpu", "host"],
+    ["-smp", "cpus=$(CPUS)"],
     ["-cdrom", "$(SELF)/.cache/$(ARTIFACT).iso"],
     ["-serial", "stdio"],
   ]
@@ -55,7 +57,6 @@ build {
     scripts = [
       "remote-exec/01-basics.sh",
       "remote-exec/02-kernel.sh",
-      "remote-exec/99-fixes.sh",
     ]
   }
 }
