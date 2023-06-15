@@ -23,6 +23,12 @@ resource "libvirt_cloudinit_disk" "nodes" {
           - ${cidrhost(var.network.subnet, 1)}
         search:
           - ${var.network.domain}
+    eth1:
+      dhcp4: false
+      dhcp6: false
+    eth2:
+      dhcp4: false
+      dhcp6: false
   EOF
 
   #network_config = <<-EOF
