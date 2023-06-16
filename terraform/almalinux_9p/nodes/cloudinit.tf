@@ -29,6 +29,13 @@ resource "libvirt_cloudinit_disk" "nodes" {
     eth2:
       dhcp4: false
       dhcp6: false
+  bonds:
+    bond0:
+      interfaces: [eth1, eth2]
+      addresses:
+        - ${cidrhost("192.168.150.0/24", count.index + var.nodes.offset)}/24
+      dhcp4: false
+      dhcp6: false
   EOF
 
   #network_config = <<-EOF
