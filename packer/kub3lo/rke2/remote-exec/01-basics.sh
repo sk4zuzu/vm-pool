@@ -11,7 +11,7 @@ set -x
 gawk -i inplace -f- /etc/cloud/cloud.cfg <<'EOF'
 $1 == "apt_preserve_sources_list:" { $2 = "true"; found=1 }
 { print }
-END { if (!found) print "apt_preserve_sources_list: true" >> FILENAME }
+ENDFILE { if (!found) print "apt_preserve_sources_list: true" }
 EOF
 
 RELEASE=$(lsb_release -sc)
@@ -54,7 +54,7 @@ apt-get -q install -y \
     htop \
     iftop iproute2 \
     jq \
-    mc \
+    make mc \
     nethogs nmap ncat \
     openssh-client \
     pv python3 \

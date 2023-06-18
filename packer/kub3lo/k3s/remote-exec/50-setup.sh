@@ -11,7 +11,7 @@ apk --no-cache add openntpd
 rc-service openntpd start
 rc-update add openntpd
 
-apk --no-cache add util-linux cloud-init
+apk --no-cache add util-linux cloud-init py3-{pyserial,netifaces}
 setup-cloud-init
 
 (yes | setup-disk -v -m sys /dev/vda) ||:
@@ -54,7 +54,7 @@ awk -i inplace -f- /mnt/etc/fstab <<'EOF'
 $2 == "/" { $4 = $4 ",rshared" }
 $1 == "cgroup" { cgroup = 1 }
 { print }
-END { if (!cgroup) print "cgroup /sys/fs/cgroup cgroup defaults 0 0" >>FILENAME }
+ENDFILE { if (!cgroup) print "cgroup /sys/fs/cgroup cgroup defaults 0 0" }
 EOF
 
 chroot /mnt/ /sbin/update-extlinux

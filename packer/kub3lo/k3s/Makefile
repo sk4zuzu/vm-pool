@@ -3,10 +3,10 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := kub3lo
 
-RELEASE  := 3.16
+RELEASE  := 3.18
 VERSION  := $(RELEASE).2
 ARTIFACT := alpine-virt-$(VERSION)-x86_64.iso
-CHECKSUM := 6c7cb998ec2c8925d5a1239410a4d224b771203f916a18f8015f31169dd767a2
+CHECKSUM := 6bc7ff54f5249bfb67082e1cf261aaa6f307d05f64089d3909e18b2b0481467f
 
 CPUS      ?= 1
 MEMORY    ?= 1024
@@ -31,6 +31,8 @@ source "qemu" "$(NAME)" {
   disk_interface = "virtio"
 
   qemuargs = [
+    ["-cpu", "host"],
+    ["-smp", "cpus=$(CPUS)"],
     ["-serial", "stdio"],
   ]
 

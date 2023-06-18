@@ -13,7 +13,7 @@ apk --no-cache add \
     htop \
     iftop iproute2 \
     jq \
-    mc \
+    make mc \
     nethogs nmap nmap-ncat \
     openssh-client \
     pv python3 \

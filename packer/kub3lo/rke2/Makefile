@@ -3,13 +3,13 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := kub3lo
 
-RELEASE  := 20.04
-VERSION  := release-20220615
+RELEASE  := 22.04
+VERSION  := release-20230518
 ARTIFACT := ubuntu-$(RELEASE)-server-cloudimg-amd64.img
-CHECKSUM := 75a04c7eed58e76dc51f61288b647bc120882378c28e928359948c0db9c7dc45
+CHECKSUM := afb820a9260217fd4c5c5aacfbca74aa7cd2418e830dc64ca2e0642b94aab161
 
 CPUS      ?= 1
-MEMORY    ?= 1024
+MEMORY    ?= 2048
 DISK_SIZE ?= 10240
 
 PACKER     := $(SELF)/../../../bin/packer
@@ -36,7 +36,9 @@ source "qemu" "$(NAME)" {
   disk_size = "$(DISK_SIZE)"
 
   qemuargs = [
-    ["-fda", "$(SELF)/.cache/$(ARTIFACT).iso"],
+    ["-cpu", "host"],
+    ["-smp", "cpus=$(CPUS)"],
+    ["-cdrom", "$(SELF)/.cache/$(ARTIFACT).iso"],
     ["-serial", "stdio"],
   ]
 
