@@ -3,10 +3,10 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := alpine
 
-RELEASE  := 3.17
-VERSION  := $(RELEASE).3
+RELEASE  := 3.18
+VERSION  := $(RELEASE).2
 ARTIFACT := alpine-virt-$(VERSION)-x86_64.iso
-CHECKSUM := 3ae1f6304346ce99e5eafddf0132c86c0fc7136ffad767a2c725501d8a9d5c04
+CHECKSUM := 6bc7ff54f5249bfb67082e1cf261aaa6f307d05f64089d3909e18b2b0481467f
 
 CPUS      ?= 1
 MEMORY    ?= 1024
@@ -31,6 +31,8 @@ source "qemu" "$(NAME)" {
   disk_interface = "virtio"
 
   qemuargs = [
+    ["-cpu", "host"],
+    ["-smp", "cpus=$(CPUS)"],
     ["-serial", "stdio"],
   ]
 
