@@ -20,7 +20,7 @@ locals {
     prefix  = "${local.env}a"
     offset  = 10
     vcpu    = 2
-    memory  = "2048"
+    memory  = "3072"
     image   = "${get_parent_terragrunt_dir()}/../../packer/kub3lo/rke2/.cache/output/packer-kub3lo.qcow2"
     storage = "34359738368"  # 32GiB
     keys    = file("~/.ssh/id_rsa.pub")
