@@ -16,13 +16,16 @@ resource "libvirt_cloudinit_disk" "nodes" {
         - ${cidrhost(var.network.subnet, count.index + var.nodes.offset)}/${split("/", var.network.subnet)[1]}
       dhcp4: false
       dhcp6: false
-      gateway4: ${cidrhost(var.network.subnet, 1)}
       macaddress: '${lower(format(var.network.macaddr, count.index + var.nodes.offset))}'
       nameservers:
         addresses:
           - ${cidrhost(var.network.subnet, 1)}
         search:
           - ${var.network.domain}
+      routes:
+        - metric: 0
+          to: 0.0.0.0/0
+          via: ${cidrhost(var.network.subnet, 1)}
     eth1:
       dhcp4: false
       dhcp6: false
@@ -51,13 +54,16 @@ resource "libvirt_cloudinit_disk" "nodes" {
   #      - ${cidrhost(var.network.subnet, count.index + var.nodes.offset)}/${split("/", var.network.subnet)[1]}
   #    dhcp4: false
   #    dhcp6: false
-  #    gateway4: ${cidrhost(var.network.subnet, 1)}
   #    macaddress: '${lower(format(var.network.macaddr, count.index + var.nodes.offset))}'
   #    nameservers:
   #      addresses:
   #        - ${cidrhost(var.network.subnet, 1)}
   #      search:
   #        - ${var.network.domain}
+  #    routes:
+  #      - metric: 0
+  #        to: 0.0.0.0/0
+  #        via: ${cidrhost(var.network.subnet, 1)}
   #EOF
 
   user_data = <<-EOF
