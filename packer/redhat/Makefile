@@ -3,16 +3,23 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := redhat
 
+# https://access.redhat.com/management/systems
 include $(SELF)/subscription.mk
 
-# https://access.redhat.com/downloads/content/479/ver=/rhel---8/8.6/x86_64/product-software
-RELEASE  := 8
-VERSION  := $(RELEASE).6
+# https://access.redhat.com/downloads/content/479/ver=/rhel---9/9.2/x86_64/product-software
+RELEASE  := 9
+VERSION  := $(RELEASE).2
 ARTIFACT := rhel-$(VERSION)-x86_64-kvm.qcow2
-CHECKSUM := c9b32bef88d605d754b932aad0140e1955ab9446818c70c4c36ca75d6f442fe9
+CHECKSUM := 34ff41b5274692c984e3860b21136af8b6ae502744c6c7578dda82002fba0287
 
-CPUS      ?= 1
-MEMORY    ?= 1024
+## https://access.redhat.com/downloads/content/479/ver=/rhel---8/8.6/x86_64/product-software
+#RELEASE  := 8
+#VERSION  := $(RELEASE).6
+#ARTIFACT := rhel-$(VERSION)-x86_64-kvm.qcow2
+#CHECKSUM := c9b32bef88d605d754b932aad0140e1955ab9446818c70c4c36ca75d6f442fe9
+
+CPUS      ?= 2
+MEMORY    ?= 2048
 DISK_SIZE ?= 12288
 
 PACKER     := $(SELF)/../../bin/packer
@@ -39,7 +46,10 @@ source "qemu" "$(NAME)" {
   disk_size = "$(DISK_SIZE)"
 
   qemuargs = [
+    ["-cpu", "host"],
+    ["-smp", "cpus=$(CPUS)"],
     ["-cdrom", "$(SELF)/.cache/$(ARTIFACT).iso"],
+    ["-serial", "stdio"],
   ]
 
   ssh_username = "cloud-user"
