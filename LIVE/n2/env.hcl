@@ -1,5 +1,5 @@
 locals {
-  shutdown = false
+  shutdown = true
 
   env = "n2"
 
@@ -16,9 +16,24 @@ locals {
   }
 
   mounts = [{
-    target = "datastores"
-    source = "/stor/9p/${local.env}/_var_lib_one_datastores/"
-    path   = "/var/lib/one/datastores/"
+    target = "nfs0"
+    source = "/stor/9p/${local.env}/_opt_nfs0/"
+    path   = "/opt/nfs0/"
+    ro     = false
+  },{
+    target = "nfs1"
+    source = "/stor/9p/${local.env}/_opt_nfs1/"
+    path   = "/opt/nfs1/"
+    ro     = false
+  },{
+    target = "nfs2"
+    source = "/stor/9p/${local.env}/_opt_nfs2/"
+    path   = "/opt/nfs2/"
+    ro     = false
+  },{
+    target = "nfs3"
+    source = "/stor/9p/${local.env}/_opt_nfs3/"
+    path   = "/opt/nfs3/"
     ro     = false
   },{
     target = "git"
