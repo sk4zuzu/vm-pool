@@ -11,7 +11,7 @@ apk --no-cache add \
     gawk \
     gzip \
     htop \
-    iftop iproute2 \
+    iftop iproute2 iptables \
     jq \
     make mc \
     nethogs nmap nmap-ncat \
@@ -19,7 +19,7 @@ apk --no-cache add \
     pv python3 \
     ripgrep \
     sudo \
-    tar \
+    tar tcpdump \
     vim \
     xfsprogs-extra \
     zip \
