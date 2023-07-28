@@ -16,11 +16,11 @@ locals {
   }
 
   nodes1 = {
-    count   = 1
+    count   = 2
     prefix  = "${local.env}a"
     offset  = 10
     vcpu    = 2
-    memory  = "2048"
+    memory  = "1024"
     image   = "${get_parent_terragrunt_dir()}/../../packer/alpine/.cache/output/packer-alpine.qcow2"
     storage = "12884901888"  # 12GiB
     keys    = file("~/.ssh/id_rsa.pub")
@@ -29,9 +29,9 @@ locals {
   nodes2 = {
     count   = 2
     prefix  = "${local.env}b"
-    offset  = 20
+    offset  = 21 # make (% 2) division split 2 hosts into 2 groups
     vcpu    = 2
-    memory  = "3072"
+    memory  = "1024"
     image   = "${get_parent_terragrunt_dir()}/../../packer/alpine/.cache/output/packer-alpine.qcow2"
     storage = "12884901888"  # 12GiB
     keys    = file("~/.ssh/id_rsa.pub")
