@@ -14,12 +14,12 @@ apk --no-cache add \
     iftop iproute2 iptables \
     jq \
     make mc \
-    nethogs nmap nmap-ncat \
+    nethogs ngrep nmap nmap-ncat \
     openssh-client \
     pv python3 \
     ripgrep \
     sudo \
-    tar tcpdump \
+    tar tcpdump tshark \
     vim \
     xfsprogs-extra \
     zip \
