@@ -32,6 +32,14 @@ resource "libvirt_cloudinit_disk" "nodes" {
     eth2:
       dhcp4: false
       dhcp6: false
+  bridges:
+    br1:
+      interfaces: [eth1]
+      addresses:
+        - ${cidrhost("172.20.100.0/24", count.index + var.nodes.offset)}/24
+      dhcp4: false
+      dhcp6: false
+      macaddress: '${lower(format("52:54:17:22:01:%02x", count.index + var.nodes.offset))}'
   EOF
 
   user_data = <<-EOF
