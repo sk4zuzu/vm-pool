@@ -26,6 +26,12 @@ resource "libvirt_cloudinit_disk" "nodes" {
         - metric: 0
           to: 0.0.0.0/0
           via: ${cidrhost(var.network.subnet, 1)}
+    eth1:
+      dhcp4: false
+      dhcp6: false
+    eth2:
+      dhcp4: false
+      dhcp6: false
   EOF
 
   user_data = <<-EOF
