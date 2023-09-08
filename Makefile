@@ -64,7 +64,7 @@ c confirm:
 b become:
 	@: $(eval BECOME_ROOT := -t sudo -i)
 
-# EXAMPLE: make c v1-{destroy,apply} sleep30 u2-{destroy,apply}
+# EXAMPLE: make c v1-{destroy,apply} sleep30 v2-{destroy,apply}
 s% sleep%:
 	seq $* | while read -r RETRY; do echo "$$RETRY" && sleep 1; done
 
@@ -118,7 +118,6 @@ $(eval $(call TERRAFORM_TASKS,o1,$$(AUTO_APPROVE)))
 $(eval $(call TERRAFORM_TASKS,r1,$$(AUTO_APPROVE)))
 $(eval $(call TERRAFORM_TASKS,r2,$$(AUTO_APPROVE)))
 $(eval $(call TERRAFORM_TASKS,u1,$$(AUTO_APPROVE)))
-$(eval $(call TERRAFORM_TASKS,u2,$$(AUTO_APPROVE)))
 $(eval $(call TERRAFORM_TASKS,v1,$$(AUTO_APPROVE)))
 $(eval $(call TERRAFORM_TASKS,v2,$$(AUTO_APPROVE)))
 $(eval $(call TERRAFORM_TASKS,v3,$$(AUTO_APPROVE)))
@@ -146,7 +145,6 @@ $(eval $(call BACKUP_TASKS,o1))
 $(eval $(call BACKUP_TASKS,r1))
 $(eval $(call BACKUP_TASKS,r2))
 $(eval $(call BACKUP_TASKS,u1))
-$(eval $(call BACKUP_TASKS,u2))
 $(eval $(call BACKUP_TASKS,v1))
 $(eval $(call BACKUP_TASKS,v2))
 $(eval $(call BACKUP_TASKS,v3))
@@ -174,7 +172,6 @@ $(eval $(call SSH_TASKS,o1,$$(BECOME_ROOT),,cloud-user@10.2.60.))
 $(eval $(call SSH_TASKS,r1,$$(BECOME_ROOT),,cloud-user@10.2.70.))
 $(eval $(call SSH_TASKS,r2,$$(BECOME_ROOT),,rocky@10.2.71.))
 $(eval $(call SSH_TASKS,u1,$$(BECOME_ROOT),,ubuntu@10.2.80.))
-$(eval $(call SSH_TASKS,u2,$$(BECOME_ROOT),ubuntu@10.2.51.10,ubuntu@10.2.81.))
 $(eval $(call SSH_TASKS,v1,$$(BECOME_ROOT),,ubuntu@10.2.51.))
 $(eval $(call SSH_TASKS,v2,$$(BECOME_ROOT),ubuntu@10.2.51.10,ubuntu@172.20.100.))
 $(eval $(call SSH_TASKS,v3,$$(BECOME_ROOT),ubuntu@10.2.51.11,ubuntu@172.20.100.))
