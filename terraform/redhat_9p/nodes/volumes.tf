@@ -12,3 +12,23 @@ resource "libvirt_volume" "nodes" {
   base_volume_id = libvirt_volume.nodes_base.*.id[0]
   pool           = var.storage.pool
 }
+
+locals {
+  disks = zipmap(
+    flatten([
+      for index in range(var.nodes.count) : [
+        for disk in var.nodes.disks : "${var.nodes.prefix}${index + 1}-${disk.name}"
+      ]
+    ]),
+    flatten([
+      for index in range(var.nodes.count) : var.nodes.disks
+    ]),
+  )
+}
+
+resource "libvirt_volume" "nodes_extra" {
+  for_each = local.disks
+  name     = each.key
+  size     = each.value.size
+  pool     = var.storage.pool
+}
