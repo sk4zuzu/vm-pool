@@ -6,11 +6,11 @@ NAME := redhat_9p
 # https://access.redhat.com/management/systems
 include $(SELF)/subscription.mk
 
-# https://access.redhat.com/downloads/content/479/ver=/rhel---9/9.2/x86_64/product-software
-RELEASE  := 9
-VERSION  := $(RELEASE).2
+# https://access.redhat.com/downloads/content/479/ver=/rhel---8/8.8/x86_64/product-software
+RELEASE  := 8
+VERSION  := $(RELEASE).8
 ARTIFACT := rhel-$(VERSION)-x86_64-kvm.qcow2
-CHECKSUM := 34ff41b5274692c984e3860b21136af8b6ae502744c6c7578dda82002fba0287
+CHECKSUM := 5f9cd94d9a9a44ac448b434f3e28d24465deef089bbd452392b3f10e96cb8eaa
 
 CPUS      ?= 2
 MEMORY    ?= 2048

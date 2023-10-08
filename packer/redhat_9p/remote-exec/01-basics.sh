@@ -10,9 +10,9 @@ subscription-manager register \
     --force
 
 subscription-manager repos \
-    --enable codeready-builder-for-rhel-9-x86_64-rpms
+    --enable codeready-builder-for-rhel-8-x86_64-rpms
 
-dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
 
 dnf repolist enabled
 

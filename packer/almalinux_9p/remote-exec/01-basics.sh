@@ -3,8 +3,6 @@
 set -o errexit -o nounset -o pipefail
 set -x
 
-update-crypto-policies --set DEFAULT:SHA1
-
 dnf install -y epel-release
 
 dnf install -y \
