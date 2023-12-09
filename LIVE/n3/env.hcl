@@ -51,6 +51,7 @@ locals {
     image   = "${get_parent_terragrunt_dir()}/../../packer/redhat_9p/.cache/output/packer-redhat_9p.qcow2"
     storage = "94489280512"  # 88GiB
     keys    = file("~/.ssh/id_rsa.pub")
+    disks   = []
     mounts  = local.mounts
   }
 
@@ -63,6 +64,13 @@ locals {
     image   = "${get_parent_terragrunt_dir()}/../../packer/redhat_9p/.cache/output/packer-redhat_9p.qcow2"
     storage = "94489280512"  # 88GiB
     keys    = file("~/.ssh/id_rsa.pub")
+    disks = [{
+      name = "vdb"
+      size = "21474836480"  # 20GiB
+    },{
+      name = "vdc"
+      size = "21474836480"  # 20GiB
+    }]
     mounts  = local.mounts
   }
 }
