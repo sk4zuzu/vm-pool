@@ -18,6 +18,12 @@ resource "libvirt_cloudinit_disk" "nodes" {
       dhcp6: false
       gateway4: ${cidrhost(var.network.subnet, 1)}
       macaddress: '${lower(format(var.network.macaddr, count.index + var.nodes.offset))}'
+    eth1:
+      dhcp4: false
+      dhcp6: false
+    eth2:
+      dhcp4: false
+      dhcp6: false
   EOF
 
   user_data = <<-EOF
