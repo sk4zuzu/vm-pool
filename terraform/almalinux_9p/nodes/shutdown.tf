@@ -1,11 +1,9 @@
-resource "null_resource" "almalinux" {
+resource "terraform_data" "almalinux" {
   depends_on = [libvirt_domain.nodes]
 
   count = var.shutdown ? var.nodes.count : 0
 
-  triggers = {
-    always = uuid()
-  }
+  triggers_replace = [uuid()]
 
   provisioner "local-exec" {
     command = <<-EOF

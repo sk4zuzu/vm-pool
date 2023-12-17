@@ -1,11 +1,9 @@
-resource "null_resource" "nixos" {
+resource "terraform_data" "nixos" {
   depends_on = [libvirt_domain.nodes]
 
   count = var.shutdown ? var.nodes.count : 0
 
-  triggers = {
-    always = uuid()
-  }
+  triggers_replace = [uuid()]
 
   provisioner "local-exec" {
     command = <<-EOF
