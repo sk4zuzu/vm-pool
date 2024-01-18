@@ -22,6 +22,15 @@ password: asd
 ssh_pwauth: true
 chpasswd:
   expire: false
+runcmd:
+- |
+  set +e
+  gawk -i inplace -f- /etc/ssh/sshd_config.d/10-cloudimg-settings.conf <<'EOF'
+  BEGIN { update = "PasswordAuthentication yes" }
+  /^PasswordAuthentication\s/ { $$0 = update }
+  { print }
+  EOF
+- systemctl reload sshd.service
 endef
 
 define PACKERFILE
