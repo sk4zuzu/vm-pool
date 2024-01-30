@@ -1,9 +1,15 @@
 #!/usr/bin/env ksh
 
-: "${CLOUD_INIT_RELEASE:=22.3.4}"
+: "${CLOUD_INIT_RELEASE:=23.4.2}"
 
 set -o errexit -o nounset -o pipefail
 set -x
+
+pkg_add \
+    bash \
+    dmidecode \
+    py3-configobj py3-jinja2 py3-jsonschema py3-netifaces py3-oauthlib py3-requests py3-setuptools py3-yaml \
+    sudo--
 
 (install -d /var/tmp/cloud-init/
  cd /var/tmp/cloud-init/

@@ -3,10 +3,10 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := openbsd
 
-RELEASE  := 7.2
+RELEASE  := 7.4
 VERSION  := $(RELEASE)
-ARTIFACT := install72.iso
-CHECKSUM := 0369ef40a3329efcb978c578c7fdc7bda71e502aecec930a74b44160928c91d3
+ARTIFACT := install74.iso
+CHECKSUM := a1001736ed9fe2307965b5fcdb426ae11f9b80d26eb21e404a705144a0a224a0
 
 CPUS      ?= 1
 MEMORY    ?= 1024
