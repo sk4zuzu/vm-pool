@@ -3,10 +3,10 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := freebsd
 
-RELEASE  := 13.1-RELEASE
+RELEASE  := 13.2-RELEASE
 VERSION  := $(RELEASE)
 ARTIFACT := FreeBSD-$(VERSION)-amd64.qcow2
-CHECKSUM := b5a36b2e164badcc551b543cff9583651c0f117e65575d3df461ce34d5cef6a7
+CHECKSUM := ba9fbe84ad5180e46cc4fb64ad959dcb07b791b900d3c11956b0027f2a2dda19
 
 CPUS      ?= 1
 MEMORY    ?= 2048

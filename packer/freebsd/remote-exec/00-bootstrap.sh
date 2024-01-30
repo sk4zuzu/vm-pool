@@ -11,11 +11,11 @@ EOF
 
 echo -n 'asd' | pw usermod -n root -h 0
 
-gawk -i inplace -f- /etc/ssh/sshd_config <<EOF
+gawk -i inplace -f- /etc/ssh/sshd_config <<'EOF'
 BEGIN { update = "PermitRootLogin yes" }
-/^#?PermitRootLogin / { \$0 = update; found=1 }
+/^[#\s]*PermitRootLogin\s/ { $0 = update; found = 1 }
 { print }
-END { if (!found) print update >> FILENAME }
+ENDFILE { if (!found) print update }
 EOF
 
 /etc/rc.d/sshd start
