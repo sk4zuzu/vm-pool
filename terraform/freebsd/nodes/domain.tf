@@ -4,8 +4,6 @@ resource "libvirt_domain" "nodes" {
   vcpu   = var.nodes.vcpu
   memory = var.nodes.memory
 
-  cloudinit = libvirt_cloudinit_disk.nodes.*.id[count.index]
-
   cpu {
     mode = "host-passthrough"
   }
@@ -29,6 +27,10 @@ resource "libvirt_domain" "nodes" {
 
   disk {
     volume_id = libvirt_volume.nodes.*.id[count.index]
+  }
+
+  disk {
+    volume_id = split(";", libvirt_cloudinit_disk.nodes.*.id[count.index])[0]
   }
 
   graphics {
