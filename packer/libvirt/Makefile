@@ -4,9 +4,9 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 NAME := libvirt
 
 RELEASE  := 22.04
-VERSION  := release-20231211
+VERSION  := release-20240126
 ARTIFACT := ubuntu-$(RELEASE)-server-cloudimg-amd64.img
-CHECKSUM := 6d6af17f28c895d87e29092725370387c5e19efe57e58b96dc574feed4245f89
+CHECKSUM := 9f8a0d84b81a1d481aafca2337cb9f0c1fdf697239ac488177cf29c97d706c25
 
 CPUS      ?= 1
 MEMORY    ?= 2048
@@ -27,7 +27,7 @@ runcmd:
   set +e
   gawk -i inplace -f- /etc/ssh/sshd_config.d/10-cloudimg-settings.conf <<'EOF'
   BEGIN { update = "PasswordAuthentication yes" }
-  /^PasswordAuthentication\s/ { $$0 = update }
+  /^[#\s]*PasswordAuthentication\s/ { $$0 = update }
   { print }
   EOF
 - systemctl reload sshd.service
