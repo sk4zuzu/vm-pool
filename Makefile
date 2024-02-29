@@ -177,7 +177,10 @@ $(eval $(call SSH_TASKS,v2,$$(BECOME_ROOT),ubuntu@10.2.51.10,ubuntu@172.20.100.)
 $(eval $(call SSH_TASKS,v3,$$(BECOME_ROOT),ubuntu@10.2.51.11,ubuntu@172.20.100.))
 $(eval $(call SSH_TASKS,x1,$$(BECOME_ROOT),,nixos@10.2.100.))
 
-.PHONY: clean
+.PHONY: ls clean
+
+ls:
+	@machinectl list
 
 clean:
 	-make clean -f $(SELF)/Makefile.BINARIES
