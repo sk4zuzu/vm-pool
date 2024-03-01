@@ -8,48 +8,10 @@ resource "libvirt_cloudinit_disk" "nodes" {
   local-hostname: ${var.nodes.prefix}${count.index + 1}
   EOF
 
-  network_config = <<-EOF
-  version: 2
-  ethernets:
-    eth0:
-      addresses:
-        - ${cidrhost(var.network.subnet, count.index + var.nodes.offset)}/${split("/", var.network.subnet)[1]}
-      dhcp4: false
-      dhcp6: false
-      macaddress: '${lower(format(var.network.macaddr, count.index + var.nodes.offset))}'
-      nameservers:
-        addresses:
-          - ${cidrhost(var.network.subnet, 1)}
-        search:
-          - ${var.network.domain}
-      routes:
-        - metric: 0
-          to: 0.0.0.0/0
-          via: ${cidrhost(var.network.subnet, 1)}
-    eth1:
-      dhcp4: false
-      dhcp6: false
-    eth2:
-      dhcp4: false
-      dhcp6: false
-  bonds:
-    bond0:
-      interfaces: [eth1, eth2]
-      addresses:
-        - ${cidrhost("192.168.150.0/24", count.index + var.nodes.offset)}/24
-      dhcp4: false
-      dhcp6: false
-  EOF
-
   #network_config = <<-EOF
   #version: 2
   #ethernets:
   #  eth0:
-  #    dhcp4: false
-  #    dhcp6: false
-  #bridges:
-  #  br0:
-  #    interfaces: [eth0]
   #    addresses:
   #      - ${cidrhost(var.network.subnet, count.index + var.nodes.offset)}/${split("/", var.network.subnet)[1]}
   #    dhcp4: false
@@ -64,7 +26,45 @@ resource "libvirt_cloudinit_disk" "nodes" {
   #      - metric: 0
   #        to: 0.0.0.0/0
   #        via: ${cidrhost(var.network.subnet, 1)}
+  #  eth1:
+  #    dhcp4: false
+  #    dhcp6: false
+  #  eth2:
+  #    dhcp4: false
+  #    dhcp6: false
+  #bonds:
+  #  bond0:
+  #    interfaces: [eth1, eth2]
+  #    addresses:
+  #      - ${cidrhost("192.168.150.0/24", count.index + var.nodes.offset)}/24
+  #    dhcp4: false
+  #    dhcp6: false
   #EOF
+
+  network_config = <<-EOF
+  version: 2
+  ethernets:
+    eth0:
+      dhcp4: false
+      dhcp6: false
+  bridges:
+    br0:
+      interfaces: [eth0]
+      addresses:
+        - ${cidrhost(var.network.subnet, count.index + var.nodes.offset)}/${split("/", var.network.subnet)[1]}
+      dhcp4: false
+      dhcp6: false
+      macaddress: '${lower(format(var.network.macaddr, count.index + var.nodes.offset))}'
+      nameservers:
+        addresses:
+          - ${cidrhost(var.network.subnet, 1)}
+        search:
+          - ${var.network.domain}
+      routes:
+        - metric: 0
+          to: 0.0.0.0/0
+          via: ${cidrhost(var.network.subnet, 1)}
+  EOF
 
   user_data = <<-EOF
   #cloud-config
