@@ -6,11 +6,11 @@ NAME := redhat
 # https://access.redhat.com/management/systems
 include $(SELF)/subscription.mk
 
-# https://access.redhat.com/downloads/content/479/ver=/rhel---9/9.2/x86_64/product-software
+# https://access.redhat.com/downloads/content/479/ver=/rhel---9/9.3/x86_64/product-software
 RELEASE  := 9
-VERSION  := $(RELEASE).2
+VERSION  := $(RELEASE).3
 ARTIFACT := rhel-$(VERSION)-x86_64-kvm.qcow2
-CHECKSUM := 34ff41b5274692c984e3860b21136af8b6ae502744c6c7578dda82002fba0287
+CHECKSUM := fafa0b90267206cb5c7d41fcadea245918ae7aca9997b87397d845e63bdabeec
 
 ## https://access.redhat.com/downloads/content/479/ver=/rhel---8/8.6/x86_64/product-software
 #RELEASE  := 8
