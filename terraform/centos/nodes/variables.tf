@@ -33,5 +33,11 @@ variable "nodes" {
     image   = string
     storage = string
     keys    = string
+    disks = list(
+      object({
+        name = string
+        size = string
+      })
+    )
   })
 }

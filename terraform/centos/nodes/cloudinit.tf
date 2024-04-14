@@ -6,12 +6,40 @@ resource "libvirt_cloudinit_disk" "nodes" {
   meta_data = <<-EOF
   instance-id: ${var.nodes.prefix}${count.index + 1}
   local-hostname: ${var.nodes.prefix}${count.index + 1}
-  network-interfaces: |
-    iface eth0 inet static
-    hwaddress ether ${lower(format(var.network.macaddr, count.index + var.nodes.offset))}
-    address ${cidrhost(var.network.subnet, count.index + var.nodes.offset)}
-    netmask ${cidrnetmask(var.network.subnet)}
-    gateway ${cidrhost(var.network.subnet, 1)}
+  EOF
+
+  #meta_data = <<-EOF
+  #instance-id: ${var.nodes.prefix}${count.index + 1}
+  #local-hostname: ${var.nodes.prefix}${count.index + 1}
+  #network-interfaces: |
+  #  iface eth0 inet static
+  #  hwaddress ether ${lower(format(var.network.macaddr, count.index + var.nodes.offset))}
+  #  address ${cidrhost(var.network.subnet, count.index + var.nodes.offset)}
+  #  netmask ${cidrnetmask(var.network.subnet)}
+  #  gateway ${cidrhost(var.network.subnet, 1)}
+  #EOF
+
+  network_config = <<-EOF
+  version: 2
+  ethernets:
+    eth0:
+      dhcp4: false
+      dhcp6: false
+  bridges:
+    br0:
+      interfaces: [eth0]
+      addresses:
+        - ${cidrhost(var.network.subnet, count.index + var.nodes.offset)}/${split("/", var.network.subnet)[1]}
+      dhcp4: false
+      dhcp6: false
+      gateway4: ${cidrhost(var.network.subnet, 1)}
+      macaddress: '${lower(format(var.network.macaddr, count.index + var.nodes.offset))}'
+      nameservers:
+        addresses:
+          - ${cidrhost(var.network.subnet, 1)}
+        search:
+          - ${var.network.domain}
+      parameters: {} # FIX
   EOF
 
   user_data = <<-EOF
@@ -31,17 +59,8 @@ resource "libvirt_cloudinit_disk" "nodes" {
     devices: [/]
   write_files:
     - content: |
-        nameserver ${cidrhost(var.network.subnet, 1)}
-        search ${var.network.domain}
-      path: /etc/resolv.conf
-    - content: |
         net.ipv4.ip_forward = 1
       path: /etc/sysctl.d/98-ip-forward.conf
-  bootcmd:
-    - sed -i 's|^HWADDR=|MACADDR=|' /etc/sysconfig/network-scripts/ifcfg-eth0
-    - systemctl disable NetworkManager && systemctl stop NetworkManager
-    - systemctl enable network && systemctl start network
-    - ifdown eth0 && ifup eth0
   runcmd:
     - sysctl -p /etc/sysctl.d/98-ip-forward.conf
   EOF
