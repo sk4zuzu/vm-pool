@@ -4,16 +4,26 @@ set -o errexit -o nounset -o pipefail
 set -x
 
 yum install -y "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
+yum install -y centos-release-scl-rh
+yum install -y centos-release-qemu-ev
+yum install -y centos-release-ceph-nautilus
 
 yum install -y \
-    ca-certificates \
-    sudo wget gpg curl
+    ca-certificates curl \
+    gpg \
+    sudo \
+    wget
 
 yum install -y \
-    pv \
-    vim mc htop \
-    net-tools iproute2 netcat nmap \
-    iftop nethogs \
-    jq
+    iftop iproute2 \
+    jq \
+    htop \
+    mc \
+    net-tools netcat nethogs nmap \
+    pv python3 \
+    vim
+
+yum install -y \
+    NetworkManager
 
 sync

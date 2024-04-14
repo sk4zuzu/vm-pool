@@ -4,12 +4,12 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 NAME := centos
 
 RELEASE  := 7
-VERSION  := $(RELEASE).5
-ARTIFACT := CentOS-7-x86_64-GenericCloud-1804_02.qcow2
-CHECKSUM := d7d720e4c2970a4dade749bf504bf8afe8b638a30c614efc43a6c769c1b5bc46
+VERSION  := 2009
+ARTIFACT := CentOS-7-x86_64-GenericCloud-$(VERSION).qcow2
+CHECKSUM := e38bab0475cc6d004d2e17015969c659e5a308111851b0e2715e84646035bdd3
 
 CPUS      ?= 1
-MEMORY    ?= 1024
+MEMORY    ?= 2048
 DISK_SIZE ?= 12288
 
 PACKER     := $(SELF)/../../bin/packer
@@ -36,7 +36,10 @@ source "qemu" "$(NAME)" {
   disk_size = "$(DISK_SIZE)"
 
   qemuargs = [
-    ["-fda", "$(SELF)/.cache/$(ARTIFACT).iso"],
+    ["-cpu", "host"],
+    ["-smp", "cpus=$(CPUS)"],
+    ["-cdrom", "$(SELF)/.cache/$(ARTIFACT).iso"],
+    ["-serial", "stdio"],
   ]
 
   ssh_username = "centos"
@@ -54,7 +57,6 @@ build {
     scripts = [
       "remote-exec/01-basics.sh",
       "remote-exec/02-selinux.sh",
-      "remote-exec/03-systemd.sh",
     ]
   }
 }
