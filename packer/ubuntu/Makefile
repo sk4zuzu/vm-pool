@@ -3,10 +3,10 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := ubuntu
 
-RELEASE  := 22.04
-VERSION  := release-20240319
+RELEASE  := 24.04
+VERSION  := release-20240423
 ARTIFACT := ubuntu-$(RELEASE)-server-cloudimg-amd64.img
-CHECKSUM := 304983616fcba6ee1452e9f38993d7d3b8a90e1eb65fb0054d672ce23294d812
+CHECKSUM := 32a9d30d18803da72f5936cf2b7b9efcb4d0bb63c67933f17e3bdfd1751de3f3
 
 CPUS      ?= 1
 MEMORY    ?= 2048
@@ -66,6 +66,7 @@ build {
     scripts = [
       "remote-exec/01-basics.sh",
       "remote-exec/02-kernel.sh",
+      "remote-exec/03-systemd.sh",
     ]
   }
 }
