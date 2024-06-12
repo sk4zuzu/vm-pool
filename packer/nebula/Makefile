@@ -4,9 +4,9 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 NAME := nebula
 
 RELEASE  := 22.04
-VERSION  := release-20240319
+VERSION  := release-20240514
 ARTIFACT := ubuntu-$(RELEASE)-server-cloudimg-amd64.img
-CHECKSUM := 304983616fcba6ee1452e9f38993d7d3b8a90e1eb65fb0054d672ce23294d812
+CHECKSUM := 1718f177dde4c461148ab7dcbdcf2f410c1f5daa694567f6a8bbb239d864b525
 
 CPUS      ?= 1
 MEMORY    ?= 1024
