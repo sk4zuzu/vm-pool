@@ -4,9 +4,9 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 NAME := ubuntu
 
 RELEASE  := 24.04
-VERSION  := release-20240423
+VERSION  := release-20240608
 ARTIFACT := ubuntu-$(RELEASE)-server-cloudimg-amd64.img
-CHECKSUM := 32a9d30d18803da72f5936cf2b7b9efcb4d0bb63c67933f17e3bdfd1751de3f3
+CHECKSUM := bc984eb1d1efbf2da8c7e9fa2487347a4cbc03247c487d890cdd32f231e1b3b0
 
 CPUS      ?= 1
 MEMORY    ?= 2048
