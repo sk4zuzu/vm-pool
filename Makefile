@@ -95,6 +95,7 @@ $(eval $(call PACKER_TASKS,redhat))
 $(eval $(call PACKER_TASKS,redhat_9p))
 $(eval $(call PACKER_TASKS,rocky))
 $(eval $(call PACKER_TASKS,ubuntu))
+$(eval $(call PACKER_TASKS,void))
 $(eval $(call PACKER_TASKS,windows))
 
 $(eval $(call TERRAFORM_TASKS,a1,$$(AUTO_APPROVE)))
@@ -206,4 +207,5 @@ clean:
 	-cd $(SELF)/packer/redhat_9p/ && make clean
 	-cd $(SELF)/packer/rocky/ && make clean
 	-cd $(SELF)/packer/ubuntu/ && make clean
+	-cd $(SELF)/packer/void/ && make clean
 	-cd $(SELF)/packer/windows/ && make clean
