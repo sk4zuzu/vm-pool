@@ -1,4 +1,4 @@
-resource "terraform_data" "almalinux" {
+resource "terraform_data" "alma_9p" {
   depends_on = [libvirt_domain.nodes]
 
   count = var.shutdown ? var.nodes.count : 0
