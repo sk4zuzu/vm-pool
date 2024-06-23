@@ -1,12 +1,12 @@
 SHELL := $(shell which bash)
 SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
-NAME := almalinux_9p
+NAME := alma_9p
 
 RELEASE  := 8
-VERSION  := $(RELEASE).9-20231128
+VERSION  := $(RELEASE).10-20240530
 ARTIFACT := AlmaLinux-$(RELEASE)-GenericCloud-$(VERSION).x86_64.qcow2
-CHECKSUM := a1686bc537bce699b512e3233666f5b8f69ed797ff1ce0af52c17fdc52942621
+CHECKSUM := 41a6bcdefb35afbd2819f0e6c68005cd5e9a346adf2dc093b1116a2b7c647d86
 
 CPUS       ?= 4
 MEMORY     ?= 12288

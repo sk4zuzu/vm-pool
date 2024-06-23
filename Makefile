@@ -74,7 +74,7 @@ binaries:
 	make -f $(SELF)/Makefile.BINARIES
 
 $(eval $(call PACKER_TASKS,alma))
-$(eval $(call PACKER_TASKS,almalinux_9p))
+$(eval $(call PACKER_TASKS,alma_9p))
 $(eval $(call PACKER_TASKS,alpine))
 $(eval $(call PACKER_TASKS,arch))
 $(eval $(call PACKER_TASKS,centos))
@@ -185,7 +185,7 @@ ls:
 clean:
 	-make clean -f $(SELF)/Makefile.BINARIES
 	-cd $(SELF)/packer/alma/ && make clean
-	-cd $(SELF)/packer/almalinux_9p/ && make clean
+	-cd $(SELF)/packer/alma_9p/ && make clean
 	-cd $(SELF)/packer/alpine/ && make clean
 	-cd $(SELF)/packer/arch/ && make clean
 	-cd $(SELF)/packer/centos/ && make clean
