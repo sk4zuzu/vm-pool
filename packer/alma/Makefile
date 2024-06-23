@@ -1,15 +1,15 @@
 SHELL := $(shell which bash)
 SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
-NAME := almalinux
+NAME := alma
 
 RELEASE  := 9
-VERSION  := $(RELEASE).3-20231113
+VERSION  := $(RELEASE).4-20240507
 ARTIFACT := AlmaLinux-$(RELEASE)-GenericCloud-$(VERSION).x86_64.qcow2
-CHECKSUM := 6bbd060c971fd827a544c7e5e991a7d9e44460a449d2d058a0bb1290dec5a114
+CHECKSUM := bff0885c804c01fff8aac4b70c9ca4f04e8c119f9ee102043838f33e06f58390
 
 CPUS      ?= 1
-MEMORY    ?= 1024
+MEMORY    ?= 2048
 DISK_SIZE ?= 12288
 
 PACKER     := $(SELF)/../../bin/packer
