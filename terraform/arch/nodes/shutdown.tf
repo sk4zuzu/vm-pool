@@ -1,4 +1,4 @@
-resource "terraform_data" "archlinux" {
+resource "terraform_data" "arch" {
   depends_on = [libvirt_domain.nodes]
 
   count = var.shutdown ? var.nodes.count : 0
