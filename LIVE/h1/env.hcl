@@ -5,7 +5,7 @@ locals {
 
   network = {
     name    = local.env
-    domain  = "archlinux.lh"
+    domain  = "arch.lh"
     macaddr = "52:54:02:01:20:%02x"
     subnet  = "10.2.120.0/24"
   }
@@ -21,7 +21,7 @@ locals {
     offset  = 10
     vcpu    = 2
     memory  = "2048"
-    image   = "${get_parent_terragrunt_dir()}/../../packer/archlinux/.cache/output/packer-archlinux.qcow2"
+    image   = "${get_parent_terragrunt_dir()}/../../packer/arch/.cache/output/packer-arch.qcow2"
     storage = "34359738368"  # 32GiB
     keys    = file("~/.ssh/id_rsa.pub")
   }
@@ -32,7 +32,7 @@ locals {
     offset  = 20
     vcpu    = 2
     memory  = "3072"
-    image   = "${get_parent_terragrunt_dir()}/../../packer/archlinux/.cache/output/packer-archlinux.qcow2"
+    image   = "${get_parent_terragrunt_dir()}/../../packer/arch/.cache/output/packer-arch.qcow2"
     storage = "34359738368"  # 32GiB
     keys    = file("~/.ssh/id_rsa.pub")
   }
