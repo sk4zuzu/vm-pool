@@ -76,7 +76,7 @@ binaries:
 $(eval $(call PACKER_TASKS,almalinux))
 $(eval $(call PACKER_TASKS,almalinux_9p))
 $(eval $(call PACKER_TASKS,alpine))
-$(eval $(call PACKER_TASKS,archlinux))
+$(eval $(call PACKER_TASKS,arch))
 $(eval $(call PACKER_TASKS,centos))
 $(eval $(call PACKER_TASKS,debian))
 $(eval $(call PACKER_TASKS,devuan))
@@ -187,7 +187,7 @@ clean:
 	-cd $(SELF)/packer/almalinux/ && make clean
 	-cd $(SELF)/packer/almalinux_9p/ && make clean
 	-cd $(SELF)/packer/alpine/ && make clean
-	-cd $(SELF)/packer/archlinux/ && make clean
+	-cd $(SELF)/packer/arch/ && make clean
 	-cd $(SELF)/packer/centos/ && make clean
 	-cd $(SELF)/packer/debian/ && make clean
 	-cd $(SELF)/packer/devuan/ && make clean

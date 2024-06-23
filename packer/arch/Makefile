@@ -1,11 +1,11 @@
 SHELL := $(shell which bash)
 SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
-NAME := archlinux
+NAME := arch
 
-VERSION  := 20221215.111177
+VERSION  := 20240615.241534
 ARTIFACT := Arch-Linux-x86_64-cloudimg-$(VERSION).qcow2
-CHECKSUM := e03bca357b6962eb65832dba91bd3515ebd6fe6592748dd0e136502b39d88041
+CHECKSUM := 346f68538962d29f4149ea53b9af7829908e60d308199064e836a24a1e7c3c4e
 
 CPUS      ?= 1
 MEMORY    ?= 1024
