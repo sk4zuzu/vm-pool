@@ -3,7 +3,7 @@ locals {
 }
 
 terraform {
-  source = "${get_parent_terragrunt_dir()}/../terraform//almalinux_9p/nodes"
+  source = "${get_parent_terragrunt_dir()}/../terraform//alma_9p/nodes"
 }
 
 include {

@@ -5,7 +5,7 @@ locals {
 
   network = {
     name    = local.env
-    domain  = "almalinux.lh"
+    domain  = "alma.lh"
     macaddr = "52:54:02:00:51:%02x"
     subnet  = "10.2.51.0/24"
   }
@@ -48,7 +48,7 @@ locals {
     offset  = 10
     vcpu    = 2
     memory  = "2048"
-    image   = "${get_parent_terragrunt_dir()}/../../packer/almalinux_9p/.cache/output/packer-almalinux_9p.qcow2"
+    image   = "${get_parent_terragrunt_dir()}/../../packer/alma_9p/.cache/output/packer-alma_9p.qcow2"
     storage = "94489280512"  # 88GiB
     keys    = file("~/.ssh/id_rsa.pub")
     disks   = []
@@ -61,7 +61,7 @@ locals {
     offset  = 20
     vcpu    = 4
     memory  = "3072"
-    image   = "${get_parent_terragrunt_dir()}/../../packer/almalinux_9p/.cache/output/packer-almalinux_9p.qcow2"
+    image   = "${get_parent_terragrunt_dir()}/../../packer/alma_9p/.cache/output/packer-alma_9p.qcow2"
     storage = "94489280512"  # 88GiB
     keys    = file("~/.ssh/id_rsa.pub")
     disks = [{
