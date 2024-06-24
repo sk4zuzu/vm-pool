@@ -16,7 +16,7 @@ EOF
 
 generate "provider" {
   path      = "provider.tf"
-  if_exists = "overwrite_terragrunt"
+  if_exists = "skip"
   contents  = <<EOF
 provider "libvirt" {
   uri = "qemu:///system"

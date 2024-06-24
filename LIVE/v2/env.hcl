@@ -1,6 +1,6 @@
-generate "provider" {
+generate "provider-overwrite" {
   path      = "provider.tf"
-  if_exists = "overwrite_terragrunt"
+  if_exists = "overwrite"
   contents  = <<EOF
 provider "libvirt" {
   uri = "qemu+tcp://10.2.51.10/system"
