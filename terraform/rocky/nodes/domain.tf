@@ -40,7 +40,7 @@ resource "libvirt_domain" "nodes" {
   }
 
   graphics {
-    type           = "spice"
+    type           = "vnc"
     listen_type    = "address"
     listen_address = "127.0.0.1"
     autoport       = true
