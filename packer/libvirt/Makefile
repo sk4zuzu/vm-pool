@@ -3,10 +3,10 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := libvirt
 
-RELEASE  := 22.04
-VERSION  := release-20240514
+RELEASE  := 24.04
+VERSION  := release-20240608
 ARTIFACT := ubuntu-$(RELEASE)-server-cloudimg-amd64.img
-CHECKSUM := 1718f177dde4c461148ab7dcbdcf2f410c1f5daa694567f6a8bbb239d864b525
+CHECKSUM := bc984eb1d1efbf2da8c7e9fa2487347a4cbc03247c487d890cdd32f231e1b3b0
 
 CPUS      ?= 1
 MEMORY    ?= 2048
@@ -67,6 +67,7 @@ build {
       "remote-exec/01-basics.sh",
       "remote-exec/02-kernel.sh",
       "remote-exec/03-libvirt.sh",
+      "remote-exec/04-systemd.sh",
     ]
   }
 }
