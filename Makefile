@@ -89,6 +89,7 @@ $(eval $(call PACKER_TASKS,libvirt))
 $(eval $(call PACKER_TASKS,nebula))
 $(eval $(call PACKER_TASKS,netbsd))
 $(eval $(call PACKER_TASKS,nixos))
+$(eval $(call PACKER_TASKS,one))
 $(eval $(call PACKER_TASKS,openbsd))
 $(eval $(call PACKER_TASKS,oracle))
 $(eval $(call PACKER_TASKS,redhat))
@@ -204,6 +205,7 @@ clean:
 	-cd $(SELF)/packer/netbsd/ && make clean
 	-cd $(SELF)/packer/nixos/ && make clean
 	-cd $(SELF)/packer/nebula/ && make clean
+	-cd $(SELF)/packer/one/ && make clean
 	-cd $(SELF)/packer/openbsd/ && make clean
 	-cd $(SELF)/packer/oracle/ && make clean
 	-cd $(SELF)/packer/redhat/ && make clean
