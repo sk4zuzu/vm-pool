@@ -51,7 +51,7 @@ resource "libvirt_domain" "nodes" {
   dynamic "filesystem" {
     for_each = var.nodes.mounts
     content {
-      accessmode = "mapped"
+      accessmode = "passthrough"
       target     = filesystem.value.target
       source     = filesystem.value.source
       readonly   = filesystem.value.ro
