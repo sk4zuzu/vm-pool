@@ -21,6 +21,15 @@ variable "nodes1" {
     image   = string
     storage = string
   })
+  default = {
+    count   = 0
+    prefix  = null
+    offset  = null
+    vcpu    = null
+    memory  = null
+    image   = null
+    storage = null
+  }
 }
 
 variable "nodes2" {
@@ -33,4 +42,13 @@ variable "nodes2" {
     image   = string
     storage = string
   })
+  default = {
+    count   = 0
+    prefix  = null
+    offset  = null
+    vcpu    = null
+    memory  = null
+    image   = null
+    storage = null
+  }
 }
