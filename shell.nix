@@ -5,8 +5,9 @@ with pkgs;
 stdenv.mkDerivation {
   name = "vm-pool-env";
   buildInputs = [
-    curl unzip
+    cdrkit cloud-utils curl
     git
-    cdrkit cloud-utils
+    libxslt
+    unzip
   ];
 }
