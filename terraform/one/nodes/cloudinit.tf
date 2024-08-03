@@ -51,5 +51,21 @@ resource "libvirt_cloudinit_disk" "nodes" {
     devices: [/]
   mounts:
     - [ 'asd', '/home/ubuntu/_git/', 'virtiofs', 'rw,relatime', '0', '0' ]
+  write_files:
+    - content: |
+        [NetDev]
+        Name=tap0
+        Kind=tap
+      path: /etc/systemd/network/tap0.netdev
+    - content: |
+        [Match]
+        Name=tap0
+        [Link]
+        ActivationPolicy=always-up
+        [Network]
+        ConfigureWithoutCarrier=yes
+      path: /etc/systemd/network/tap0.network
+  runcmd:
+    - networkctl reload
   EOF
 }
