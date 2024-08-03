@@ -3,10 +3,15 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := alma_9p
 
-RELEASE  := 8
-VERSION  := $(RELEASE).10-20240530
+#RELEASE  := 8
+#VERSION  := $(RELEASE).10-20240530
+#ARTIFACT := AlmaLinux-$(RELEASE)-GenericCloud-$(VERSION).x86_64.qcow2
+#CHECKSUM := 41a6bcdefb35afbd2819f0e6c68005cd5e9a346adf2dc093b1116a2b7c647d86
+
+RELEASE  := 9
+VERSION  := $(RELEASE).4-20240507
 ARTIFACT := AlmaLinux-$(RELEASE)-GenericCloud-$(VERSION).x86_64.qcow2
-CHECKSUM := 41a6bcdefb35afbd2819f0e6c68005cd5e9a346adf2dc093b1116a2b7c647d86
+CHECKSUM := bff0885c804c01fff8aac4b70c9ca4f04e8c119f9ee102043838f33e06f58390
 
 CPUS       ?= 4
 MEMORY     ?= 12288

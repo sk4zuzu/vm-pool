@@ -5,7 +5,8 @@ set -x
 
 rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
 
-dnf install -y https://www.elrepo.org/elrepo-release-8.el8.elrepo.noarch.rpm
+(source /etc/os-release && IFS=. read -ra V <<< "$VERSION_ID" \
+                        && dnf install -y "https://www.elrepo.org/elrepo-release-${V[0]}.el${V[0]}.elrepo.noarch.rpm")
 
 dnf --enablerepo=elrepo-kernel install -y kernel-ml
 
