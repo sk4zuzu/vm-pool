@@ -34,7 +34,7 @@ apt-get -q install -y \
     arptables \
     bridge-utils \
     ebtables \
-    iproute2 iptables \
+    iproute2 ipset iptables \
     nftables \
     tcpdump
 
