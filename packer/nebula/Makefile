@@ -3,10 +3,15 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := nebula
 
-RELEASE  := 22.04
-VERSION  := release-20240514
+RELEASE  := 24.04
+VERSION  := release-20240806
 ARTIFACT := ubuntu-$(RELEASE)-server-cloudimg-amd64.img
-CHECKSUM := 1718f177dde4c461148ab7dcbdcf2f410c1f5daa694567f6a8bbb239d864b525
+CHECKSUM := fb4db0c7951867cb48b50a55c5e37c8c3395faedcb07dd5d6d9a17bdcebe69c1
+
+#RELEASE  := 22.04
+#VERSION  := release-20240514
+#ARTIFACT := ubuntu-$(RELEASE)-server-cloudimg-amd64.img
+#CHECKSUM := 1718f177dde4c461148ab7dcbdcf2f410c1f5daa694567f6a8bbb239d864b525
 
 CPUS      ?= 1
 MEMORY    ?= 1024
@@ -67,6 +72,7 @@ build {
       "remote-exec/01-basics.sh",
       "remote-exec/02-kernel.sh",
       "remote-exec/03-libvirt.sh",
+      "remote-exec/04-systemd.sh",
     ]
   }
 }

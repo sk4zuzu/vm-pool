@@ -4,9 +4,9 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 NAME := libvirt
 
 RELEASE  := 24.04
-VERSION  := release-20240608
+VERSION  := release-20240806
 ARTIFACT := ubuntu-$(RELEASE)-server-cloudimg-amd64.img
-CHECKSUM := bc984eb1d1efbf2da8c7e9fa2487347a4cbc03247c487d890cdd32f231e1b3b0
+CHECKSUM := fb4db0c7951867cb48b50a55c5e37c8c3395faedcb07dd5d6d9a17bdcebe69c1
 
 CPUS      ?= 1
 MEMORY    ?= 2048
