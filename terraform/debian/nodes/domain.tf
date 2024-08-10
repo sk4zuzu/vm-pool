@@ -14,6 +14,16 @@ resource "libvirt_domain" "nodes" {
     network_name   = var.network.name
     wait_for_lease = false
   }
+  dynamic "network_interface" {
+    for_each = toset([
+      "${var.env}none1",
+      "${var.env}none2",
+    ])
+    content {
+      network_name   = network_interface.value
+      wait_for_lease = false
+    }
+  }
 
   console {
     type        = "pty"
@@ -30,7 +40,6 @@ resource "libvirt_domain" "nodes" {
   disk {
     volume_id = libvirt_volume.nodes.*.id[count.index]
   }
-
   dynamic "disk" {
     for_each = var.nodes.disks
     content {

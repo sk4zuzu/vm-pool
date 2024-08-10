@@ -12,6 +12,17 @@ resource "libvirt_cloudinit_disk" "nodes" {
   version: 2
   ethernets:
     eth0:
+      dhcp4: false
+      dhcp6: false
+    eth1:
+      dhcp4: false
+      dhcp6: false
+    eth2:
+      dhcp4: false
+      dhcp6: false
+  bridges:
+    br0:
+      interfaces: [eth0]
       addresses:
         - ${cidrhost(var.network.subnet, count.index + var.nodes.offset)}/${split("/", var.network.subnet)[1]}
       dhcp4: false
