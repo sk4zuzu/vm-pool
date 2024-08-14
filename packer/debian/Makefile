@@ -57,6 +57,8 @@ build {
     scripts = [
       "remote-exec/01-basics.sh",
       "remote-exec/02-kernel.sh",
+      "remote-exec/03-libvirt.sh",
+      "remote-exec/04-systemd.sh",
     ]
   }
 }
