@@ -17,7 +17,7 @@ dnf install -y \
     jq \
     mc \
     net-tools netcat nethogs nmap \
-    pv \
+    pv python3 \
     vim
 
 sync
