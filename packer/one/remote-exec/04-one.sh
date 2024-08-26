@@ -52,4 +52,11 @@ policy_rc_d_enable
 
 apt-get -q clean
 
+awk -i inplace -f- ~ubuntu/.bashrc <<'EOF'
+BEGIN { append = "if test -d ~ubuntu/_git/one-build/; then cd $_; fi" }
+$0 ~ "^" append { found=1 }
+{ print }
+ENDFILE { if (!found) print append }
+EOF
+
 sync
