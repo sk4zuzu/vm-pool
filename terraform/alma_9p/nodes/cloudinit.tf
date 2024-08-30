@@ -68,7 +68,7 @@ resource "libvirt_cloudinit_disk" "nodes" {
 
   user_data = <<-EOF
   #cloud-config
-  ssh_pwauth: false
+  ssh_pwauth: true
   users:
     - name: almalinux
       ssh_authorized_keys: ${jsonencode(var.nodes.keys)}
