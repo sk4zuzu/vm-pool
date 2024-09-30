@@ -12,8 +12,7 @@ apt-get -q update -y
 
 policy_rc_d_disable
 
-apt-get -q install -y \
-    open-iscsi
+apt-get -q install -y open-iscsi
 
 policy_rc_d_enable
 

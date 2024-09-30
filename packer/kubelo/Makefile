@@ -3,13 +3,13 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := kubelo
 
-RELEASE  := 20.04
-VERSION  := release-20220711
+RELEASE  := 24.04
+VERSION  := release-20240806
 ARTIFACT := ubuntu-$(RELEASE)-server-cloudimg-amd64.img
-CHECKSUM := 692406940d6a8d6eb8196732b83a7fcb9d5bed4bcf493526a1aece05ceca452b
+CHECKSUM := fb4db0c7951867cb48b50a55c5e37c8c3395faedcb07dd5d6d9a17bdcebe69c1
 
 CPUS      ?= 1
-MEMORY    ?= 1024
+MEMORY    ?= 2048
 DISK_SIZE ?= 10240
 
 PACKER     := $(SELF)/../../bin/packer
@@ -63,9 +63,10 @@ build {
     scripts = [
       "remote-exec/01-basics.sh",
       "remote-exec/02-kernel.sh",
-      "remote-exec/03-docker.sh",
-      "remote-exec/04-kubernetes.sh",
-      "remote-exec/05-iscsi.sh",
+      "remote-exec/03-systemd.sh",
+      "remote-exec/04-containerd.sh",
+      "remote-exec/05-kubernetes.sh",
+      "remote-exec/06-iscsi.sh",
     ]
   }
 }
