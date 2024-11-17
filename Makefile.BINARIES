@@ -2,8 +2,8 @@ SHELL := $(shell which bash)
 SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 PACKER_VERSION     ?= 1.11.2
-TERRAFORM_VERSION  ?= 1.9.5
-TERRAGRUNT_VERSION ?= v0.67.4
+TERRAFORM_VERSION  ?= 1.9.8
+TERRAGRUNT_VERSION ?= v0.68.14
 
 TARGETS = \
 $(SELF)/bin/OVMF.fd \
