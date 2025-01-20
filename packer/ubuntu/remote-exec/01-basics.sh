@@ -8,15 +8,15 @@ export DEBIAN_FRONTEND=noninteractive
 set -o errexit -o nounset -o pipefail
 set -x
 
-#gawk -i inplace -f- /etc/cloud/cloud.cfg <<'EOF'
+#gawk -i inplace -f- /etc/cloud/cloud.cfg <<'AWK'
 #$1 == "apt_preserve_sources_list:" { $2 = "true"; found=1 }
 #{ print }
-#END { if (!found) print "apt_preserve_sources_list: true" >> FILENAME }
-#EOF
+#ENDFILE { if (!found) print "apt_preserve_sources_list: true" }
+#AWK
 #
 #RELEASE=$(lsb_release -sc)
 #
-#cat >/etc/apt/sources.list <<EOF
+#install -m u=rw,go=r -o 0 -g 0 /dev/fd/0 /etc/apt/sources.list <<EOF
 #deb mirror://mirrors.ubuntu.com/mirrors.txt $RELEASE main restricted
 #deb mirror://mirrors.ubuntu.com/mirrors.txt $RELEASE-updates main restricted
 #deb mirror://mirrors.ubuntu.com/mirrors.txt $RELEASE universe
