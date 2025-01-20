@@ -17,5 +17,6 @@ resource "libvirt_cloudinit_disk" "nodes" {
   #cloud-config
   runcmd:
     - powershell.exe -Command Set-NetAdapter "eth0" -MacAddress "${lower(format(var.network.macaddr, count.index + var.nodes.offset))}" -Confirm:$false
+    - powershell.exe -Command Set-DnsClientServerAddress -InterfaceAlias "eth0" -ServerAddresses ("1.1.1.1", "8.8.8.8")
   EOF
 }
