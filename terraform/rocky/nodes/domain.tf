@@ -4,12 +4,6 @@ resource "libvirt_domain" "nodes" {
   vcpu   = var.nodes.vcpu
   memory = var.nodes.memory
 
-  firmware = var.nodes.firmware.file
-  nvram {
-    file     = "${var.storage.directory}/nvram-${var.nodes.prefix}${count.index + 1}"
-    template = var.nodes.firmware.vars
-  }
-
   cpu {
     mode = "host-passthrough"
   }

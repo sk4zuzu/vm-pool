@@ -28,10 +28,6 @@ variable "nodes" {
     count    = number
     prefix   = string
     offset   = number
-    firmware = object({
-      file = string
-      vars = string
-    })
     vcpu     = number
     memory   = string
     image    = string
