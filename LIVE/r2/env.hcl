@@ -19,10 +19,6 @@ locals {
     count    = 1
     prefix   = "${local.env}a"
     offset   = 10
-    firmware = {
-      file = "${get_parent_terragrunt_dir()}/../../bin/OVMF_CODE.fd"
-      vars = "${get_parent_terragrunt_dir()}/../../bin/OVMF_VARS.fd"
-    }
     vcpu     = 2
     memory   = "2048"
     image    = "${get_parent_terragrunt_dir()}/../../packer/rocky/.cache/output/packer-rocky.qcow2"
@@ -34,10 +30,6 @@ locals {
     count    = 2
     prefix   = "${local.env}b"
     offset   = 20
-    firmware = {
-      file = "${get_parent_terragrunt_dir()}/../../bin/OVMF_CODE.fd"
-      vars = "${get_parent_terragrunt_dir()}/../../bin/OVMF_VARS.fd"
-    }
     vcpu     = 2
     memory   = "3072"
     image    = "${get_parent_terragrunt_dir()}/../../packer/rocky/.cache/output/packer-rocky.qcow2"
