@@ -59,7 +59,7 @@ endef
 all:
 
 c confirm:
-	@: $(eval AUTO_APPROVE := --terragrunt-non-interactive)
+	@: $(eval AUTO_APPROVE := --non-interactive)
 
 b become:
 	@: $(eval BECOME_ROOT := -t sudo -i)
