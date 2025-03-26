@@ -4,13 +4,12 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 NAME := rocky
 
 RELEASE  := 9
-VERSION  := $(RELEASE).0-20220706.0
-ARTIFACT := Rocky-$(RELEASE)-GenericCloud-$(VERSION).x86_64.qcow2
-CHECKSUM := 9305faad09707ab72ec8e4a7b2cdc8e20bc31b608443d6c6df954fd2f3371aa2
+VERSION  := $(RELEASE).5-20241118.0
+ARTIFACT := Rocky-$(RELEASE)-GenericCloud-Base-$(VERSION).x86_64.qcow2
+CHECKSUM := 069493fdc807300a22176540e9171fcff2227a92b40a7985a0c1c9e21aeebf57
 
-FIRMWARE  ?= $(SELF)/../../bin/OVMF.fd
 CPUS      ?= 1
-MEMORY    ?= 1024
+MEMORY    ?= 2048
 DISK_SIZE ?= 12288
 
 PACKER     := $(SELF)/../../bin/packer
@@ -35,8 +34,6 @@ source "qemu" "$(NAME)" {
 
   memory    = "$(MEMORY)"
   disk_size = "$(DISK_SIZE)"
-
-  firmware = "$(FIRMWARE)"
 
   qemuargs = [
     ["-cpu", "host"],
