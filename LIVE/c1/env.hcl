@@ -24,10 +24,11 @@ locals {
     image   = "${get_parent_terragrunt_dir()}/../../packer/centos/.cache/output/packer-centos.qcow2"
     storage = "34359738368"  # 32GiB
     keys    = file("~/.ssh/id_rsa.pub")
+    disks   = []
   }
 
   nodes2 = {
-    count   = 2
+    count   = 0
     prefix  = "${local.env}b"
     offset  = 20
     vcpu    = 2
@@ -35,5 +36,6 @@ locals {
     image   = "${get_parent_terragrunt_dir()}/../../packer/centos/.cache/output/packer-centos.qcow2"
     storage = "34359738368"  # 32GiB
     keys    = file("~/.ssh/id_rsa.pub")
+    disks   = []
   }
 }
