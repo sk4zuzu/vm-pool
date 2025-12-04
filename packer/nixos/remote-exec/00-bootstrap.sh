@@ -16,7 +16,7 @@ cat >/mnt/etc/nixos/configuration.nix <<EOF
 
 {
   environment.systemPackages = with pkgs; [
-    bash_5 bat
+    bash bat
     fd file
     git
     htop
@@ -34,8 +34,8 @@ cat >/mnt/etc/nixos/configuration.nix <<EOF
   imports = [ ./hardware-configuration.nix ];
 
   boot.loader.grub.enable  = true;
-  boot.loader.grub.version = 2;
   boot.loader.grub.device  = "/dev/vda";
+  boot.kernelParams        = [ "net.ifnames=0" "biosdevname=0" ];
   boot.growPartition       = true;
 
   networking.hostName        = "nixos";
@@ -64,5 +64,7 @@ cat >/mnt/etc/nixos/configuration.nix <<EOF
 EOF
 
 nixos-install
+
+nixos-enter -- nix-collect-garbage -d
 
 sync

@@ -3,14 +3,14 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := nixos
 
-RELEASE  := 22.11
-VERSION  := $(RELEASE)pre422009.fdebb81f45a
+RELEASE  := 25.05
+VERSION  := $(RELEASE).803297.10d7f8d34e5e
 ARTIFACT := nixos-minimal-$(VERSION)-x86_64-linux.iso
-CHECKSUM := cb41a4246f645bd16870cf19de264ed53ef0bc9b266615402fbaa29e0b77e6a5
+CHECKSUM := d70666d5f45a28752dd45f2df919cc77cfbdee32101fadb635bc19da861fafc8
 
 CPUS      ?= 1
-MEMORY    ?= 1024
-DISK_SIZE ?= 10240
+MEMORY    ?= 3072
+DISK_SIZE ?= 16384
 
 PACKER     := $(SELF)/../../bin/packer
 PACKER_LOG ?= 1
@@ -21,7 +21,7 @@ source "qemu" "$(NAME)" {
   accelerator = "kvm"
 
   disk_image   = false
-  iso_url      = "https://releases.nixos.org/nixos/unstable/nixos-$(VERSION)/$(ARTIFACT)"
+  iso_url      = "https://releases.nixos.org/nixos/$(RELEASE)/nixos-$(VERSION)/$(ARTIFACT)"
   iso_checksum = "$(CHECKSUM)"
 
   memory    = "$(MEMORY)"
@@ -31,6 +31,8 @@ source "qemu" "$(NAME)" {
   disk_interface = "virtio"
 
   qemuargs = [
+    ["-cpu", "host"],
+    ["-smp", "cpus=$(CPUS)"],
     ["-serial", "stdio"],
   ]
 
@@ -43,10 +45,10 @@ source "qemu" "$(NAME)" {
 
   headless = $(HEADLESS)
 
-  boot_wait = "3s"
+  boot_wait = "5s"
 
   boot_command = [
-    "<enter><wait20s>",
+    "<enter><wait30s>",
     "sudo chpasswd <<< root:asd<enter>",
   ]
 }
