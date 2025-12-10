@@ -1,42 +1,79 @@
 resource "libvirt_domain" "nodes" {
-  count  = var.nodes.count
-  name   = "${var.nodes.prefix}${count.index + 1}"
-  vcpu   = var.nodes.vcpu
-  memory = var.nodes.memory
+  count = var.nodes.count
+  name  = "${var.nodes.prefix}${count.index + 1}"
 
-  cloudinit = libvirt_cloudinit_disk.nodes.*.id[count.index]
+  type = "kvm"
 
-  cpu {
-    mode = "host-passthrough"
+  os = {
+    type         = "hvm"
+    type_arch    = "x86_64"
+    type_machine = "pc" # q35 -> no disk
   }
 
-  network_interface {
-    network_name   = var.network.name
-    wait_for_lease = false
+  features = { acpi = true } # required, otherwise keyboard may not work
+
+  cpu  = { mode = "host-passthrough" }
+  vcpu = var.nodes.vcpu
+
+  memory      = var.nodes.memory
+  memory_unit = "MiB"
+
+  devices = {
+    disks = [
+      {
+        boot   = { order = 1 }
+        driver = { type = "qcow2" } # required, otherwise "raw" driver is used
+        source = {
+          volume = {
+            pool   = var.storage.pool
+            volume = libvirt_volume.nodes_root[count.index].name
+          }
+        }
+        target = {
+          dev = "vda"
+          bus = "virtio"
+        }
+      },
+      {
+        device = "cdrom"
+        driver = { type = "raw" }
+        source = {
+          file = {
+            file = libvirt_volume.nodes_init[count.index].path
+          }
+        }
+        target = {
+          dev = "sdd"
+          bus = "sata"
+        }
+      },
+    ]
+    interfaces = concat(
+      [
+        {
+          type   = "network"
+          model  = { type = "virtio" }
+          source = { network = { network = var.network.name } }
+        },
+      ],
+      [
+        for v in ["${var.env}none1", "${var.env}none2"] : {
+          type   = "network"
+          model  = { type = "virtio" }
+          source = { network = { network = v } }
+        }
+      ]
+    )
+    graphics = [
+      {
+        vnc = {
+          listen    = "127.0.0.1"
+          auto_port = true
+        }
+      },
+    ]
   }
 
-  console {
-    type        = "pty"
-    target_port = "0"
-    target_type = "serial"
-  }
-
-  console {
-    type        = "pty"
-    target_type = "virtio"
-    target_port = "1"
-  }
-
-  disk {
-    volume_id = libvirt_volume.nodes.*.id[count.index]
-  }
-
-  graphics {
-    type           = "vnc"
-    listen_type    = "address"
-    listen_address = "127.0.0.1"
-    autoport       = true
-  }
-
-  autostart = !var.shutdown
+  running   = var.running
+  autostart = false
 }
