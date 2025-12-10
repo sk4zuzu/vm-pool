@@ -4,9 +4,9 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 NAME := debian
 
 RELEASE  := bookworm
-VERSION  := 20240717-1811
+VERSION  := 20251112-2294
 ARTIFACT := debian-12-generic-amd64-$(VERSION).qcow2
-CHECKSUM := 9ce1ce8c0f16958dd07bce6dd44d12f4d44d12593432a3a8f7c890c262ce78b0402642fa25c22941760b5a84d631cf81e2cb9dc39815be25bf3a2b56388504c6
+CHECKSUM := 5da221d8f7434ee86145e78a2c60ca45eb4ef8296535e04f6f333193225792aa8ceee3df6aea2b4ee72d6793f7312308a8b0c6a1c7ed4c7c730fa7bda1bc665f
 
 CPUS      ?= 1
 MEMORY    ?= 2048
@@ -18,10 +18,13 @@ HEADLESS   ?= true
 
 define CLOUD_CONFIG
 #cloud-config
-password: asd
+users:
+- name: debian
+  plain_text_passwd: asd
+  lock_passwd: false
+  sudo: ALL=(ALL) NOPASSWD:ALL
+  shell: /bin/bash
 ssh_pwauth: true
-chpasswd:
-  expire: false
 endef
 
 define PACKERFILE
@@ -53,12 +56,11 @@ source "qemu" "$(NAME)" {
 build {
   sources = ["source.qemu.$(NAME)"]
   provisioner "shell" {
-    execute_command = "sudo -iu root {{.Vars}} bash {{.Path}}"
+    execute_command = "sudo {{.Vars}} bash {{.Path}}"
     scripts = [
       "remote-exec/01-basics.sh",
       "remote-exec/02-kernel.sh",
-      "remote-exec/03-libvirt.sh",
-      "remote-exec/04-systemd.sh",
+      "remote-exec/99-fixes.sh",
     ]
   }
 }
