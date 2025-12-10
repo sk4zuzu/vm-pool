@@ -3,7 +3,7 @@
 set -o errexit -o nounset -o pipefail
 set -x
 
-cat >>'/etc/rc.conf.local' <<'EOF'
+cat >>/etc/rc.conf.local <<'EOF'
 smtpd_flags=NO
 EOF
 

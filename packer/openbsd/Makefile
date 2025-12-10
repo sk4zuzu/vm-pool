@@ -3,10 +3,10 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := openbsd
 
-RELEASE  := 7.4
+RELEASE  := 7.8
 VERSION  := $(RELEASE)
-ARTIFACT := install74.iso
-CHECKSUM := a1001736ed9fe2307965b5fcdb426ae11f9b80d26eb21e404a705144a0a224a0
+ARTIFACT := install78.iso
+CHECKSUM := a228d0a1ef558b4d9ec84c698f0d3ffd13cd38c64149487cba0f1ad873be07b2
 
 CPUS      ?= 1
 MEMORY    ?= 1024
@@ -31,6 +31,8 @@ source "qemu" "$(NAME)" {
   disk_interface = "virtio"
 
   qemuargs = [
+    ["-cpu", "host"],
+    ["-smp", "cpus=$(CPUS)"],
     ["-serial", "stdio"],
   ]
 
@@ -79,7 +81,7 @@ all: build
 build: $(SELF)/.cache/output/packer-$(NAME).qcow2
 
 $(SELF)/.cache/output/packer-$(NAME).qcow2: Makefile $(wildcard $(SELF)/remote-exec/*.sh)
-	mkdir -p $(SELF)/.cache/
+	install -d $(SELF)/.cache/
 	if ! [[ -e $(SELF)/.cache/build.pkr.hcl ]]; then ln -s /dev/stdin $(SELF)/.cache/build.pkr.hcl; fi
 	$(PACKER) build -force $(SELF)/.cache/build.pkr.hcl <<< "$$PACKERFILE"
 
