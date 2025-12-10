@@ -6,11 +6,17 @@ NAME := redhat
 # https://access.redhat.com/management/systems
 include $(SELF)/subscription.mk
 
-# https://access.redhat.com/downloads/content/479/ver=/rhel---9/9.3/x86_64/product-software
-RELEASE  := 9
-VERSION  := $(RELEASE).3
+# https://access.redhat.com/downloads/content/479/ver=/rhel---10/10.1/x86_64/product-software
+RELEASE  := 10
+VERSION  := $(RELEASE).1
 ARTIFACT := rhel-$(VERSION)-x86_64-kvm.qcow2
-CHECKSUM := fafa0b90267206cb5c7d41fcadea245918ae7aca9997b87397d845e63bdabeec
+CHECKSUM := dc74ad1a9ccd3c62a02cc29f7f4715e47fa0fdaf08a8080dd20906f885f29bae
+
+# https://access.redhat.com/downloads/content/479/ver=/rhel---9/9.3/x86_64/product-software
+#RELEASE  := 9
+#VERSION  := $(RELEASE).3
+#ARTIFACT := rhel-$(VERSION)-x86_64-kvm.qcow2
+#CHECKSUM := fafa0b90267206cb5c7d41fcadea245918ae7aca9997b87397d845e63bdabeec
 
 ## https://access.redhat.com/downloads/content/479/ver=/rhel---8/8.6/x86_64/product-software
 #RELEASE  := 8
@@ -28,10 +34,12 @@ HEADLESS   ?= true
 
 define CLOUD_CONFIG
 #cloud-config
+users:
+- name: cloud-user
+  plain_text_passwd: asd
+  lock_passwd: false
+  sudo: ALL=(ALL) NOPASSWD:ALL
 ssh_pwauth: true
-password: asd
-chpasswd:
-  expire: false
 endef
 
 define PACKERFILE
@@ -66,10 +74,15 @@ build {
     environment_vars = [
       "SUBSCRIPTION_USERNAME=$(SUBSCRIPTION_USERNAME)",
       "SUBSCRIPTION_PASSWORD=$(SUBSCRIPTION_PASSWORD)",
+      "RELEASE=$(RELEASE)",
     ]
-    execute_command = "sudo -iu root {{.Vars}} bash {{.Path}}"
+    expect_disconnect = true
+    execute_command   = "sudo {{.Vars}} bash {{.Path}}"
     scripts = [
       "remote-exec/01-basics.sh",
+      "remote-exec/02-kernel.sh",
+      "remote-exec/98-selinux.sh",
+      "remote-exec/99-fixes.sh",
     ]
   }
 }
@@ -82,7 +95,7 @@ export
 all: build
 
 $(SELF)/.cache/cloud-config.yml:
-	mkdir -p $(SELF)/.cache/ && echo "$$CLOUD_CONFIG" >$@
+	install -d $(SELF)/.cache/ && echo "$$CLOUD_CONFIG" >$@
 
 $(SELF)/.cache/$(ARTIFACT).iso: $(SELF)/.cache/cloud-config.yml
 	cloud-localds $@ $^
