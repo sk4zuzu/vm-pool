@@ -3,13 +3,13 @@
 set -o errexit -o nounset -o pipefail
 set -x
 
-cat >/etc/selinux/config <<EOF
+cat >/etc/selinux/config <<'EOF'
 # This file controls the state of SELinux on the system.
 # SELINUX= can take one of these three values:
 #     enforcing - SELinux security policy is enforced.
 #     permissive - SELinux prints warnings instead of enforcing.
 #     disabled - No SELinux policy is loaded.
-SELINUX=enforcing
+SELINUX=permissive
 # SELINUXTYPE= can take one of three two values:
 #     targeted - Targeted processes are protected,
 #     minimum - Modification of targeted policy. Only selected processes are protected.
@@ -19,4 +19,4 @@ EOF
 
 touch /.autorelabel
 
-sync
+sync && reboot

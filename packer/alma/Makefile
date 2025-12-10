@@ -3,10 +3,10 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := alma
 
-RELEASE  := 9
-VERSION  := $(RELEASE).4-20240507
+RELEASE  := 10
+VERSION  := $(RELEASE).1-20251125.0
 ARTIFACT := AlmaLinux-$(RELEASE)-GenericCloud-$(VERSION).x86_64.qcow2
-CHECKSUM := bff0885c804c01fff8aac4b70c9ca4f04e8c119f9ee102043838f33e06f58390
+CHECKSUM := 8729862a9e2d93c478c2334b33d01d7ee21934a795a9b68550cc1c63ffd0efae
 
 CPUS      ?= 1
 MEMORY    ?= 2048
@@ -18,10 +18,12 @@ HEADLESS   ?= true
 
 define CLOUD_CONFIG
 #cloud-config
+users:
+- name: almalinux
+  plain_text_passwd: asd
+  lock_passwd: false
+  sudo: ALL=(ALL) NOPASSWD:ALL
 ssh_pwauth: true
-password: asd
-chpasswd:
-  expire: false
 endef
 
 define PACKERFILE
@@ -53,11 +55,13 @@ source "qemu" "$(NAME)" {
 build {
   sources = ["source.qemu.$(NAME)"]
   provisioner "shell" {
-    execute_command = "sudo -iu root {{.Vars}} bash {{.Path}}"
+    expect_disconnect = true
+    execute_command   = "sudo {{.Vars}} bash {{.Path}}"
     scripts = [
       "remote-exec/01-basics.sh",
-      "remote-exec/02-selinux.sh",
-      "remote-exec/03-network.sh",
+      "remote-exec/02-kernel.sh",
+      "remote-exec/98-selinux.sh",
+      "remote-exec/99-fixes.sh",
     ]
   }
 }

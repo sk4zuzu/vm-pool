@@ -3,6 +3,8 @@
 set -o errexit -o nounset -o pipefail
 set -x
 
+dnf config-manager --set-enabled crb
+
 dnf install -y epel-release
 
 dnf install -y \
@@ -17,7 +19,7 @@ dnf install -y \
     jq \
     mc \
     net-tools netcat nethogs nmap \
-    pv \
+    pciutils pv \
     vim
 
 sync
