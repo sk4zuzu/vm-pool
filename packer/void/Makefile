@@ -3,9 +3,9 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := void
 
-RELEASE  := musl-20240314
+RELEASE  := musl-20250202
 ARTIFACT := void-live-x86_64-$(RELEASE)-base.iso
-CHECKSUM := a7c18f68ea63ec01e174d2e54cbe7b666edbd21431cdec1ca10e7e8fc1a6c73b
+CHECKSUM := 0c46bf13a7a019c1fec0b2969201aecf09ff9a7646ef749e04ea63ead0c86404
 
 CPUS      ?= 1
 MEMORY    ?= 1024
