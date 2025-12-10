@@ -1,7 +1,12 @@
+locals {
+  pubkeys = flatten([[
+    for k in split("\n", var.nodes.keys) : trimspace(k) if trimspace(k) != ""
+  ]])
+}
+
 resource "libvirt_cloudinit_disk" "nodes" {
   count = var.nodes.count
   name  = "${var.nodes.prefix}${count.index + 1}.iso"
-  pool  = var.storage.pool
 
   meta_data = <<-EOF
   instance-id: ${var.nodes.prefix}${count.index + 1}
@@ -29,19 +34,17 @@ resource "libvirt_cloudinit_disk" "nodes" {
   #cloud-config
   users:
     - name: freebsd
+      lock_passwd: false
+      ssh_authorized_keys: ${jsonencode(local.pubkeys)}
       sudo: ALL=(ALL) NOPASSWD:ALL
-      ssh_authorized_keys: ${jsonencode(var.nodes.keys)}
     - name: root
-      ssh_authorized_keys: ${jsonencode(var.nodes.keys)}
-  chpasswd:
-    list:
-      - freebsd:asd
-    expire: false
+      lock_passwd: false
+      ssh_authorized_keys: ${jsonencode(local.pubkeys)}
   write_files:
-    - content: |
+    - path: /etc/sysctl.conf
+      content: |
         net.inet.ip.forwarding=1
       append: true
-      path: /etc/sysctl.conf
   runcmd:
     - sysctl net.inet.ip.forwarding=1
   EOF
