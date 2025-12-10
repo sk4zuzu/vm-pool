@@ -3,13 +3,13 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := nixos
 
-RELEASE  := 25.05
-VERSION  := $(RELEASE).803297.10d7f8d34e5e
+RELEASE  := 25.11
+VERSION  := $(RELEASE).1056.d9bc5c7dceb3
 ARTIFACT := nixos-minimal-$(VERSION)-x86_64-linux.iso
 CHECKSUM := d70666d5f45a28752dd45f2df919cc77cfbdee32101fadb635bc19da861fafc8
 
 CPUS      ?= 1
-MEMORY    ?= 3072
+MEMORY    ?= 2048
 DISK_SIZE ?= 16384
 
 PACKER     := $(SELF)/../../bin/packer
@@ -74,7 +74,7 @@ all: build
 build: $(SELF)/.cache/output/packer-$(NAME).qcow2
 
 $(SELF)/.cache/output/packer-$(NAME).qcow2: Makefile $(wildcard $(SELF)/remote-exec/*.sh)
-	mkdir -p $(SELF)/.cache/
+	install -d $(SELF)/.cache/
 	if ! [[ -e $(SELF)/.cache/build.pkr.hcl ]]; then ln -s /dev/stdin $(SELF)/.cache/build.pkr.hcl; fi
 	$(PACKER) build -force $(SELF)/.cache/build.pkr.hcl <<< "$$PACKERFILE"
 
