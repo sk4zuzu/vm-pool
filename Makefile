@@ -85,7 +85,6 @@ $(eval $(call PACKER_TASKS,fedora))
 $(eval $(call PACKER_TASKS,freebsd))
 $(eval $(call PACKER_TASKS,kub3lo))
 $(eval $(call PACKER_TASKS,kubelo))
-$(eval $(call PACKER_TASKS,libvirt))
 $(eval $(call PACKER_TASKS,netbsd))
 $(eval $(call PACKER_TASKS,nixos))
 $(eval $(call PACKER_TASKS,openbsd))
@@ -183,7 +182,6 @@ clean:
 	-cd $(SELF)/packer/freebsd/ && make clean
 	-cd $(SELF)/packer/kub3lo/ && make clean
 	-cd $(SELF)/packer/kubelo/ && make clean
-	-cd $(SELF)/packer/libvirt/ && make clean
 	-cd $(SELF)/packer/netbsd/ && make clean
 	-cd $(SELF)/packer/nixos/ && make clean
 	-cd $(SELF)/packer/openbsd/ && make clean
