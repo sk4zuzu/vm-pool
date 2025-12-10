@@ -3,10 +3,10 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := kub3lo
 
-RELEASE  := 22.04
-VERSION  := release-20230518
+RELEASE  := 25.04
+VERSION  := release-20251122
 ARTIFACT := ubuntu-$(RELEASE)-server-cloudimg-amd64.img
-CHECKSUM := afb820a9260217fd4c5c5aacfbca74aa7cd2418e830dc64ca2e0642b94aab161
+CHECKSUM := 13051b60132738b31d1a3708b5b3f80f
 
 CPUS      ?= 1
 MEMORY    ?= 2048
@@ -18,10 +18,13 @@ HEADLESS   ?= true
 
 define CLOUD_CONFIG
 #cloud-config
-password: asd
+users:
+- name: ubuntu
+  plain_text_passwd: asd
+  lock_passwd: false
+  sudo: ALL=(ALL) NOPASSWD:ALL
+  shell: /bin/bash
 ssh_pwauth: true
-chpasswd:
-  expire: false
 endef
 
 define PACKERFILE
@@ -53,12 +56,13 @@ source "qemu" "$(NAME)" {
 build {
   sources = ["source.qemu.$(NAME)"]
   provisioner "shell" {
-    execute_command = "sudo -iu root {{.Vars}} bash {{.Path}}"
+    execute_command = "sudo {{.Vars}} bash {{.Path}}"
     scripts = [
       "remote-exec/01-basics.sh",
       "remote-exec/02-kernel.sh",
       "remote-exec/03-extras.sh",
       "remote-exec/51-rke2.sh",
+      "remote-exec/99-fixes.sh",
     ]
   }
 }

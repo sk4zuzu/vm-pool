@@ -8,49 +8,24 @@ export DEBIAN_FRONTEND=noninteractive
 set -o errexit -o nounset -o pipefail
 set -x
 
-gawk -i inplace -f- /etc/cloud/cloud.cfg <<'EOF'
-$1 == "apt_preserve_sources_list:" { $2 = "true"; found=1 }
-{ print }
-ENDFILE { if (!found) print "apt_preserve_sources_list: true" }
-EOF
-
-RELEASE=$(lsb_release -sc)
-
-cat >/etc/apt/sources.list <<EOF
-deb mirror://mirrors.ubuntu.com/mirrors.txt $RELEASE main restricted
-deb mirror://mirrors.ubuntu.com/mirrors.txt $RELEASE-updates main restricted
-deb mirror://mirrors.ubuntu.com/mirrors.txt $RELEASE universe
-deb mirror://mirrors.ubuntu.com/mirrors.txt $RELEASE-updates universe
-deb mirror://mirrors.ubuntu.com/mirrors.txt $RELEASE multiverse
-deb mirror://mirrors.ubuntu.com/mirrors.txt $RELEASE-updates multiverse
-deb mirror://mirrors.ubuntu.com/mirrors.txt $RELEASE-backports main restricted universe multiverse
-
-deb http://archive.ubuntu.com/ubuntu $RELEASE main restricted
-deb http://archive.ubuntu.com/ubuntu $RELEASE-updates main restricted
-deb http://archive.ubuntu.com/ubuntu $RELEASE universe
-deb http://archive.ubuntu.com/ubuntu $RELEASE-updates universe
-deb http://archive.ubuntu.com/ubuntu $RELEASE multiverse
-deb http://archive.ubuntu.com/ubuntu $RELEASE-updates multiverse
-deb http://archive.ubuntu.com/ubuntu $RELEASE-backports main restricted universe multiverse
-
-deb http://security.ubuntu.com/ubuntu $RELEASE-security main restricted
-deb http://security.ubuntu.com/ubuntu $RELEASE-security universe
-deb http://security.ubuntu.com/ubuntu $RELEASE-security multiverse
-EOF
-
 apt-get -q update -y
 
 policy_rc_d_disable
 
 apt-get -q remove -y --purge \
+    fwupd \
+    snapd \
     unattended-upgrades
+
+apt-get autoremove -y --purge
+
+apt-get -q upgrade -y
 
 apt-get -q install -y \
     bash bat \
     curl \
     e2fsprogs \
-    gawk \
-    gzip \
+    gawk gzip \
     htop \
     iftop iproute2 \
     jq \
@@ -62,8 +37,7 @@ apt-get -q install -y \
     tar \
     vim \
     xfsprogs \
-    zip \
-    zstd
+    zip zstd
 
 policy_rc_d_enable
 
