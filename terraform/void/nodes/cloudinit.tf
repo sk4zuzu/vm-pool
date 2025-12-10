@@ -1,7 +1,6 @@
 resource "libvirt_cloudinit_disk" "nodes" {
   count = var.nodes.count
   name  = "${var.nodes.prefix}${count.index + 1}.iso"
-  pool  = var.storage.pool
 
   meta_data = jsonencode({
     hostname = "${var.nodes.prefix}${count.index + 1}"
