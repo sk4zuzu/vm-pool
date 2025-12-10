@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env ash
 
 set -o errexit -o nounset -o pipefail
 set -x
@@ -8,21 +8,20 @@ apk --no-cache add \
     curl \
     e2fsprogs-extra \
     fd \
-    gawk \
-    gzip \
+    gawk gzip \
     htop \
-    iftop iproute2 \
+    iftop iproute2 iptables \
     jq \
+    lsblk \
     make mc \
-    nethogs nmap nmap-ncat \
+    nethogs ngrep nmap nmap-ncat \
     openssh-client \
     pv python3 \
     ripgrep \
     sudo \
-    tar \
+    tar tcpdump tshark \
     vim \
     xfsprogs-extra \
-    zip \
-    zstd
+    zip zstd
 
 sync
