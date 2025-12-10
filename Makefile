@@ -19,16 +19,14 @@ define TERRAFORM_TASKS
 .PHONY: $(1)-init $(1)-apply $(1)-destroy
 
 $(1)-init:
-	cd $(SELF)/LIVE/$(1)/ && $(SELF)/bin/terragrunt run-all init
+	cd $(SELF)/LIVE/$(1)/ && $(SELF)/bin/terragrunt run --all init
 
 $(1)-apply: $(1)-init
-	cd $(SELF)/LIVE/$(1)/ \
-	&& ($(SELF)/bin/terragrunt run-all apply $(2) || (sleep 1; $(SELF)/bin/terragrunt run-all apply $(2)))
+	cd $(SELF)/LIVE/$(1)/ && $(SELF)/bin/terragrunt run --all apply $(2)
 
 $(1)-destroy: $(1)-init
 	-make -f Makefile.SNAPSHOT clean-$(1)
-	cd $(SELF)/LIVE/$(1)/ \
-	&& ($(SELF)/bin/terragrunt run-all destroy $(2) || (sleep 1; $(SELF)/bin/terragrunt run-all destroy $(2)))
+	cd $(SELF)/LIVE/$(1)/ && $(SELF)/bin/terragrunt run --all destroy $(2)
 endef
 
 ###
