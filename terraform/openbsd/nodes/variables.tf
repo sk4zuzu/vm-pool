@@ -2,9 +2,9 @@ variable "env" {
   type = string
 }
 
-variable "shutdown" {
+variable "running" {
   type    = bool
-  default = false
+  default = true
 }
 
 variable "network" {
