@@ -1,5 +1,5 @@
 locals {
-  shutdown = false
+  running = true
 
   env = "w1"
 
