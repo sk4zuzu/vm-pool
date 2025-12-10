@@ -3,12 +3,12 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := arch
 
-VERSION  := 20240615.241534
+VERSION  := 20251201.460866
 ARTIFACT := Arch-Linux-x86_64-cloudimg-$(VERSION).qcow2
-CHECKSUM := 346f68538962d29f4149ea53b9af7829908e60d308199064e836a24a1e7c3c4e
+CHECKSUM := 53deacc97a595e7438259b802f72a952e38a545385e2810233e58ab6281dd5f7
 
 CPUS      ?= 1
-MEMORY    ?= 1024
+MEMORY    ?= 2048
 DISK_SIZE ?= 12288
 
 PACKER     := $(SELF)/../../bin/packer
@@ -17,10 +17,12 @@ HEADLESS   ?= true
 
 define CLOUD_CONFIG
 #cloud-config
+users:
+- name: arch
+  plain_text_passwd: asd
+  lock_passwd: false
+  sudo: ALL=(ALL) NOPASSWD:ALL
 ssh_pwauth: true
-password: asd
-chpasswd:
-  expire: false
 endef
 
 define PACKERFILE
@@ -52,7 +54,7 @@ source "qemu" "$(NAME)" {
 build {
   sources = ["source.qemu.$(NAME)"]
   provisioner "shell" {
-    execute_command = "sudo -iu root {{.Vars}} bash {{.Path}}"
+    execute_command = "sudo {{.Vars}} bash {{.Path}}"
     scripts = [
       "remote-exec/01-basics.sh",
     ]
