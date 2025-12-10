@@ -79,14 +79,12 @@ $(eval $(call PACKER_TASKS,arch))
 $(eval $(call PACKER_TASKS,centos))
 $(eval $(call PACKER_TASKS,debian))
 $(eval $(call PACKER_TASKS,dflybsd))
-$(eval $(call PACKER_TASKS,fedora))
 $(eval $(call PACKER_TASKS,freebsd))
 $(eval $(call PACKER_TASKS,kub3lo))
 $(eval $(call PACKER_TASKS,kubelo))
 $(eval $(call PACKER_TASKS,netbsd))
 $(eval $(call PACKER_TASKS,nixos))
 $(eval $(call PACKER_TASKS,openbsd))
-$(eval $(call PACKER_TASKS,oracle))
 $(eval $(call PACKER_TASKS,redhat))
 $(eval $(call PACKER_TASKS,rocky))
 $(eval $(call PACKER_TASKS,ubuntu))
@@ -162,14 +160,12 @@ clean:
 	-cd $(SELF)/packer/centos/ && make clean
 	-cd $(SELF)/packer/debian/ && make clean
 	-cd $(SELF)/packer/dflysbd/ && make clean
-	-cd $(SELF)/packer/fedora/ && make clean
 	-cd $(SELF)/packer/freebsd/ && make clean
 	-cd $(SELF)/packer/kub3lo/ && make clean
 	-cd $(SELF)/packer/kubelo/ && make clean
 	-cd $(SELF)/packer/netbsd/ && make clean
 	-cd $(SELF)/packer/nixos/ && make clean
 	-cd $(SELF)/packer/openbsd/ && make clean
-	-cd $(SELF)/packer/oracle/ && make clean
 	-cd $(SELF)/packer/redhat/ && make clean
 	-cd $(SELF)/packer/rocky/ && make clean
 	-cd $(SELF)/packer/ubuntu/ && make clean
