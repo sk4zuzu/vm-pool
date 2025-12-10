@@ -3,10 +3,10 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := freebsd
 
-RELEASE  := 14.0-RELEASE
+RELEASE  := 15.0-RELEASE
 VERSION  := $(RELEASE)
-ARTIFACT := FreeBSD-$(VERSION)-amd64.qcow2
-CHECKSUM := dbc37c13c743f42464760c364cc7b9a8f4a679d000a266929a6e13a84f1ba6cb
+ARTIFACT := FreeBSD-$(VERSION)-amd64-BASIC-CLOUDINIT-ufs.qcow2
+CHECKSUM := aad747926ecf4f393078031b99c8dfbca7eea0810517340baae4dc6d1a411d60
 
 CPUS      ?= 1
 MEMORY    ?= 2048
@@ -42,7 +42,7 @@ source "qemu" "$(NAME)" {
 
   http_directory = "$(SELF)/remote-exec/"
 
-  boot_wait = "60s"
+  boot_wait = "45s"
 
   boot_command = [
 	"root<enter><wait1s>",
@@ -55,7 +55,6 @@ build {
     execute_command = "env {{.Vars}} bash --login {{.Path}}"
     scripts = [
       "remote-exec/01-basics.sh",
-      "remote-exec/02-cloud-init.sh",
       "remote-exec/99-fixes.sh",
     ]
   }
@@ -69,6 +68,7 @@ export
 all: build
 
 $(SELF)/.cache/$(ARTIFACT):
+	install -d $(SELF)/.cache/
 	curl -fL https://download.freebsd.org/releases/VM-IMAGES/$(VERSION)/amd64/Latest/$(ARTIFACT).xz \
 	| xzcat >$@
 
