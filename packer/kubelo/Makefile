@@ -3,10 +3,10 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := kubelo
 
-RELEASE  := 24.04
-VERSION  := release-20240806
+RELEASE  := 25.04
+VERSION  := release-20251122
 ARTIFACT := ubuntu-$(RELEASE)-server-cloudimg-amd64.img
-CHECKSUM := fb4db0c7951867cb48b50a55c5e37c8c3395faedcb07dd5d6d9a17bdcebe69c1
+CHECKSUM := 13051b60132738b31d1a3708b5b3f80f
 
 CPUS      ?= 1
 MEMORY    ?= 2048
@@ -18,19 +18,13 @@ HEADLESS   ?= true
 
 define CLOUD_CONFIG
 #cloud-config
-password: asd
+users:
+- name: ubuntu
+  plain_text_passwd: asd
+  lock_passwd: false
+  sudo: ALL=(ALL) NOPASSWD:ALL
+  shell: /bin/bash
 ssh_pwauth: true
-chpasswd:
-  expire: false
-runcmd:
-- |
-  set +e
-  gawk -i inplace -f- /etc/ssh/sshd_config.d/10-cloudimg-settings.conf <<'EOF'
-  BEGIN { update = "PasswordAuthentication yes" }
-  /^PasswordAuthentication\s/ { $$0 = update }
-  { print }
-  EOF
-- systemctl reload sshd.service
 endef
 
 define PACKERFILE
@@ -45,7 +39,10 @@ source "qemu" "$(NAME)" {
   disk_size = "$(DISK_SIZE)"
 
   qemuargs = [
-    ["-fda", "$(SELF)/.cache/$(ARTIFACT).iso"],
+    ["-cpu", "host"],
+    ["-smp", "cpus=$(CPUS)"],
+    ["-cdrom", "$(SELF)/.cache/$(ARTIFACT).iso"],
+    ["-serial", "stdio"],
   ]
 
   ssh_username = "ubuntu"
@@ -59,14 +56,14 @@ source "qemu" "$(NAME)" {
 build {
   sources = ["source.qemu.$(NAME)"]
   provisioner "shell" {
-    execute_command = "sudo -iu root {{.Vars}} bash {{.Path}}"
+    execute_command = "sudo {{.Vars}} bash {{.Path}}"
     scripts = [
       "remote-exec/01-basics.sh",
       "remote-exec/02-kernel.sh",
-      "remote-exec/03-systemd.sh",
-      "remote-exec/04-containerd.sh",
-      "remote-exec/05-kubernetes.sh",
-      "remote-exec/06-iscsi.sh",
+      "remote-exec/03-containerd.sh",
+      "remote-exec/04-kubernetes.sh",
+      "remote-exec/05-iscsi.sh",
+      "remote-exec/99-fixes.sh",
     ]
   }
 }

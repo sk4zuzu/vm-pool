@@ -13,7 +13,11 @@ apt-get -q update -y
 policy_rc_d_disable
 
 apt-get -q remove -y --purge \
+    fwupd \
+    snapd \
     unattended-upgrades
+
+apt-get autoremove -y --purge
 
 apt-get -q upgrade -y
 
@@ -32,10 +36,6 @@ apt-get -q install -y --no-install-recommends \
     net-tools netcat-traditional nethogs nmap \
     pv \
     vim
-
-apt-get -q install -y \
-    conntrack \
-    socat
 
 policy_rc_d_enable
 

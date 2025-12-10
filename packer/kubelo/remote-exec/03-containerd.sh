@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-: "${CNI_PLUGINS_VERSION:=1.5.1}"
-: "${CONTAINERD_VERSION:=1.7.22}"
-: "${RUNC_VERSION:=1.1.14}"
+: "${CNI_PLUGINS_VERSION:=1.9.0}"
+: "${CONTAINERD_VERSION:=2.2.0}"
+: "${RUNC_VERSION:=1.4.0}"
 
 set -o errexit -o nounset -o pipefail
 set -x
@@ -12,8 +12,6 @@ install -m u=rwx,go=rx -d /etc/containerd/ /opt/cni/{,bin/}
 curl -fsSL "https://github.com/containerd/containerd/releases/download/v$CONTAINERD_VERSION/containerd-static-$CONTAINERD_VERSION-linux-amd64.tar.gz" \
 | tar -xz -f- -C /usr/local/bin/ --strip-components=1 --no-same-owner \
   bin/containerd \
-  bin/containerd-shim \
-  bin/containerd-shim-runc-v1 \
   bin/containerd-shim-runc-v2 \
   bin/containerd-stress \
   bin/ctr
