@@ -1,5 +1,5 @@
 locals {
-  shutdown = false
+  running = true
 
   env = "k3"
 
@@ -24,6 +24,8 @@ locals {
     image   = "${get_parent_terragrunt_dir()}/../../packer/kub3lo/k3s/.cache/output/packer-kub3lo.qcow2"
     storage = "12884901888"  # 12GiB
     keys    = file("~/.ssh/id_rsa.pub")
+    disks   = []
+    mounts  = []
   }
 
   nodes2 = {
@@ -35,5 +37,7 @@ locals {
     image   = "${get_parent_terragrunt_dir()}/../../packer/kub3lo/k3s/.cache/output/packer-kub3lo.qcow2"
     storage = "34359738368"  # 32GiB
     keys    = file("~/.ssh/id_rsa.pub")
+    disks   = []
+    mounts  = []
   }
 }
