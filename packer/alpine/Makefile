@@ -3,10 +3,10 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := alpine
 
-RELEASE  := 3.20
-VERSION  := $(RELEASE).3
+RELEASE  := 3.22
+VERSION  := $(RELEASE).2
 ARTIFACT := nocloud_alpine-$(VERSION)-x86_64-bios-cloudinit-r0.qcow2
-CHECKSUM := 73bd1fdfd9a0b4db250c923630a415a054ed1ae869e6ff4a121b49d28b2fb3a2a21a948bd0c121e5640f3f16c68cfb574b72fd6a4395a788a71f7f279c1c52e3
+CHECKSUM := 792948e73c48309d6517be9fd84fb6191b7e6cda04116ca55cfdddb49b2a491b009b0e7a9c5aedf0f854fe20675f737e85f5b8fc4dd1d69595fc80a0b19e744e
 
 CPUS      ?= 1
 MEMORY    ?= 1024
@@ -18,11 +18,13 @@ HEADLESS   ?= true
 
 define CLOUD_CONFIG
 #cloud-config
-password: asd
+users:
+# using the 'default' option here seemed to be breaking /etc/doas.conf
+- name: alpine
+  groups: [wheel] # relying here on default alpine/doas settings
+  plain_text_passwd: asd
+  lock_passwd: false
 ssh_pwauth: true
-chpasswd:
-  expire: false
-packages: [bash, sudo]
 endef
 
 define PACKERFILE
@@ -57,9 +59,11 @@ source "qemu" "$(NAME)" {
 build {
   sources = ["source.qemu.$(NAME)"]
   provisioner "shell" {
-    execute_command = "sudo -iu root {{.Vars}} bash {{.Path}}"
+    execute_command = "doas /bin/ash {{.Path}}"
     scripts = [
       "remote-exec/01-basics.sh",
+      "remote-exec/02-kernel.sh",
+      "remote-exec/99-fixes.sh",
     ]
   }
 }
