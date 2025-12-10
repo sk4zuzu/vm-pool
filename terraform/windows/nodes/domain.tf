@@ -1,50 +1,79 @@
 resource "libvirt_domain" "nodes" {
-  count  = var.nodes.count
-  name   = "${var.nodes.prefix}${count.index + 1}"
-  vcpu   = var.nodes.vcpu
-  memory = var.nodes.memory
+  count = var.nodes.count
+  name  = "${var.nodes.prefix}${count.index + 1}"
 
-  firmware = var.nodes.firmware.file
-  nvram {
-    file     = "${var.storage.directory}/nvram-${var.nodes.prefix}${count.index + 1}"
-    template = var.nodes.firmware.vars
+  type = "kvm"
+
+  os = {
+    type            = "hvm"
+    type_arch       = "x86_64"
+    type_machine    = "q35"
+    loader          = var.nodes.firmware.file
+    loader_type     = "pflash"
+    loader_readonly = "yes"
+    loader_secure   = "no"
+    loader_format   = "raw"
+    nv_ram = {
+      nv_ram   = "${var.storage.directory}/nvram-${var.nodes.prefix}${count.index + 1}"
+      template = var.nodes.firmware.vars
+    }
   }
 
-  cpu {
-    mode = "host-passthrough"
+  features = { acpi = true } # required, otherwise keyboard may not work
+
+  cpu  = { mode = "host-passthrough" }
+  vcpu = var.nodes.vcpu
+
+  memory      = var.nodes.memory
+  memory_unit = "MiB"
+
+  devices = {
+    disks = [
+      {
+        boot   = { order = 1 }
+        driver = { type = "qcow2" } # required, otherwise "raw" driver is used
+        source = {
+          volume = {
+            pool   = var.storage.pool
+            volume = libvirt_volume.nodes_root[count.index].name
+          }
+        }
+        target = {
+          dev = "vda"
+          bus = "virtio"
+        }
+      },
+      {
+        device = "cdrom"
+        driver = { type = "raw" }
+        source = {
+          file = {
+            file = libvirt_volume.nodes_init[count.index].path
+          }
+        }
+        target = {
+          dev = "sdd"
+          bus = "sata"
+        }
+      },
+    ]
+    interfaces = [
+      {
+        type   = "network"
+        model  = { type = "virtio" }
+        source = { network = { network = var.network.name } }
+      },
+    ]
+    graphics = [
+      {
+        vnc = {
+          listen    = "127.0.0.1"
+          auto_port = true
+        }
+      },
+    ]
   }
 
-  network_interface {
-    network_name   = var.network.name
-    wait_for_lease = false
-  }
-
-  console {
-    type        = "pty"
-    target_port = "0"
-    target_type = "serial"
-  }
-
-  console {
-    type        = "pty"
-    target_type = "virtio"
-    target_port = "1"
-  }
-
-  disk {
-    volume_id = libvirt_volume.nodes.*.id[count.index]
-  }
-
-  disk {
-    volume_id = split(";", libvirt_cloudinit_disk.nodes.*.id[count.index])[0]
-  }
-
-  graphics {
-    type           = "vnc"
-    listen_type    = "address"
-    listen_address = "127.0.0.1"
-    autoport       = true
-  }
-
-  autostart = !var.shutdown
+  running   = var.running
+  autostart = false
 }

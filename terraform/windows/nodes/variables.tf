@@ -2,9 +2,9 @@ variable "env" {
   type = string
 }
 
-variable "shutdown" {
+variable "running" {
   type    = bool
-  default = false
+  default = true
 }
 
 variable "network" {
@@ -25,9 +25,9 @@ variable "storage" {
 
 variable "nodes" {
   type = object({
-    count   = number
-    prefix  = string
-    offset  = number
+    count  = number
+    prefix = string
+    offset = number
     firmware = object({
       file = string
       vars = string
