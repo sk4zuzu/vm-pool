@@ -1,5 +1,5 @@
 locals {
-  shutdown = false
+  running = true
 
   env = "a2"
 
@@ -16,7 +16,7 @@ locals {
   }
 
   nodes1 = {
-    count   = 2
+    count   = 1
     prefix  = "${local.env}a"
     offset  = 10
     vcpu    = 2
@@ -27,7 +27,7 @@ locals {
   }
 
   nodes2 = {
-    count   = 0
+    count   = 2
     prefix  = "${local.env}b"
     offset  = 20
     vcpu    = 2
