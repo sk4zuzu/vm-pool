@@ -74,7 +74,6 @@ binaries:
 	make -f $(SELF)/Makefile.BINARIES
 
 $(eval $(call PACKER_TASKS,alma))
-$(eval $(call PACKER_TASKS,alma_9p))
 $(eval $(call PACKER_TASKS,alpine))
 $(eval $(call PACKER_TASKS,arch))
 $(eval $(call PACKER_TASKS,centos))
@@ -87,14 +86,11 @@ $(eval $(call PACKER_TASKS,freebsd))
 $(eval $(call PACKER_TASKS,kub3lo))
 $(eval $(call PACKER_TASKS,kubelo))
 $(eval $(call PACKER_TASKS,libvirt))
-$(eval $(call PACKER_TASKS,nebula))
 $(eval $(call PACKER_TASKS,netbsd))
 $(eval $(call PACKER_TASKS,nixos))
-$(eval $(call PACKER_TASKS,one))
 $(eval $(call PACKER_TASKS,openbsd))
 $(eval $(call PACKER_TASKS,oracle))
 $(eval $(call PACKER_TASKS,redhat))
-$(eval $(call PACKER_TASKS,redhat_9p))
 $(eval $(call PACKER_TASKS,rocky))
 $(eval $(call PACKER_TASKS,ubuntu))
 $(eval $(call PACKER_TASKS,void))
@@ -185,7 +181,6 @@ ls:
 clean:
 	-make clean -f $(SELF)/Makefile.BINARIES
 	-cd $(SELF)/packer/alma/ && make clean
-	-cd $(SELF)/packer/alma_9p/ && make clean
 	-cd $(SELF)/packer/alpine/ && make clean
 	-cd $(SELF)/packer/arch/ && make clean
 	-cd $(SELF)/packer/centos/ && make clean
@@ -200,12 +195,9 @@ clean:
 	-cd $(SELF)/packer/libvirt/ && make clean
 	-cd $(SELF)/packer/netbsd/ && make clean
 	-cd $(SELF)/packer/nixos/ && make clean
-	-cd $(SELF)/packer/nebula/ && make clean
-	-cd $(SELF)/packer/one/ && make clean
 	-cd $(SELF)/packer/openbsd/ && make clean
 	-cd $(SELF)/packer/oracle/ && make clean
 	-cd $(SELF)/packer/redhat/ && make clean
-	-cd $(SELF)/packer/redhat_9p/ && make clean
 	-cd $(SELF)/packer/rocky/ && make clean
 	-cd $(SELF)/packer/ubuntu/ && make clean
 	-cd $(SELF)/packer/void/ && make clean
