@@ -1,7 +1,12 @@
+locals {
+  pubkeys = flatten([[
+    for v in split("\n", var.nodes.keys) : trimspace(v) if trimspace(v) != ""
+  ]])
+}
+
 resource "libvirt_cloudinit_disk" "nodes" {
   count = var.nodes.count
   name  = "${var.nodes.prefix}${count.index + 1}.iso"
-  pool  = var.storage.pool
 
   meta_data = <<-EOF
   instance-id: ${var.nodes.prefix}${count.index + 1}
@@ -23,20 +28,20 @@ resource "libvirt_cloudinit_disk" "nodes" {
   bridges:
     br0:
       interfaces: [eth0]
-      addresses:
-        - ${cidrhost(var.network.subnet, count.index + var.nodes.offset)}/${split("/", var.network.subnet)[1]}
       dhcp4: false
       dhcp6: false
       macaddress: '${lower(format(var.network.macaddr, count.index + var.nodes.offset))}'
+      addresses:
+        - ${cidrhost(var.network.subnet, count.index + var.nodes.offset)}/${split("/", var.network.subnet)[1]}
+      routes:
+        - metric: 0
+          to: 0.0.0.0/0
+          via: ${cidrhost(var.network.subnet, 1)}
       nameservers:
         addresses:
           - ${cidrhost(var.network.subnet, 1)}
         search:
           - ${var.network.domain}
-      routes:
-        - metric: 0
-          to: 0.0.0.0/0
-          via: ${cidrhost(var.network.subnet, 1)}
   EOF
 
   user_data = <<-EOF
@@ -44,13 +49,11 @@ resource "libvirt_cloudinit_disk" "nodes" {
   ssh_pwauth: false
   users:
     - name: debian
-      ssh_authorized_keys: ${jsonencode(var.nodes.keys)}
+      lock_passwd: false
+      ssh_authorized_keys: ${jsonencode(local.pubkeys)}
     - name: root
-      ssh_authorized_keys: ${jsonencode(var.nodes.keys)}
-  chpasswd:
-    list:
-      - debian:asd
-    expire: false
+      lock_passwd: false
+      ssh_authorized_keys: ${jsonencode(local.pubkeys)}
   growpart:
     mode: auto
     devices: [/]
@@ -61,13 +64,9 @@ resource "libvirt_cloudinit_disk" "nodes" {
     - [ ${mount.target}, ${mount.path}, '9p', 'trans=virtio,version=9p2000.L,${mount.ro ? "r" : "rw"}', '0', '0' ]
   %{endfor}
   write_files:
-    - content: |
-        nameserver ${cidrhost(var.network.subnet, 1)}
-        search ${var.network.domain}
-      path: /etc/resolv.conf
-    - content: |
+    - path: /etc/sysctl.d/98-ip-forward.conf
+      content: |
         net.ipv4.ip_forward = 1
-      path: /etc/sysctl.d/98-ip-forward.conf
   runcmd:
     - sysctl -p /etc/sysctl.d/98-ip-forward.conf
   EOF
