@@ -1,6 +1,6 @@
 # https://blog.v12n.io/automating-the-installation-of-cloudbase-init-in-windows-templates-using-packer/
 
-$msiFileName = "CloudbaseInitSetup_1_1_2_x64.msi"
+$msiFileName = "CloudbaseInitSetup_1_1_6_x64.msi"
 
 Start-Process msiexec.exe -ArgumentList "/i E:\$msiFileName /qn /norestart RUN_SERVICE_AS_LOCAL_SYSTEM=1" -Wait
 
