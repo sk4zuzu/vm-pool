@@ -3,10 +3,10 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := ubuntu
 
-RELEASE  := 22.04
-VERSION  := release-20241206
+RELEASE  := 25.04
+VERSION  := release-20251122
 ARTIFACT := ubuntu-$(RELEASE)-server-cloudimg-amd64.img
-CHECKSUM := c0618a6deffde52a669c0bd133e9173faf3e6d47e3ebd75902d8d5e0bdbd1043
+CHECKSUM := 13051b60132738b31d1a3708b5b3f80f
 
 CPUS      ?= 1
 MEMORY    ?= 2048
@@ -18,19 +18,13 @@ HEADLESS   ?= true
 
 define CLOUD_CONFIG
 #cloud-config
-password: asd
+users:
+- name: ubuntu
+  plain_text_passwd: asd
+  lock_passwd: false
+  sudo: ALL=(ALL) NOPASSWD:ALL
+  shell: /bin/bash
 ssh_pwauth: true
-chpasswd:
-  expire: false
-runcmd:
-- |
-  set +e
-  gawk -i inplace -f- /etc/ssh/sshd_config.d/10-cloudimg-settings.conf <<'EOF'
-  BEGIN { update = "PasswordAuthentication yes" }
-  /^[#\s]*PasswordAuthentication\s/ { $$0 = update }
-  { print }
-  EOF
-- systemctl reload sshd.service
 endef
 
 define PACKERFILE
@@ -62,11 +56,12 @@ source "qemu" "$(NAME)" {
 build {
   sources = ["source.qemu.$(NAME)"]
   provisioner "shell" {
-    execute_command = "sudo -iu root {{.Vars}} bash {{.Path}}"
+    execute_command = "sudo {{.Vars}} bash {{.Path}}"
     scripts = [
       "remote-exec/01-basics.sh",
       "remote-exec/02-kernel.sh",
-      "remote-exec/03-systemd.sh",
+      "remote-exec/03-libvirt.sh",
+      "remote-exec/99-fixes.sh",
     ]
   }
 }

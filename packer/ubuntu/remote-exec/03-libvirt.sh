@@ -12,24 +12,27 @@ apt-get -q update -y
 
 policy_rc_d_disable
 
-apt-get -q remove -y --purge \
-    unattended-upgrades
-
 apt-get -q install -y --no-install-recommends \
-    apt-transport-https \
-    ca-certificates \
-    curl \
-    software-properties-common
+    bridge-utils \
+    dnsmasq \
+    libvirt-clients \
+    libvirt-daemon-system \
+    qemu-kvm
 
-apt-get -q install -y --no-install-recommends \
-    gawk \
-    htop \
-    iftop iproute2 \
-    jq \
-    make mc \
-    net-tools netcat-traditional nethogs nmap \
-    pv \
-    vim
+systemctl disable dnsmasq
+
+tee -a /etc/libvirt/qemu.conf <<'EOF'
+user = "root"
+group = "root"
+security_driver = "none"
+EOF
+
+systemctl start libvirtd
+
+virsh pool-define-as --name default --type dir --target /var/lib/libvirt/images/
+virsh pool-autostart default
+
+systemctl stop libvirtd
 
 policy_rc_d_enable
 
