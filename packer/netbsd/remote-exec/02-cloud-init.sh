@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-: "${CLOUD_INIT_RELEASE:=23.4.2}"
+: "${CLOUD_INIT_RELEASE:=24.4.1}"
 
 set -o errexit -o nounset -o pipefail
 set -x

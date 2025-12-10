@@ -3,7 +3,9 @@
 set -o errexit -o nounset -o pipefail
 set -x
 
-cat >>/etc/dhcpcd.conf <<EOF
+pip3 install jsonpatch # required by cloud-init
+
+cat >>/etc/dhcpcd.conf <<'EOF'
 denyinterfaces vioif0
 EOF
 

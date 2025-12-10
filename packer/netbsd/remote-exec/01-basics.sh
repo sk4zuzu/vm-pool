@@ -11,12 +11,13 @@ pkg_add \
     jq \
     mc mozilla-rootcerts-openssl \
     nmap \
-    python39 \
+    python313 py313-pip \
     ripgrep \
     sudo \
     tcpdump \
     vim
 
-ln -s /usr/pkg/bin/python3.9 /usr/bin/python3
+ln -s /usr/pkg/bin/python3.13 /usr/bin/python3
+ln -s /usr/pkg/bin/pip3.13 /usr/bin/pip3
 
 sync

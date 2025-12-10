@@ -3,10 +3,10 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := netbsd
 
-RELEASE  := 9.3
+RELEASE  := 10.1
 VERSION  := $(RELEASE)
 ARTIFACT := NetBSD-$(VERSION)-amd64.iso
-CHECKSUM := 7e7f03bfd0584480cd11ed8833963310e34361d105498a028a2ebf3c10354171
+CHECKSUM := 45049867bfe4187f018b083024abb967
 
 CPUS      ?= 1
 MEMORY    ?= 1024
@@ -31,6 +31,8 @@ source "qemu" "$(NAME)" {
   disk_interface = "virtio"
 
   qemuargs = [
+    ["-cpu", "host"],
+    ["-smp", "cpus=$(CPUS)"],
     ["-serial", "stdio"],
   ]
 
@@ -77,7 +79,7 @@ all: build
 build: $(SELF)/.cache/output/packer-$(NAME).qcow2
 
 $(SELF)/.cache/output/packer-$(NAME).qcow2: Makefile $(wildcard $(SELF)/remote-exec/*.sh)
-	mkdir -p $(SELF)/.cache/
+	install -d $(SELF)/.cache/
 	if ! [[ -e $(SELF)/.cache/build.pkr.hcl ]]; then ln -s /dev/stdin $(SELF)/.cache/build.pkr.hcl; fi
 	$(PACKER) build -force $(SELF)/.cache/build.pkr.hcl <<< "$$PACKERFILE"
 

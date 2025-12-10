@@ -26,7 +26,7 @@ for DIR in kern/ proc/; do
     install -d "/mnt/$DIR"
 done
 
-cat >/mnt/etc/fstab <<EOF
+cat >/mnt/etc/fstab <<'EOF'
 /dev/ld0a /         ffs    rw,log 1 1
 kernfs    /kern/    kernfs rw     0 0
 procfs    /proc/    procfs rw     0 0
@@ -49,11 +49,11 @@ cat >/mnt/etc/pkg_install.conf <<EOF
 PKG_PATH=http://cdn.netbsd.org/pub/pkgsrc/packages/NetBSD/amd64/$RELEASE/All/
 EOF
 
-cat >>/mnt/etc/ssh/sshd_config <<EOF
+cat >>/mnt/etc/ssh/sshd_config <<'EOF'
 PermitRootLogin yes
 EOF
 
-cat >>/mnt/etc/rc.conf <<EOF
+cat >>/mnt/etc/rc.conf <<'EOF'
 hostname=netbsd
 ifconfig_vioif0=dhcp
 ip6addrctl=YES
