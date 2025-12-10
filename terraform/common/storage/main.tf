@@ -1,7 +1,8 @@
 resource "libvirt_pool" "self" {
   name = var.storage.pool
   type = "dir"
-  target {
+
+  target = {
     path = var.storage.directory
   }
 }

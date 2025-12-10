@@ -1,31 +1,43 @@
 resource "libvirt_network" "self" {
-  name      = var.network.name
-  domain    = var.network.domain
-  addresses = [var.network.subnet]
+  name = var.network.name
 
-  mode   = "nat"
-  bridge = var.network.name
+  forward = {
+    mode = "nat"
+  }
 
-  dhcp { enabled = false }
+  bridge = {
+    name = var.network.name
+    stp  = "on"
+  }
 
-  dns {
-    enabled = true
+  ips = [
+    {
+      address = cidrhost(var.network.subnet, 1)
+      netmask = cidrnetmask(var.network.subnet)
+    },
+  ]
 
-    dynamic "hosts" {
-      for_each = range(0, var.nodes1.count)
-      content {
-        hostname = "${var.nodes1.prefix}${hosts.value + 1}"
-        ip       = cidrhost(var.network.subnet, hosts.value + var.nodes1.offset)
-      }
-    }
+  domain = {
+    name       = var.network.domain
+    local_only = "yes"
+  }
 
-    dynamic "hosts" {
-      for_each = range(0, var.nodes2.count)
-      content {
-        hostname = "${var.nodes2.prefix}${hosts.value + 1}"
-        ip       = cidrhost(var.network.subnet, hosts.value + var.nodes2.offset)
-      }
-    }
+  dns = {
+    enable = "yes"
+    host = concat(
+      [
+        for k in range(0, var.nodes1.count) : {
+          hostnames = [{ hostname = "${var.nodes1.prefix}${k + 1}" }]
+          ip        = cidrhost(var.network.subnet, k + var.nodes1.offset)
+        }
+      ],
+      [
+        for k in range(0, var.nodes2.count) : {
+          hostnames = [{ hostname = "${var.nodes2.prefix}${k + 1}" }]
+          ip        = cidrhost(var.network.subnet, k + var.nodes2.offset)
+        }
+      ]
+    )
   }
 
   autostart = true
