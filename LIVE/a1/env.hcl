@@ -1,5 +1,5 @@
 locals {
-  shutdown = false
+  running = true
 
   env = "a1"
 
@@ -15,25 +15,36 @@ locals {
     directory = "/stor/libvirt/vm_pool_${local.env}"
   }
 
+  mounts = [{
+    target = "_shared"
+    source = "/_shared/"
+    path   = "/_shared/"
+    ro     = false
+  }]
+
   nodes1 = {
-    count   = 2
+    count   = 1
     prefix  = "${local.env}a"
     offset  = 10
     vcpu    = 2
-    memory  = "1024"
+    memory  = "2048"
     image   = "${get_parent_terragrunt_dir()}/../../packer/alpine/.cache/output/packer-alpine.qcow2"
     storage = "12884901888"  # 12GiB
     keys    = file("~/.ssh/id_rsa.pub")
+    disks   = []
+    mounts  = local.mounts
   }
 
   nodes2 = {
     count   = 2
     prefix  = "${local.env}b"
-    offset  = 21 # make (% 2) division split 2 hosts into 2 groups
+    offset  = 20
     vcpu    = 2
-    memory  = "1024"
+    memory  = "2048"
     image   = "${get_parent_terragrunt_dir()}/../../packer/alpine/.cache/output/packer-alpine.qcow2"
     storage = "12884901888"  # 12GiB
     keys    = file("~/.ssh/id_rsa.pub")
+    disks   = []
+    mounts  = local.mounts
   }
 }
