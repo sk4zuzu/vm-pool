@@ -3,10 +3,10 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := rocky
 
-RELEASE  := 9
-VERSION  := $(RELEASE).5-20241118.0
+RELEASE  := 10
+VERSION  := $(RELEASE).1-20251116.0
 ARTIFACT := Rocky-$(RELEASE)-GenericCloud-Base-$(VERSION).x86_64.qcow2
-CHECKSUM := 069493fdc807300a22176540e9171fcff2227a92b40a7985a0c1c9e21aeebf57
+CHECKSUM := 28628abf08a134c6f9e1eccbcac3f2898715919a6da294ae2c6cd66d6bc347ad
 
 CPUS      ?= 1
 MEMORY    ?= 2048
@@ -18,10 +18,12 @@ HEADLESS   ?= true
 
 define CLOUD_CONFIG
 #cloud-config
+users:
+- name: rocky
+  plain_text_passwd: asd
+  lock_passwd: false
+  sudo: ALL=(ALL) NOPASSWD:ALL
 ssh_pwauth: true
-password: asd
-chpasswd:
-  expire: false
 endef
 
 define PACKERFILE
@@ -52,11 +54,13 @@ source "qemu" "$(NAME)" {
 build {
   sources = ["source.qemu.$(NAME)"]
   provisioner "shell" {
-    execute_command = "sudo -iu root {{.Vars}} bash {{.Path}}"
+    expect_disconnect = true
+    execute_command   = "sudo {{.Vars}} bash {{.Path}}"
     scripts = [
       "remote-exec/01-basics.sh",
-      "remote-exec/02-selinux.sh",
-      "remote-exec/03-network.sh",
+      "remote-exec/02-kernel.sh",
+      "remote-exec/98-selinux.sh",
+      "remote-exec/99-fixes.sh",
     ]
   }
 }
