@@ -15,10 +15,10 @@ cp /var/db/xbps/keys/* /mnt/var/db/xbps/keys/
 
 XBPS_ARCH="$ARCH" xbps-install -Sy -r /mnt -R "$REPO" \
     base-system \
-    cdrtools \
     gawk grub \
     htop \
     jq \
+    libcdio \
     mc \
     neovim \
     shinit socklog-void \

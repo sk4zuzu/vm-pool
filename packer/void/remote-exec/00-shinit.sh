@@ -7,7 +7,7 @@ check() {
 load() {
     SHINIT_USER=void
 
-    NAME=$(isoinfo -i /dev/sr0 -R -x /meta-data | jq -r '.hostname')
-    KEYS=$(isoinfo -i /dev/sr0 -R -x /meta-data | jq -r '.keys')
-    DATA=$(isoinfo -i /dev/sr0 -R -x /user-data)
+    NAME=$(iso-read -i /dev/sr0 -e /meta-data -o /dev/fd/1 | jq -r '.hostname')
+    KEYS=$(iso-read -i /dev/sr0 -e /meta-data -o /dev/fd/1 | jq -r '.keys')
+    DATA=$(iso-read -i /dev/sr0 -e /user-data -o /dev/fd/1)
 }
