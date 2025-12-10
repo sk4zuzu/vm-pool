@@ -3,10 +3,10 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
 NAME := dflybsd
 
-RELEASE  := 6.2.2_REL
+RELEASE  := 6.4.2_REL
 VERSION  := $(RELEASE)
 ARTIFACT := dfly-x86_64-$(VERSION).iso
-CHECKSUM := aa942f24aa8a53dbf1ca9400cf6e949b
+CHECKSUM := fdab09ac37cf427b8c01de5d54bfd1d7
 
 CPUS      ?= 1
 MEMORY    ?= 2048
@@ -28,12 +28,13 @@ source "qemu" "$(NAME)" {
   disk_size = "$(DISK_SIZE)"
 
   qemuargs = [
+    ["-cpu", "host"],
+    ["-smp", "cpus=$(CPUS)"],
     ["-serial", "stdio"],
   ]
 
   ssh_username     = "root"
   ssh_password     = "asd"
-  ssh_timeout      = "3600s"
   shutdown_command = "/sbin/poweroff"
 
   output_directory = "$(SELF)/.cache/output/"

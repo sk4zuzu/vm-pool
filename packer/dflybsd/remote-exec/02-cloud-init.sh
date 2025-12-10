@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
 
-: "${CLOUD_INIT_RELEASE:=22.3.4}"
-
 set -o errexit -o nounset -o pipefail
 set -x
 
-(install -d /var/tmp/cloud-init/
- cd /var/tmp/cloud-init/
- git clone -b "$CLOUD_INIT_RELEASE" https://github.com/canonical/cloud-init.git .
- ./tools/build-on-freebsd)
+pkg install -y py311-cloud-init
+
+gawk -i inplace -f- /etc/rc.conf <<'AWK'
+BEGIN { update = "cloudinit_enable=YES" }
+/^[#\s]*cloudinit_enable=/ { $0 = update; found = 1 }
+{ print }
+ENDFILE { if (!found) print update }
+AWK
 
 sync

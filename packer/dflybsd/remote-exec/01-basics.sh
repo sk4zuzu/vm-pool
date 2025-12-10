@@ -5,9 +5,8 @@ set -x
 
 pkg install -y \
     bash bat \
-    htop \
+    gawk \
     jq \
-    mc \
     nmap \
     python3 \
     ripgrep \

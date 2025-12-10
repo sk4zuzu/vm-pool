@@ -5,7 +5,8 @@ set -x
 
 pwd_mkdb -p /etc/master.passwd
 
-(cd /usr/local/lib/python3.9/ && patch -Np0) <<EOF
+# fix for cloud-init
+(cd /usr/local/lib/python3.11/ && patch -Np0) <<'EOF'
 --- crypt.py	2022-10-08 02:35:01.000000000 +0200
 +++ crypt.py	2022-11-08 18:49:13.334474908 +0100
 @@ -110,11 +110,12 @@
@@ -27,10 +28,11 @@ pwd_mkdb -p /etc/master.passwd
 +del _add_method
 EOF
 
-cat >>/etc/dhcpcd.conf <<EOF
+cat >>/etc/dhcpcd.conf <<'EOF'
 denyinterfaces vtnet0
 EOF
 
 >/etc/resolv.conf
+>/firstboot # cloud-init works anyway
 
 sync

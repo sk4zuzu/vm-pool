@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+: "${PASSWORD:=asd}"
+
 set -o errexit -o nounset -o pipefail
 set -x
 
@@ -8,7 +10,7 @@ fdisk -I -B /dev/vbd0
 disklabel -w -r /dev/vbd0s1
 disklabel -r /dev/vbd0s1 >/tmp/vbd0s1
 
-cat >>/tmp/vbd0s1 <<EOF
+cat >>/tmp/vbd0s1 <<'EOF'
 a: *  * 4.2BSD
 EOF
 
@@ -35,15 +37,15 @@ find /var/ -type d -print0 \
 (cd /mnt/var/log/
  touch auth.log cron daemon messages security)
 
-cat >/mnt/boot/loader.conf <<EOF
+cat >/mnt/boot/loader.conf <<'EOF'
 vfs.root.mountfrom="ufs:/dev/vbd0s1a"
 EOF
 
-cat >/mnt/etc/fstab <<EOF
+cat >/mnt/etc/fstab <<'EOF'
 /dev/vbd0s1a / ufs rw 1 1
 EOF
 
-cat >/mnt/etc/rc.conf <<EOF
+cat >/mnt/etc/rc.conf <<'EOF'
 hostname=dflybsd
 dhcp_client=dhcpcd
 dhcpcd_enable=YES
@@ -55,14 +57,14 @@ sshd_enable=YES
 syslogd_enable=YES
 EOF
 
-sed -i '' -f- /mnt/etc/ssh/sshd_config <<EOF
+sed -i '' -f- /mnt/etc/ssh/sshd_config <<'SED'
 s/^#*PasswordAuthentication .*/PasswordAuthentication yes/
 s/^#*PermitRootLogin .*/PermitRootLogin yes/
-EOF
+SED
 
-chroot /mnt/ sh -es <<EOF
-echo -n 'asd' | pw usermod -n root -h 0
-EOF
+chroot /mnt/ sh -es <<SH
+echo -n '$PASSWORD' | pw usermod -n root -h 0
+SH
 
 umount /mnt/
 
