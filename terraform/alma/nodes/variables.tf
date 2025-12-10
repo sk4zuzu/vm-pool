@@ -2,9 +2,9 @@ variable "env" {
   type = string
 }
 
-variable "shutdown" {
+variable "running" {
   type    = bool
-  default = false
+  default = true
 }
 
 variable "network" {
@@ -33,5 +33,19 @@ variable "nodes" {
     image   = string
     storage = string
     keys    = string
+    disks = list(
+      object({
+        name = string
+        size = string
+      })
+    )
+    mounts = list(
+      object({
+        target = string
+        source = string
+        path   = string
+        ro     = bool
+      })
+    )
   })
 }
