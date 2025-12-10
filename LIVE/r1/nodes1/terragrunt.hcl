@@ -7,7 +7,7 @@ terraform {
 }
 
 include {
-  path = find_in_parent_folders()
+  path = find_in_parent_folders("root.hcl")
 }
 
 dependencies {
@@ -15,9 +15,9 @@ dependencies {
 }
 
 inputs = {
-  shutdown = local.environment_vars.locals.shutdown
-  env      = local.environment_vars.locals.env
-  network  = local.environment_vars.locals.network
-  storage  = local.environment_vars.locals.storage
-  nodes    = local.environment_vars.locals.nodes1
+  running = local.environment_vars.locals.running
+  env     = local.environment_vars.locals.env
+  network = local.environment_vars.locals.network
+  storage = local.environment_vars.locals.storage
+  nodes   = local.environment_vars.locals.nodes1
 }
