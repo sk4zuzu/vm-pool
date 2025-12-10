@@ -1,5 +1,5 @@
 locals {
-  shutdown = false
+  running = true
 
   env = "b2"
 
@@ -31,7 +31,7 @@ locals {
     prefix  = "${local.env}b"
     offset  = 20
     vcpu    = 2
-    memory  = "3072"
+    memory  = "2048"
     image   = "${get_parent_terragrunt_dir()}/../../packer/openbsd/.cache/output/packer-openbsd.qcow2"
     storage = "12884901888"  # 12GiB
     keys    = file("~/.ssh/id_rsa.pub")
