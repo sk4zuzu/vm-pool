@@ -33,7 +33,7 @@ apt-get -q install -y \
     nethogs nmap ncat \
     openssh-client \
     pv python3 \
-    sudo \
+    skopeo sudo \
     tar \
     vim \
     xfsprogs \

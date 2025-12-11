@@ -13,11 +13,9 @@ apt-get -q update -y
 policy_rc_d_disable
 
 apt-get -q install -y \
-    haproxy \
     open-iscsi
 
 systemctl enable \
-    haproxy \
     iscsid
 
 policy_rc_d_enable

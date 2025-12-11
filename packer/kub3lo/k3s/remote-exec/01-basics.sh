@@ -18,7 +18,7 @@ apk --no-cache add \
     openssh-client \
     pv python3 \
     ripgrep \
-    sudo \
+    skopeo sudo \
     tar tcpdump tshark \
     vim \
     xfsprogs-extra \
