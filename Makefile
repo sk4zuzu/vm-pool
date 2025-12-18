@@ -143,7 +143,7 @@ $(eval $(call SSH_TASKS,k2,$$(BECOME_ROOT),,ubuntu@10.2.41.))
 $(eval $(call SSH_TASKS,k3,$$(BECOME_ROOT),,alpine@10.2.42.))
 $(eval $(call SSH_TASKS,r1,$$(BECOME_ROOT),,cloud-user@10.2.70.))
 $(eval $(call SSH_TASKS,u1,$$(BECOME_ROOT),,ubuntu@10.2.80.))
-$(eval $(call SSH_TASKS,x1,$$(BECOME_ROOT),,nixos@10.2.100.))
+$(eval $(call SSH_TASKS,x1,$$(BECOME_ROOT),,asd@10.2.100.))
 
 .PHONY: ls clean
 
