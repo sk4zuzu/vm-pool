@@ -70,7 +70,7 @@ resource "libvirt_cloudinit_disk" "nodes" {
   user_data = <<-EOF
   #cloud-config
   users:
-    - name: nixos
+    - name: asd
       ssh_authorized_keys: ${jsonencode(local.pubkeys)}
     - name: root
       ssh_authorized_keys: ${jsonencode(local.pubkeys)}
