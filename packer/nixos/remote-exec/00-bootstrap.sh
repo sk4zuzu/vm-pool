@@ -17,10 +17,14 @@ cat >/mnt/etc/nixos/configuration.nix <<EOF
 { config, pkgs, lib, ... }:
 
 {
+  nix.settings = {
+    experimental-features = [ "nix-command" "flakes" ];
+  };
+
   environment.systemPackages = with pkgs; [
     bash bat
     fd file
-    git
+    git gnumake
     htop
     iproute2
     jq
@@ -60,12 +64,19 @@ cat >/mnt/etc/nixos/configuration.nix <<EOF
 
   i18n.defaultLocale = "en_US.UTF-8";
 
-  security.sudo.wheelNeedsPassword = false;
+  security = {
+    doas = {
+      enable = true;
+      extraRules = [ { groups = [ "wheel" ]; noPass = true; keepEnv = false; setEnv = [ "LOCALE_ARCHIVE" ]; } ];
+    };
+    sudo.wheelNeedsPassword = false;
+  };
 
-  users.users.nixos = {
+  users.users.asd = {
     isNormalUser = true;
     extraGroups  = [ "wheel" ];
     password     = "asd";
+    uid          = 1000;
   };
 
   systemd.services."systemd-networkd-wait-online".serviceConfig.ExecStart = [

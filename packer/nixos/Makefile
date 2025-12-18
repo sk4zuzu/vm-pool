@@ -4,9 +4,9 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 NAME := nixos
 
 RELEASE  := 25.11
-VERSION  := $(RELEASE).1056.d9bc5c7dceb3
+VERSION  := $(RELEASE).1948.c6f52ebd45e5
 ARTIFACT := nixos-minimal-$(VERSION)-x86_64-linux.iso
-CHECKSUM := d70666d5f45a28752dd45f2df919cc77cfbdee32101fadb635bc19da861fafc8
+CHECKSUM := dbc381a83f312463fac58c4bfc347dbca608cbecc7d257b13d90fb3f1e2e962b
 
 CPUS      ?= 1
 MEMORY    ?= 2048
