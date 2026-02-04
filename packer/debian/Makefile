@@ -61,6 +61,7 @@ build {
     scripts = [
       "remote-exec/01-basics.sh",
       "remote-exec/02-kernel.sh",
+      "remote-exec/98-apparmor.sh",
       "remote-exec/99-fixes.sh",
     ]
   }
