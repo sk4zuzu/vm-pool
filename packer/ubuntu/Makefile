@@ -12,9 +12,10 @@ CPUS      ?= 1
 MEMORY    ?= 2048
 DISK_SIZE ?= 10240
 
-PACKER     := $(SELF)/../../bin/packer
-PACKER_LOG ?= 1
-HEADLESS   ?= true
+PACKER             := $(SELF)/../../bin/packer
+PACKER_PLUGIN_PATH := $(SELF)/../../bin
+PACKER_LOG         ?= 1
+HEADLESS           ?= true
 
 define CLOUD_CONFIG
 #cloud-config

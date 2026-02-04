@@ -12,9 +12,10 @@ CPUS      ?= 1
 MEMORY    ?= 1024
 DISK_SIZE ?= 12288
 
-PACKER     := $(SELF)/../../bin/packer
-PACKER_LOG ?= 1
-HEADLESS   ?= true
+PACKER             := $(SELF)/../../bin/packer
+PACKER_PLUGIN_PATH := $(SELF)/../../bin
+PACKER_LOG         ?= 1
+HEADLESS           ?= true
 
 define PACKERFILE
 source "qemu" "$(NAME)" {

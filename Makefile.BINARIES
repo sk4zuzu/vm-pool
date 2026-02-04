@@ -1,9 +1,10 @@
 SHELL := $(shell which bash)
 SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
-PACKER_VERSION     ?= 1.14.3
-TERRAFORM_VERSION  ?= 1.14.1
-TERRAGRUNT_VERSION ?= v0.93.12
+PACKER_VERSION      ?= 1.14.3
+PACKER_QEMU_VERSION ?= 1.1.4
+TERRAFORM_VERSION   ?= 1.14.1
+TERRAGRUNT_VERSION  ?= v0.93.12
 
 TARGETS = \
 $(SELF)/bin/OVMF.fd \
@@ -11,28 +12,46 @@ $(SELF)/bin/OVMF_CODE.fd \
 $(SELF)/bin/OVMF_VARS.fd \
 $(SELF)/bin/packer \
 $(SELF)/bin/terraform \
-$(SELF)/bin/terragrunt
+$(SELF)/bin/terragrunt \
+$(SELF)/bin/packer-plugin-qemu
 
 define HASHICORP_RELEASE_INSTALL
 $(SELF)/bin/$(1): $(SELF)/bin/$(1)-$(2)
-	rm -f $$@ && ln -s $$< $$@
+	ln -sf $$< $$@
 $(SELF)/bin/$(1)-$(2):
-	install -d /tmp/$(1)-$(2)/ \
-	&& curl -fSL https://releases.hashicorp.com/$(1)/$(2)/$(1)_$(2)_linux_amd64.zip \
-	        -o /tmp/$(1)-$(2)/download.zip \
-	&& unzip -o -d /tmp/$(1)-$(2)/ /tmp/$(1)-$(2)/download.zip \
-	&& mv /tmp/$(1)-$(2)/$(1)* $$@ \
-	&& rm -rf /tmp/$(1)-$(2)/ \
-	&& chmod +x $$@
+	install -d /tmp/$(1)-$(2)/
+	curl -fSL https://releases.hashicorp.com/$(1)/$(2)/$(1)_$(2)_linux_amd64.zip \
+	     -o /tmp/$(1)-$(2)/download.zip
+	unzip -o -d /tmp/$(1)-$(2)/ /tmp/$(1)-$(2)/download.zip
+	mv /tmp/$(1)-$(2)/$(1)* $$@
+	rm -rf /tmp/$(1)-$(2)/
+	chmod +x $$@
+endef
+
+define HASHICORP_PACKER_PLUGIN_INSTALL
+$(SELF)/bin/packer-plugin-$(1): NAME = $$(shell $$^ describe | jq -r '"packer-plugin-qemu_v\(.version)_\(.api_version)_linux_amd64"')
+$(SELF)/bin/packer-plugin-$(1): $(SELF)/bin/packer-plugin-$(1)-$(2)
+	ln -sf $$< $$@
+	install -d $(SELF)/bin/github.com/hashicorp/$(1)/
+	ln -sf $$@ $(SELF)/bin/github.com/hashicorp/$(1)/$$(NAME)
+	sha256sum $$@ > $(SELF)/bin/github.com/hashicorp/$(1)/$$(NAME)_SHA256SUM
+$(SELF)/bin/packer-plugin-$(1)-$(2):
+	install -d /tmp/packer-plugin-$(1)-$(2)/
+	curl -fSL https://releases.hashicorp.com/packer-plugin-$(1)/$(2)/packer-plugin-$(1)_$(2)_linux_amd64.zip \
+	     -o /tmp/packer-plugin-$(1)-$(2)/download.zip
+	unzip -o -d /tmp/packer-plugin-$(1)-$(2)/ /tmp/packer-plugin-$(1)-$(2)/download.zip
+	mv /tmp/packer-plugin-$(1)-$(2)/packer-plugin-$(1)_v$(2)_*linux_amd64 $$@
+	rm -rf /tmp/packer-plugin-$(1)-$(2)/
+	chmod +x $$@
 endef
 
 define GITHUB_RELEASE_INSTALL
 $(SELF)/bin/$(2): $(SELF)/bin/$(2)-$(3)
-	rm -f $$@ && ln -s $$< $$@
+	ln -sf $$< $$@
 $(SELF)/bin/$(2)-$(3):
 	curl -fSL https://github.com/$(1)/$(2)/releases/download/$(3)/$(2)_linux_amd64 \
-	     -o $$@ \
-	&& chmod +x $$@
+	     -o $$@
+	chmod +x $$@
 endef
 
 export
@@ -55,6 +74,9 @@ $(SELF)/bin/OVMF_VARS.fd:
 
 $(eval \
 	$(call HASHICORP_RELEASE_INSTALL,packer,$(PACKER_VERSION)))
+
+$(eval \
+	$(call HASHICORP_PACKER_PLUGIN_INSTALL,qemu,$(PACKER_QEMU_VERSION)))
 
 $(eval \
 	$(call HASHICORP_RELEASE_INSTALL,terraform,$(TERRAFORM_VERSION)))
