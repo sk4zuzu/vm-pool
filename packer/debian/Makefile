@@ -4,9 +4,9 @@ SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 NAME := debian
 
 RELEASE  := bookworm
-VERSION  := 20251112-2294
+VERSION  := 20260129-2372
 ARTIFACT := debian-12-generic-amd64-$(VERSION).qcow2
-CHECKSUM := 5da221d8f7434ee86145e78a2c60ca45eb4ef8296535e04f6f333193225792aa8ceee3df6aea2b4ee72d6793f7312308a8b0c6a1c7ed4c7c730fa7bda1bc665f
+CHECKSUM := bb0fbc6fb36e5a4c5c1e003c2e9d2ef40981944a97889ea179c13f1d06be44971c9aa66c2f3788822367bed0175685697e4d9b8c9fe04c83b13ac014c02c19b6
 
 CPUS      ?= 1
 MEMORY    ?= 2048
