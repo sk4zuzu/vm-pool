@@ -6,17 +6,17 @@ NAME := redhat
 # https://access.redhat.com/management/systems
 include $(SELF)/subscription.mk
 
-# https://access.redhat.com/downloads/content/479/ver=/rhel---10/10.1/x86_64/product-software
-RELEASE  := 10
-VERSION  := $(RELEASE).1
-ARTIFACT := rhel-$(VERSION)-x86_64-kvm.qcow2
-CHECKSUM := dc74ad1a9ccd3c62a02cc29f7f4715e47fa0fdaf08a8080dd20906f885f29bae
-
-# https://access.redhat.com/downloads/content/479/ver=/rhel---9/9.3/x86_64/product-software
-#RELEASE  := 9
-#VERSION  := $(RELEASE).3
+## https://access.redhat.com/downloads/content/479/ver=/rhel---10/10.1/x86_64/product-software
+#RELEASE  := 10
+#VERSION  := $(RELEASE).1
 #ARTIFACT := rhel-$(VERSION)-x86_64-kvm.qcow2
-#CHECKSUM := fafa0b90267206cb5c7d41fcadea245918ae7aca9997b87397d845e63bdabeec
+#CHECKSUM := dc74ad1a9ccd3c62a02cc29f7f4715e47fa0fdaf08a8080dd20906f885f29bae
+
+# https://access.redhat.com/downloads/content/479/ver=/rhel---9/9.7/x86_64/product-software
+RELEASE  := 9
+VERSION  := $(RELEASE).7
+ARTIFACT := rhel-$(VERSION)-x86_64-kvm.qcow2
+CHECKSUM := e89e0a3e28c3e7fb73a97483b60130d5a3e4bba9481ae282ec6e0551ccf30047
 
 ## https://access.redhat.com/downloads/content/479/ver=/rhel---8/8.6/x86_64/product-software
 #RELEASE  := 8
