@@ -40,11 +40,17 @@ locals {
     prefix  = "${local.env}b"
     offset  = 20
     vcpu    = 2
-    memory  = "2048"
+    memory  = "3072"
     image   = "${get_parent_terragrunt_dir()}/../../packer/redhat/.cache/output/packer-redhat.qcow2"
     storage = "34359738368"  # 32GiB
     keys    = file("~/.ssh/id_rsa.pub")
-    disks   = []
-    mounts  = local.mounts
+    disks = [{
+      name = "vdb"
+      size = "68719476736"  # 64GiB
+    },{
+      name = "vdc"
+      size = "68719476736"  # 64GiB
+    }]
+    mounts = local.mounts
   }
 }
