@@ -1,9 +1,9 @@
 SHELL := $(shell which bash)
 SELF  := $(patsubst %/,%,$(dir $(abspath $(firstword $(MAKEFILE_LIST)))))
 
-PACKER_VERSION      ?= 1.14.3
+PACKER_VERSION      ?= 1.15.0
 PACKER_QEMU_VERSION ?= 1.1.4
-TERRAFORM_VERSION   ?= 1.14.1
+TERRAFORM_VERSION   ?= 1.14.5
 TERRAGRUNT_VERSION  ?= v0.93.12
 
 TARGETS = \
