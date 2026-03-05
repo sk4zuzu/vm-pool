@@ -18,6 +18,12 @@ resource "libvirt_domain" "nodes" {
   memory      = var.nodes.memory
   memory_unit = "MiB"
 
+  memory_backing = {
+    memory_huge_pages = {
+      hugepages = []
+    }
+  }
+
   devices = merge(
     {
       disks = concat(
