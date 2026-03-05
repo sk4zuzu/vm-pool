@@ -18,8 +18,7 @@ apt-get -q remove -y --purge \
 apt-get -q install -y --no-install-recommends \
     apt-transport-https \
     ca-certificates \
-    curl \
-    software-properties-common
+    curl
 
 apt-get -q install -y --no-install-recommends \
     gawk \
