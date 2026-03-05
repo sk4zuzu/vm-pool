@@ -86,6 +86,7 @@ $(eval $(call PACKER_TASKS,openbsd))
 $(eval $(call PACKER_TASKS,opensuse))
 $(eval $(call PACKER_TASKS,redhat))
 $(eval $(call PACKER_TASKS,rocky))
+$(eval $(call PACKER_TASKS,suse))
 $(eval $(call PACKER_TASKS,ubuntu))
 $(eval $(call PACKER_TASKS,void))
 $(eval $(call PACKER_TASKS,windows))
@@ -171,6 +172,7 @@ clean:
 	-cd $(SELF)/packer/opensuse/ && make clean
 	-cd $(SELF)/packer/redhat/ && make clean
 	-cd $(SELF)/packer/rocky/ && make clean
+	-cd $(SELF)/packer/suse/ && make clean
 	-cd $(SELF)/packer/ubuntu/ && make clean
 	-cd $(SELF)/packer/void/ && make clean
 	-cd $(SELF)/packer/windows/ && make clean
