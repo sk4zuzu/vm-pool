@@ -26,7 +26,7 @@ XBPS_ARCH="$ARCH" xbps-install -Sy -r /mnt -R "$REPO" \
 
 install -o 0 -g 0 -m u=rw,go=r /tmp/00-shinit.sh /mnt/usr/libexec/shinit/provider/vm-pool
 
-xchroot /mnt/ /bin/bash -es <<'XCHROOT'
+xchroot /mnt/ /bin/bash -es <<'BASH'
 install -o 0 -g 0 -m u=rw,go= /dev/fd/0 /etc/sudoers.d/wheel <<'EOF'
 %wheel ALL=(ALL:ALL) NOPASSWD: ALL
 EOF
@@ -59,6 +59,6 @@ EOF
 grub-install /dev/vda
 
 xbps-reconfigure -fa
-XCHROOT
+BASH
 
 sync

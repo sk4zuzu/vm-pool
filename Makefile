@@ -6,7 +6,7 @@ SSH_OPTIONS := -o ForwardAgent=yes \
                -o GlobalKnownHostsFile=/dev/null \
                -o UserKnownHostsFile=/dev/null
 
-define PACKER_TASKS
+define PACKER_TASKS_MAKE
 .PHONY: $(1)-disk
 
 $(1)-disk:
@@ -15,7 +15,7 @@ endef
 
 ###
 
-define TERRAFORM_TASKS
+define TERRAFORM_TASKS_MAKE
 .PHONY: $(1)-init $(1)-apply $(1)-destroy
 
 $(1)-init:
@@ -31,7 +31,7 @@ endef
 
 ###
 
-define BACKUP_TASKS
+define BACKUP_TASKS_MAKE
 .PHONY: $(1)-backup $(1)-restore
 
 $(1)-backup:
@@ -43,7 +43,7 @@ endef
 
 ###
 
-define SSH_TASKS
+define SSH_TASKS_MAKE
 .PHONY: $(1)-ssh
 
 $(1)-ssh: $(1)-ssh10
@@ -71,87 +71,87 @@ requirements: binaries
 binaries:
 	make -f $(SELF)/Makefile.BINARIES
 
-$(eval $(call PACKER_TASKS,alma))
-$(eval $(call PACKER_TASKS,alpine))
-$(eval $(call PACKER_TASKS,arch))
-$(eval $(call PACKER_TASKS,centos))
-$(eval $(call PACKER_TASKS,debian))
-$(eval $(call PACKER_TASKS,dflybsd))
-$(eval $(call PACKER_TASKS,freebsd))
-$(eval $(call PACKER_TASKS,kub3lo))
-$(eval $(call PACKER_TASKS,kubelo))
-$(eval $(call PACKER_TASKS,netbsd))
-$(eval $(call PACKER_TASKS,nixos))
-$(eval $(call PACKER_TASKS,openbsd))
-$(eval $(call PACKER_TASKS,opensuse))
-$(eval $(call PACKER_TASKS,redhat))
-$(eval $(call PACKER_TASKS,rocky))
-$(eval $(call PACKER_TASKS,suse))
-$(eval $(call PACKER_TASKS,ubuntu))
-$(eval $(call PACKER_TASKS,void))
-$(eval $(call PACKER_TASKS,windows))
+$(eval $(call PACKER_TASKS_MAKE,alma))
+$(eval $(call PACKER_TASKS_MAKE,alpine))
+$(eval $(call PACKER_TASKS_MAKE,arch))
+$(eval $(call PACKER_TASKS_MAKE,centos))
+$(eval $(call PACKER_TASKS_MAKE,debian))
+$(eval $(call PACKER_TASKS_MAKE,dflybsd))
+$(eval $(call PACKER_TASKS_MAKE,freebsd))
+$(eval $(call PACKER_TASKS_MAKE,kub3lo))
+$(eval $(call PACKER_TASKS_MAKE,kubelo))
+$(eval $(call PACKER_TASKS_MAKE,netbsd))
+$(eval $(call PACKER_TASKS_MAKE,nixos))
+$(eval $(call PACKER_TASKS_MAKE,openbsd))
+$(eval $(call PACKER_TASKS_MAKE,opensuse))
+$(eval $(call PACKER_TASKS_MAKE,redhat))
+$(eval $(call PACKER_TASKS_MAKE,rocky))
+$(eval $(call PACKER_TASKS_MAKE,suse))
+$(eval $(call PACKER_TASKS_MAKE,ubuntu))
+$(eval $(call PACKER_TASKS_MAKE,void))
+$(eval $(call PACKER_TASKS_MAKE,windows))
 
-$(eval $(call TERRAFORM_TASKS,a1,$$(AUTO_APPROVE)))
-$(eval $(call TERRAFORM_TASKS,a2,$$(AUTO_APPROVE)))
-$(eval $(call TERRAFORM_TASKS,b1,$$(AUTO_APPROVE)))
-$(eval $(call TERRAFORM_TASKS,b2,$$(AUTO_APPROVE)))
-$(eval $(call TERRAFORM_TASKS,b3,$$(AUTO_APPROVE)))
-$(eval $(call TERRAFORM_TASKS,b4,$$(AUTO_APPROVE)))
-$(eval $(call TERRAFORM_TASKS,c1,$$(AUTO_APPROVE)))
-$(eval $(call TERRAFORM_TASKS,c2,$$(AUTO_APPROVE)))
-$(eval $(call TERRAFORM_TASKS,c3,$$(AUTO_APPROVE)))
-$(eval $(call TERRAFORM_TASKS,d1,$$(AUTO_APPROVE)))
-$(eval $(call TERRAFORM_TASKS,h1,$$(AUTO_APPROVE)))
-$(eval $(call TERRAFORM_TASKS,k1,$$(AUTO_APPROVE)))
-$(eval $(call TERRAFORM_TASKS,k2,$$(AUTO_APPROVE)))
-$(eval $(call TERRAFORM_TASKS,k3,$$(AUTO_APPROVE)))
-$(eval $(call TERRAFORM_TASKS,r1,$$(AUTO_APPROVE)))
-$(eval $(call TERRAFORM_TASKS,s1,$$(AUTO_APPROVE)))
-$(eval $(call TERRAFORM_TASKS,s2,$$(AUTO_APPROVE)))
-$(eval $(call TERRAFORM_TASKS,u1,$$(AUTO_APPROVE)))
-$(eval $(call TERRAFORM_TASKS,w1,$$(AUTO_APPROVE)))
-$(eval $(call TERRAFORM_TASKS,x1,$$(AUTO_APPROVE)))
+$(eval $(call TERRAFORM_TASKS_MAKE,a1,$$(AUTO_APPROVE)))
+$(eval $(call TERRAFORM_TASKS_MAKE,a2,$$(AUTO_APPROVE)))
+$(eval $(call TERRAFORM_TASKS_MAKE,b1,$$(AUTO_APPROVE)))
+$(eval $(call TERRAFORM_TASKS_MAKE,b2,$$(AUTO_APPROVE)))
+$(eval $(call TERRAFORM_TASKS_MAKE,b3,$$(AUTO_APPROVE)))
+$(eval $(call TERRAFORM_TASKS_MAKE,b4,$$(AUTO_APPROVE)))
+$(eval $(call TERRAFORM_TASKS_MAKE,c1,$$(AUTO_APPROVE)))
+$(eval $(call TERRAFORM_TASKS_MAKE,c2,$$(AUTO_APPROVE)))
+$(eval $(call TERRAFORM_TASKS_MAKE,c3,$$(AUTO_APPROVE)))
+$(eval $(call TERRAFORM_TASKS_MAKE,d1,$$(AUTO_APPROVE)))
+$(eval $(call TERRAFORM_TASKS_MAKE,h1,$$(AUTO_APPROVE)))
+$(eval $(call TERRAFORM_TASKS_MAKE,k1,$$(AUTO_APPROVE)))
+$(eval $(call TERRAFORM_TASKS_MAKE,k2,$$(AUTO_APPROVE)))
+$(eval $(call TERRAFORM_TASKS_MAKE,k3,$$(AUTO_APPROVE)))
+$(eval $(call TERRAFORM_TASKS_MAKE,r1,$$(AUTO_APPROVE)))
+$(eval $(call TERRAFORM_TASKS_MAKE,s1,$$(AUTO_APPROVE)))
+$(eval $(call TERRAFORM_TASKS_MAKE,s2,$$(AUTO_APPROVE)))
+$(eval $(call TERRAFORM_TASKS_MAKE,u1,$$(AUTO_APPROVE)))
+$(eval $(call TERRAFORM_TASKS_MAKE,w1,$$(AUTO_APPROVE)))
+$(eval $(call TERRAFORM_TASKS_MAKE,x1,$$(AUTO_APPROVE)))
 
-$(eval $(call BACKUP_TASKS,a1))
-$(eval $(call BACKUP_TASKS,a2))
-$(eval $(call BACKUP_TASKS,b1))
-$(eval $(call BACKUP_TASKS,b2))
-$(eval $(call BACKUP_TASKS,b3))
-$(eval $(call BACKUP_TASKS,b4))
-$(eval $(call BACKUP_TASKS,c1))
-$(eval $(call BACKUP_TASKS,c2))
-$(eval $(call BACKUP_TASKS,c3))
-$(eval $(call BACKUP_TASKS,d1))
-$(eval $(call BACKUP_TASKS,h1))
-$(eval $(call BACKUP_TASKS,k1))
-$(eval $(call BACKUP_TASKS,k2))
-$(eval $(call BACKUP_TASKS,k3))
-$(eval $(call BACKUP_TASKS,r1))
-$(eval $(call BACKUP_TASKS,s1))
-$(eval $(call BACKUP_TASKS,s2))
-$(eval $(call BACKUP_TASKS,u1))
-$(eval $(call BACKUP_TASKS,w1))
-$(eval $(call BACKUP_TASKS,x1))
+$(eval $(call BACKUP_TASKS_MAKE,a1))
+$(eval $(call BACKUP_TASKS_MAKE,a2))
+$(eval $(call BACKUP_TASKS_MAKE,b1))
+$(eval $(call BACKUP_TASKS_MAKE,b2))
+$(eval $(call BACKUP_TASKS_MAKE,b3))
+$(eval $(call BACKUP_TASKS_MAKE,b4))
+$(eval $(call BACKUP_TASKS_MAKE,c1))
+$(eval $(call BACKUP_TASKS_MAKE,c2))
+$(eval $(call BACKUP_TASKS_MAKE,c3))
+$(eval $(call BACKUP_TASKS_MAKE,d1))
+$(eval $(call BACKUP_TASKS_MAKE,h1))
+$(eval $(call BACKUP_TASKS_MAKE,k1))
+$(eval $(call BACKUP_TASKS_MAKE,k2))
+$(eval $(call BACKUP_TASKS_MAKE,k3))
+$(eval $(call BACKUP_TASKS_MAKE,r1))
+$(eval $(call BACKUP_TASKS_MAKE,s1))
+$(eval $(call BACKUP_TASKS_MAKE,s2))
+$(eval $(call BACKUP_TASKS_MAKE,u1))
+$(eval $(call BACKUP_TASKS_MAKE,w1))
+$(eval $(call BACKUP_TASKS_MAKE,x1))
 
-$(eval $(call SSH_TASKS,a1,$$(BECOME_ROOT),,alpine@10.2.20.))
-$(eval $(call SSH_TASKS,a2,$$(BECOME_ROOT),,void@10.2.21.))
-$(eval $(call SSH_TASKS,b1,$$(BECOME_ROOT),,freebsd@10.2.110.))
-$(eval $(call SSH_TASKS,b2,$$(BECOME_ROOT),,openbsd@10.2.111.))
-$(eval $(call SSH_TASKS,b3,$$(BECOME_ROOT),,netbsd@10.2.112.))
-$(eval $(call SSH_TASKS,b4,$$(BECOME_ROOT),,dflybsd@10.2.113.))
-$(eval $(call SSH_TASKS,c1,$$(BECOME_ROOT),,cloud-user@10.2.30.))
-$(eval $(call SSH_TASKS,c2,$$(BECOME_ROOT),,almalinux@10.2.31.))
-$(eval $(call SSH_TASKS,c3,$$(BECOME_ROOT),,rocky@10.2.32.))
-$(eval $(call SSH_TASKS,d1,$$(BECOME_ROOT),,debian@10.2.81.))
-$(eval $(call SSH_TASKS,h1,$$(BECOME_ROOT),,arch@10.2.120.))
-$(eval $(call SSH_TASKS,k1,$$(BECOME_ROOT),,ubuntu@10.2.40.))
-$(eval $(call SSH_TASKS,k2,$$(BECOME_ROOT),,ubuntu@10.2.41.))
-$(eval $(call SSH_TASKS,k3,$$(BECOME_ROOT),,alpine@10.2.42.))
-$(eval $(call SSH_TASKS,r1,$$(BECOME_ROOT),,cloud-user@10.2.70.))
-$(eval $(call SSH_TASKS,s1,$$(BECOME_ROOT),,opensuse@10.2.60.))
-$(eval $(call SSH_TASKS,s2,$$(BECOME_ROOT),,suse@10.2.61.))
-$(eval $(call SSH_TASKS,u1,$$(BECOME_ROOT),,ubuntu@10.2.80.))
-$(eval $(call SSH_TASKS,x1,$$(BECOME_ROOT),,asd@10.2.100.))
+$(eval $(call SSH_TASKS_MAKE,a1,$$(BECOME_ROOT),,alpine@10.2.20.))
+$(eval $(call SSH_TASKS_MAKE,a2,$$(BECOME_ROOT),,void@10.2.21.))
+$(eval $(call SSH_TASKS_MAKE,b1,$$(BECOME_ROOT),,freebsd@10.2.110.))
+$(eval $(call SSH_TASKS_MAKE,b2,$$(BECOME_ROOT),,openbsd@10.2.111.))
+$(eval $(call SSH_TASKS_MAKE,b3,$$(BECOME_ROOT),,netbsd@10.2.112.))
+$(eval $(call SSH_TASKS_MAKE,b4,$$(BECOME_ROOT),,dflybsd@10.2.113.))
+$(eval $(call SSH_TASKS_MAKE,c1,$$(BECOME_ROOT),,cloud-user@10.2.30.))
+$(eval $(call SSH_TASKS_MAKE,c2,$$(BECOME_ROOT),,almalinux@10.2.31.))
+$(eval $(call SSH_TASKS_MAKE,c3,$$(BECOME_ROOT),,rocky@10.2.32.))
+$(eval $(call SSH_TASKS_MAKE,d1,$$(BECOME_ROOT),,debian@10.2.81.))
+$(eval $(call SSH_TASKS_MAKE,h1,$$(BECOME_ROOT),,arch@10.2.120.))
+$(eval $(call SSH_TASKS_MAKE,k1,$$(BECOME_ROOT),,ubuntu@10.2.40.))
+$(eval $(call SSH_TASKS_MAKE,k2,$$(BECOME_ROOT),,ubuntu@10.2.41.))
+$(eval $(call SSH_TASKS_MAKE,k3,$$(BECOME_ROOT),,alpine@10.2.42.))
+$(eval $(call SSH_TASKS_MAKE,r1,$$(BECOME_ROOT),,cloud-user@10.2.70.))
+$(eval $(call SSH_TASKS_MAKE,s1,$$(BECOME_ROOT),,opensuse@10.2.60.))
+$(eval $(call SSH_TASKS_MAKE,s2,$$(BECOME_ROOT),,suse@10.2.61.))
+$(eval $(call SSH_TASKS_MAKE,u1,$$(BECOME_ROOT),,ubuntu@10.2.80.))
+$(eval $(call SSH_TASKS_MAKE,x1,$$(BECOME_ROOT),,asd@10.2.100.))
 
 .PHONY: ls clean
 

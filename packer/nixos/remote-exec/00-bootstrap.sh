@@ -13,7 +13,7 @@ nixos-generate-config --root /mnt/ --no-filesystems
 
 install -d /mnt/etc/nixos/configuration.nix.d/
 
-cat >/mnt/etc/nixos/configuration.nix <<EOF
+cat >/mnt/etc/nixos/configuration.nix <<NIX
 { config, pkgs, lib, ... }:
 
 {
@@ -91,7 +91,7 @@ cat >/mnt/etc/nixos/configuration.nix <<EOF
 
   system.stateVersion = "$(nixos-version | cut -d. -f-2)";
 }
-EOF
+NIX
 
 nixos-install
 

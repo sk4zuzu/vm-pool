@@ -17,7 +17,7 @@ PACKER_PLUGIN_PATH := $(SELF)/../../bin
 PACKER_LOG         ?= 1
 HEADLESS           ?= true
 
-define PACKERFILE
+define PACKERFILE_HCL
 source "qemu" "$(NAME)" {
   accelerator = "kvm"
 
@@ -79,7 +79,7 @@ build: $(SELF)/.cache/output/packer-$(NAME).qcow2
 $(SELF)/.cache/output/packer-$(NAME).qcow2: Makefile $(wildcard $(SELF)/remote-exec/*.sh)
 	install -d $(SELF)/.cache/
 	if ! [[ -e $(SELF)/.cache/build.pkr.hcl ]]; then ln -s /dev/stdin $(SELF)/.cache/build.pkr.hcl; fi
-	$(PACKER) build -force $(SELF)/.cache/build.pkr.hcl <<< "$$PACKERFILE"
+	$(PACKER) build -force $(SELF)/.cache/build.pkr.hcl <<< "$$PACKERFILE_HCL"
 
 .PHONY: clean
 

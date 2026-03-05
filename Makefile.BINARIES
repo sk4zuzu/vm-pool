@@ -15,7 +15,7 @@ $(SELF)/bin/terraform \
 $(SELF)/bin/terragrunt \
 $(SELF)/bin/packer-plugin-qemu
 
-define HASHICORP_RELEASE_INSTALL
+define HASHICORP_RELEASE_INSTALL_MAKE
 $(SELF)/bin/$(1): $(SELF)/bin/$(1)-$(2)
 	ln -sf $$< $$@
 $(SELF)/bin/$(1)-$(2):
@@ -28,7 +28,7 @@ $(SELF)/bin/$(1)-$(2):
 	chmod +x $$@
 endef
 
-define HASHICORP_PACKER_PLUGIN_INSTALL
+define HASHICORP_PACKER_PLUGIN_INSTALL_MAKE
 $(SELF)/bin/packer-plugin-$(1): NAME = $$(shell $$^ describe | jq -r '"packer-plugin-qemu_v\(.version)_\(.api_version)_linux_amd64"')
 $(SELF)/bin/packer-plugin-$(1): $(SELF)/bin/packer-plugin-$(1)-$(2)
 	ln -sf $$< $$@
@@ -45,7 +45,7 @@ $(SELF)/bin/packer-plugin-$(1)-$(2):
 	chmod +x $$@
 endef
 
-define GITHUB_RELEASE_INSTALL
+define GITHUB_RELEASE_INSTALL_MAKE
 $(SELF)/bin/$(2): $(SELF)/bin/$(2)-$(3)
 	ln -sf $$< $$@
 $(SELF)/bin/$(2)-$(3):
@@ -73,13 +73,13 @@ $(SELF)/bin/OVMF_VARS.fd:
 	curl -fsSL -o $@ https://retrage.github.io/edk2-nightly/bin/RELEASEX64_OVMF_VARS.fd
 
 $(eval \
-	$(call HASHICORP_RELEASE_INSTALL,packer,$(PACKER_VERSION)))
+	$(call HASHICORP_RELEASE_INSTALL_MAKE,packer,$(PACKER_VERSION)))
 
 $(eval \
-	$(call HASHICORP_PACKER_PLUGIN_INSTALL,qemu,$(PACKER_QEMU_VERSION)))
+	$(call HASHICORP_PACKER_PLUGIN_INSTALL_MAKE,qemu,$(PACKER_QEMU_VERSION)))
 
 $(eval \
-	$(call HASHICORP_RELEASE_INSTALL,terraform,$(TERRAFORM_VERSION)))
+	$(call HASHICORP_RELEASE_INSTALL_MAKE,terraform,$(TERRAFORM_VERSION)))
 
 $(eval \
-	$(call GITHUB_RELEASE_INSTALL,gruntwork-io,terragrunt,$(TERRAGRUNT_VERSION)))
+	$(call GITHUB_RELEASE_INSTALL_MAKE,gruntwork-io,terragrunt,$(TERRAGRUNT_VERSION)))

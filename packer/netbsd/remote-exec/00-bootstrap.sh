@@ -33,12 +33,12 @@ procfs    /proc/    procfs rw     0 0
 ptyfs     /dev/pts/ ptyfs  rw     0 0
 EOF
 
-chroot /mnt/ /bin/ksh -es <<EOF
+chroot /mnt/ /bin/ksh -es <<SH
 cp /usr/mdec/boot /boot
 installboot -v /dev/ld0a /usr/mdec/bootxx_ffsv2 /boot
 fdisk -vv /dev/ld0
 usermod -p \$(pwhash '$PASSWORD') root
-EOF
+SH
 
 cat >>/mnt/etc/login.conf <<EOF
 default:\

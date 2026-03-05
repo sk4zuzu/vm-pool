@@ -16,13 +16,13 @@ pkg_add \
  git clone -b "$CLOUD_INIT_RELEASE" https://github.com/canonical/cloud-init.git .
  ./tools/build-on-openbsd)
 
-cat >/etc/rc.local <<'EOF'
+cat >/etc/rc.local <<'SH'
 #!/usr/bin/env ksh
 set -o errexit
 /usr/local/bin/cloud-init init -l
 /usr/local/bin/cloud-init init
 /usr/local/bin/cloud-init modules --mode config
 /usr/local/bin/cloud-init modules --mode final
-EOF
+SH
 
 sync

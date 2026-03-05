@@ -82,18 +82,18 @@ curl -fsSL "https://github.com/flannel-io/flannel/releases/download/v$FLANNEL_VE
 END { for (img in seen) system("ctr --namespace=k8s.io image pull " img) }
 AWK
 
-install -m u=rwx,go=rx /dev/fd/0 /usr/local/bin/kube-vip <<EOF
+install -m u=rwx,go=rx /dev/fd/0 /usr/local/bin/kube-vip <<BASH
 #!/usr/bin/env bash
-exec ctr --namespace=k8s.io run --rm --net-host ghcr.io/kube-vip/kube-vip:v$KUBEVIP_VERSION vip /kube-vip "\$@"
-EOF
+exec ctr --namespace=k8s.io run --rm --net-host 'ghcr.io/kube-vip/kube-vip:v$KUBEVIP_VERSION' vip /kube-vip "\$@"
+BASH
 
-install -m u=rw,go=r /dev/fd/0 /etc/profile.d/crictl.sh <<'EOF'
+install -m u=rw,go=r /dev/fd/0 /etc/profile.d/crictl.sh <<'BASH'
 export CONTAINER_RUNTIME_ENDPOINT=/run/containerd/containerd.sock
 export IMAGE_SERVICE_ENDPOINT=/run/containerd/containerd.sock
-EOF
+BASH
 
-install -m u=rw,go=r /dev/fd/0 /etc/profile.d/kubeconfig.sh <<'EOF'
+install -m u=rw,go=r /dev/fd/0 /etc/profile.d/kubeconfig.sh <<'BASH'
 export KUBECONFIG=/etc/kubernetes/admin.conf
-EOF
+BASH
 
 sync

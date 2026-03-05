@@ -16,7 +16,7 @@ PACKER_PLUGIN_PATH := $(SELF)/../../bin
 PACKER_LOG         ?= 1
 HEADLESS           ?= true
 
-define CLOUD_CONFIG
+define CLOUD_CONFIG_YML
 #cloud-config
 users:
 - name: arch
@@ -26,7 +26,7 @@ users:
 ssh_pwauth: true
 endef
 
-define PACKERFILE
+define PACKERFILE_HCL
 source "qemu" "$(NAME)" {
   accelerator = "kvm"
 
@@ -70,7 +70,7 @@ export
 all: build
 
 $(SELF)/.cache/cloud-config.yml:
-	install -d $(SELF)/.cache/ && echo "$$CLOUD_CONFIG" >$@
+	install -d $(SELF)/.cache/ && echo "$$CLOUD_CONFIG_YML" >$@
 
 $(SELF)/.cache/$(ARTIFACT).iso: $(SELF)/.cache/cloud-config.yml
 	cloud-localds $@ $^
@@ -81,7 +81,7 @@ build: $(SELF)/.cache/output/packer-$(NAME).qcow2
 
 $(SELF)/.cache/output/packer-$(NAME).qcow2: $(SELF)/.cache/$(ARTIFACT).iso Makefile $(wildcard $(SELF)/remote-exec/*.sh)
 	if ! [[ -e $(SELF)/.cache/build.pkr.hcl ]]; then ln -s /dev/stdin $(SELF)/.cache/build.pkr.hcl; fi
-	$(PACKER) build -force $(SELF)/.cache/build.pkr.hcl <<< "$$PACKERFILE"
+	$(PACKER) build -force $(SELF)/.cache/build.pkr.hcl <<< "$$PACKERFILE_HCL"
 
 .PHONY: clean
 

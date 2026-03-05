@@ -6,7 +6,7 @@ set -x
 pwd_mkdb -p /etc/master.passwd
 
 # fix for cloud-init
-(cd /usr/local/lib/python3.11/ && patch -Np0) <<'EOF'
+(cd /usr/local/lib/python3.11/ && patch -Np0) <<'DIFF'
 --- crypt.py	2022-10-08 02:35:01.000000000 +0200
 +++ crypt.py	2022-11-08 18:49:13.334474908 +0100
 @@ -110,11 +110,12 @@
@@ -26,7 +26,7 @@ pwd_mkdb -p /etc/master.passwd
 -del _v, _add_method
 +#del _v, _add_method
 +del _add_method
-EOF
+DIFF
 
 cat >>/etc/dhcpcd.conf <<'EOF'
 denyinterfaces vtnet0
