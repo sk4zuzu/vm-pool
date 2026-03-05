@@ -9,9 +9,9 @@ NAME := ubuntu
 #CHECKSUM := 13051b60132738b31d1a3708b5b3f80f
 
 RELEASE  := 24.04
-VERSION  := release-20251213
+VERSION  := release-20260225
 ARTIFACT := ubuntu-$(RELEASE)-server-cloudimg-amd64.img
-CHECKSUM := f14e6f04d00ab4739f477edddae441b7
+CHECKSUM := 46063c6f375646b634adb52b3681102d
 
 CPUS      ?= 1
 MEMORY    ?= 2048
