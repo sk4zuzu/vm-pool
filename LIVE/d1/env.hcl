@@ -40,7 +40,7 @@ locals {
     prefix  = "${local.env}b"
     offset  = 20
     vcpu    = 2
-    memory  = "2048"
+    memory  = "3072"
     image   = "${get_parent_terragrunt_dir()}/../../packer/debian/.cache/output/packer-debian.qcow2"
     storage = "34359738368"  # 32GiB
     keys    = file("~/.ssh/id_rsa.pub")
