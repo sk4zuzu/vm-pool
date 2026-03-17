@@ -3,7 +3,7 @@
 set -o errexit -o nounset -o pipefail
 set -x
 
-zypper --non-interactive install -y kernel-default
+zypper --non-interactive install -y --force-resolution kernel-default
 
 gawk -i inplace -f- /etc/default/grub <<'AWK'
 /^GRUB_CMDLINE_LINUX_DEFAULT=/ { found = 1 }
